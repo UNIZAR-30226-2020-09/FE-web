@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Switch } from 'react-router-dom';
 
-import createHistory from 'history/createBrowserHistory';
+//import createHistory from 'history/createBrowserHistory'; // Warning deprecated
+import { createBrowserHistory as createHistory } from 'history'
 
 import './index.css';
 import App from './components/App';

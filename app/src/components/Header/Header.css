@@ -1,0 +1,171 @@
+/* Header CSS*/
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+body {
+  /* Fuente + color letra predeter */
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #363636;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  text-transform: none;
+  color: inherit;
+  font: inherit;
+}
+
+a {
+  background-color: transparent;
+  color: #0088ce;
+  text-decoration: none;
+}
+
+.navbar {
+  /* Contenidos de navbar */
+  display: block;
+  /* Prop. espaciales*/
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 60px;
+  position: fixed;
+  z-index: 10;
+  /* Prop forma */
+  border: none;
+  border-radius: 0;
+  border-top: 2px solid #39a5dc;
+  margin-bottom: 0;
+  background-color: #202020;
+}
+
+.navbar .header{
+  float: left;
+}
+
+/* Boton menu */
+.navbar .toogle{
+  /*display: block;*/
+  position: relative;
+  padding: 12px 10px;
+  background-color: transparent;
+  background-image: none;
+  border: 0;
+  float: left;
+  margin: 10px 15px;
+}
+.toogle .icon-bar {
+  display: block;
+  background: #d1d1d1;
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+}
+.toogle .icon-bar + .icon-bar{
+  margin-top: 4px;
+}
+.toogle:hover .icon-bar,
+.toogle:focus .icon-bar {
+  background: #fff;
+}
+
+/* Icono en header */
+.navbar .navbar-icon{
+  color: #fff;
+  height: auto;
+  min-height: 34px;
+  padding: 12px 0;
+  float: left;
+
+  /*margin: 0 25px 0 0;*/
+}
+.navbar .navbar-icon img{
+  display: inline-block;
+  vertical-align: middle;
+  max-height: 34px;
+  border: 0;
+  margin: 0 15px 0 0;
+  /*max-height: 120px;
+  height: auto;
+  width: auto;*/
+}
+
+/* Textos */
+.navbar .nav-text{
+  font-size: 0.7rem;
+  text-decoration: none;
+  color: #aaa;
+}
+.navbar ul li .nav-text{
+  font-size: 1rem;
+  text-decoration: none;
+  color: #f2f2f2;
+}
+
+/* Menu navbar*/
+.navbar .collapse{
+  display: block;
+  width: auto;
+  height: auto;
+  box-shadow: none;
+  overflow: visible;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 0;
+  border-top: 0;
+}
+
+.navbar ul {
+  font-size: 0;
+  float: right;
+  list-style: none;
+  margin: 0;
+}
+
+.navbar ul li {
+  display: block;
+  float: left;
+  position: relative;
+}
+
+.nav-item{
+  display: block;
+  max-height: 58px;
+  padding: 21px 12px;
+  position: relative;
+  color: #d1d1d1;
+  font-size: 14px;
+  cursor: pointer;
+  /*line-height: 1;
+  margin: 0;
+  border: 0;*/
+}
+
+.nav-item:hover {
+  color: #fff;
+}
+
+/*REESCRIBIR*/
+
+.nav-item1{
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #f2f2f2;
+  text-decoration:none;
+
+  height: inherit;
+
+  display: inline-block;
+  padding: 20px 15px;
+  position: relative;
+}
