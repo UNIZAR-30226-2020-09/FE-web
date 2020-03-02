@@ -10,13 +10,22 @@ const top = [[
   {id:3, name: 'Cerrar Sesión', link: '/', icon: 'fas fa-sign-out-alt'},
   {id:4, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'},
 ]];
+const left = [[
+  {id:5, name: 'Inicio', link: '/', icon: 'fas fa-home'},
+  {id:6, name: 'Iniciar Sesión', link: '/login', icon: 'fas fa-sign-in-alt'}
+],[
+  {id:7, name: 'Inicio', link: '/', icon: 'fas fa-home'},
+  {id:8, name: 'Mis Contraseñas', link: '/', icon: 'fas fa-key'},
+  {id:9, name: 'Ajustes', link: '/', icon: 'fas fa-cog'},
+  {id:10, name: 'Cerrar sesión', link: '/', icon: 'fas fa-sign-out-alt'}
+]];
 
 const OptionsTop = props => {
   if (props.mobile) return null;
   let user = 0, log = null;
   if (props.user){
     /*log = (
-      <li key={user} className="nav-item nav-text">
+      <li key={user} className="nav-top-item nav-text">
         {props.user.name}
       </li>
     )*/
@@ -28,7 +37,7 @@ const OptionsTop = props => {
       {log}
       {props.opts[user].map((opt) =>
         <li key={opt.id}>
-          <Link to={opt.link} className="nav-item">
+          <Link to={opt.link} className="nav-top-item">
             <span className={opt.icon}/> {opt.name}
           </Link>
         </li>
@@ -38,11 +47,57 @@ const OptionsTop = props => {
   );
 };
 
+const OptionsLeft = props => {
+  if (props.mobile) return null;
+  let user = 0;//, log = null;
+  if (props.user){
+    user = 1
+  }
+  return(
+    <div className="nav-vertical">
+      <ul>
+      {props.opts[user].map((opt) =>
+        <li key={opt.id} className="nav-left-item">
+          <Link to={opt.link}>
+            <span className={opt.icon}/>
+            <i>{opt.name}</i>
+          </Link>
+        </li>
+      )}
+      </ul>
+      <ul>
+        <li className="nav-left-item">
+          <a href="https://www.google.com/">
+            <span className="fas fa-book"/>
+            <i>Documentación</i>
+          </a>
+        </li>
+        <li className="nav-left-item">
+          <a href="https://www.google.com/">
+            <span className="fas fa-info-circle"/>
+            <i>About</i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+function toogle() {
+  console.log("onClick");
+  let x = document.getElementsByClassName("nav-vertical")[0];
+  if (x.className === "nav-vertical") {
+    x.className += " collapsed";
+  } else {
+    x.className = "nav-vertical";
+  }
+}
+
 const Static = props => {
   return(
-    <nav className="navbar">
+    <nav id="navbar">
       <div className="header">
-        <button className="toogle">
+        <button className="toogle" onClick={toogle}>
           <span className="icon-bar"/>
           <span className="icon-bar"/>
           <span className="icon-bar"/>
@@ -52,8 +107,7 @@ const Static = props => {
         </span>
       </div>
       {props.top}
-      {props.navresponsive}
-
+      {props.left}
     </nav>
   );
 }
@@ -106,19 +160,26 @@ class Header extends React.Component {
 
   render(){
     //console.log(this.state.mobile);
-    //const tp = <OptionsTop mobile={this.state.mobile} user={{name: "ads"}} opts={top}/>;
-    const tp = <OptionsTop mobile={this.state.mobile} user={null} opts={top}/>;
+    //let user = null;
+    let user = {name: "ads"}
+    const tp = <OptionsTop mobile={this.state.mobile} user={user} opts={top}/>;
+    const lf = <OptionsLeft mobile={this.state.mobile} user={user} opts={left}/>
     if (!this.state.mobile){
       return(
-        <Static top={tp}/>
+        <Static top={tp} left={lf}/>
       );
     } else if (this.state.mobile)  {
       return(
-        <Static top={tp}/>
+        <Static top={tp} left={lf}/>
       );
     }
     return null;
   }
 }
 
+//// TODO:  -collapse con cuerpo de App
+////        -spacer entre listas lef-navbar
+////        -active? => state?
+////        -
+////        -
 export default Header;
