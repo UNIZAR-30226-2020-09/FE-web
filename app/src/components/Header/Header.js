@@ -21,7 +21,9 @@ const left = [[
 ]];
 
 const OptionsTop = props => {
-  if (props.mobile) return null;
+  if (props.mobile) {
+    return null;
+  }
   let user = 0, log = null;
   if (props.user){
     /*log = (
@@ -48,13 +50,16 @@ const OptionsTop = props => {
 };
 
 const OptionsLeft = props => {
-  if (props.mobile) return null;
+  let cls = "nav-vertical"
+  if (props.mobile) {
+    cls += " responsive";
+  }
   let user = 0;//, log = null;
   if (props.user){
     user = 1
   }
   return(
-    <div className="nav-vertical">
+    <div className={cls}>
       <ul>
       {props.opts[user].map((opt) =>
         <li key={opt.id} className="nav-left-item">
@@ -65,6 +70,7 @@ const OptionsLeft = props => {
         </li>
       )}
       </ul>
+      <div className="spacer"/>
       <ul>
         <li className="nav-left-item">
           <a href="https://www.google.com/">
@@ -84,12 +90,29 @@ const OptionsLeft = props => {
 };
 
 function toogle() {
-  console.log("onClick");
+  // console.log("onClick");
   let x = document.getElementsByClassName("nav-vertical")[0];
-  if (x.className === "nav-vertical") {
-    x.className += " collapsed";
+  let y = document.getElementsByClassName("app-container")[0];
+  if (x.classList.contains("resp-collapsed")){
+    // Modelo movil aka responsive
+    x.className = "nav-vertical responsive"
+    y.className = "app-container navbar-collapsed-responsive";
+  } else if (x.classList.contains("responsive")) {
+    x.className +=  " resp-collapsed";
+    y.className = "app-container navbar-collapsed-responsive";
   } else {
-    x.className = "nav-vertical";
+    // Modelo web
+    if (x.className === "nav-vertical") {
+      x.className += " collapsed";
+      if (y !== null) {
+         y.className += " navbar-collapsed";
+      }
+    } else {
+      x.className = "nav-vertical";
+      if (y !== null) {
+        y.className = "app-container";
+      }
+    }
   }
 }
 
@@ -119,7 +142,7 @@ class Header extends React.Component {
     this.responsive = this.responsive.bind(this);
     //this._getwidth = this._getwidth.bind(this);
     this.state = {
-      mobile: document.body.clientWidth > this._getwidth
+      mobile: 600 > this._getwidth()
     };
     document.body.onresize = this.responsive;
   }
@@ -153,13 +176,15 @@ class Header extends React.Component {
   // Set event response
   componentDidMount() {
     window.addEventListener('resize', this.responsive);
+    if (this.state.mobile) toogle();
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.responsive);
   }
 
+
   render(){
-    //console.log(this.state.mobile);
+    //console.log("render " + this.state.mobile);
     //let user = null;
     let user = {name: "ads"}
     const tp = <OptionsTop mobile={this.state.mobile} user={user} opts={top}/>;

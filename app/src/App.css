@@ -1,3 +1,15 @@
+
+.app-container {
+  top: 60px;
+  margin-left: 250px;
+}
+.navbar-collapsed{
+  margin-left: 75px;
+}
+.navbar-collapsed-responsive{
+  margin-left: 0px;
+}
+
 .App {
   text-align: center;
 }

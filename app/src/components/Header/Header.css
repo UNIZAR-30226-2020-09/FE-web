@@ -175,12 +175,19 @@ i {
 .nav-vertical ul{} /* Igual a #navbar ul */
 .nav-vertical ul li{} /* Igual a #navbar ul li */
 
+.responsive{
+  width:100%
+}
+
+.resp-collapsed{
+  width:0px;
+}
+
 
 .active i{
   font-weight: 600;
   color: #fff;
 }
-
 
 .nav-left-item{ /* Clase en .nav-vertical ul li */
   display: block;
@@ -198,7 +205,8 @@ i {
   position: relative;
   color: #d1d1d1;
   cursor: pointer;
-  width: 250px;
+  /*width: 250px;*/
+  width: 100%;
   height: 63px;
   font-size: 14px;
   font-weight: 400;
@@ -234,4 +242,7 @@ i {
 }
 .collapsed a i{
   display: none;
+}
+
+.spacer{
 }
