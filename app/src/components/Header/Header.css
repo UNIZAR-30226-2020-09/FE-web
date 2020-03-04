@@ -161,6 +161,11 @@ i {
 }
 
 .nav-vertical{
+  /* Requerido para SPACER */
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  /* \/ Original \/  */
   width: 250px;
   top: 60px;
   left: 0;
@@ -168,7 +173,7 @@ i {
   background: #292e34;
   border-right: 1px solid #292e34;
   overflow-x: hidden;
-  overflow-y: auto;
+  /*overflow-y: auto;*/
   position: fixed;
   z-index: 10;
 }
@@ -244,5 +249,8 @@ i {
   display: none;
 }
 
+
 .spacer{
+  /* Espaciado entre listas ligado a altura de padre 1 */
+  flex-grow: 1;
 }

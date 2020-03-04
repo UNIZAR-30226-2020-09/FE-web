@@ -13,6 +13,10 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={React_Home}/>
           <Route path="/login" component={React_Home} />
+          <Route path="/passwords" component={React_Home} />
+          <Route path="/settings" component={React_Home} />
+          <Route path="/login" component={React_Home} />
+          <Route path="/login" component={React_Home} />
         </Switch>
       </div>
     );
