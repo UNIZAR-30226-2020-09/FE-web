@@ -1,0 +1,256 @@
+/* Header CSS*/
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+body {
+  /* Fuente + color letra predeter */
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #363636;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  text-transform: none;
+  color: inherit;
+  font: inherit;
+}
+
+a {
+  background-color: transparent;
+  color: #0088ce;
+  text-decoration: none;
+}
+
+i {
+  font-style: normal;
+  text-decoration: none;
+}
+
+#navbar {
+  /* Contenidos de navbar */
+  display: block;
+  /* Prop. espaciales*/
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 60px;
+  position: fixed;
+  z-index: 10;
+  /* Prop forma */
+  border: none;
+  border-radius: 0;
+  border-top: 2px solid #39a5dc;
+  margin-bottom: 0;
+  background-color: #202020;
+}
+#navbar .header{
+  float: left;
+}
+
+/* Boton menu */
+#navbar .toogle{
+
+  position: relative;
+  padding: 12px 10px;
+  background-color: transparent;
+  background-image: none;
+  border: 0;
+  float: left;
+  margin: 10px 15px;
+}
+.toogle .icon-bar {
+  display: block;
+  background: #d1d1d1;
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+}
+.toogle .icon-bar + .icon-bar{
+  margin-top: 4px;
+}
+.toogle:hover .icon-bar,
+.toogle:focus .icon-bar {
+  background: #fff;
+}
+
+/* Icono en header */
+#navbar .navbar-icon{
+  color: #fff;
+  height: auto;
+  min-height: 34px;
+  padding: 12px 0;
+  float: left;
+
+  /*margin: 0 25px 0 0;*/
+}
+#navbar .navbar-icon img{
+  display: inline-block;
+  vertical-align: middle;
+  max-height: 34px;
+  border: 0;
+  margin: 0 15px 0 0;
+  /*max-height: 120px;
+  height: auto;
+  width: auto;*/
+}
+
+/* Objetos Base */
+#navbar .nav-text{
+  font-size: 0.7rem;
+  text-decoration: none;
+  color: #aaa;
+}
+#navbar ul {
+  font-size: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+#navbar ul li {
+  display: block;
+  position: relative;
+}
+#navbar ul li .nav-text{
+  font-size: 1rem;
+  text-decoration: none;
+  color: #f2f2f2;
+}
+
+/* Menu navbar*/
+#navbar .collapse{
+  display: block;
+  width: auto;
+  height: auto;
+  box-shadow: none;
+  overflow: visible;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 0;
+  border-top: 0;
+}
+#navbar .collapse ul{
+  float: right;
+}
+#navbar .collapse ul li {
+  float: left;
+}
+
+.nav-top-item{
+  display: block;
+  max-height: 58px;
+  padding: 21px 12px;
+  position: relative;
+  color: #d1d1d1;
+  font-size: 14px;
+  cursor: pointer;
+  /*line-height: 1;
+  margin: 0;
+  border: 0;*/
+}
+.nav-top-item:hover {
+  color: #fff;
+}
+
+.nav-vertical{
+  /* Requerido para SPACER */
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  /* \/ Original \/  */
+  width: 250px;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  background: #292e34;
+  border-right: 1px solid #292e34;
+  overflow-x: hidden;
+  /*overflow-y: auto;*/
+  position: fixed;
+  z-index: 10;
+}
+.nav-vertical ul{} /* Igual a #navbar ul */
+.nav-vertical ul li{} /* Igual a #navbar ul li */
+
+.responsive{
+  width:100%
+}
+
+.resp-collapsed{
+  width:0px;
+}
+
+
+.active i{
+  font-weight: 600;
+  color: #fff;
+}
+
+.nav-left-item{ /* Clase en .nav-vertical ul li */
+  display: block;
+  position: relative;
+  margin-bottom: -1px;
+  padding: 0;
+  border: 1px solid #f5f5f5;
+  border-right: 0;
+  border-left: 0;
+  background-color: transparent;
+  border-color: #030303;
+}
+.nav-left-item a{
+  display: flex;
+  position: relative;
+  color: #d1d1d1;
+  cursor: pointer;
+  /*width: 250px;*/
+  width: 100%;
+  height: 63px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 26px;
+  padding: 17px 0 17px 25px;
+  white-space: nowrap;
+  /*padding-right: 0;
+  padding: 17px 20px 17px 25px;*/
+}
+.nav-left-item a span{
+  color: #72767b;
+  float: left;
+  font-size: 20px;
+  line-height: 26px;
+  margin-right: 15px;
+  text-align: center;
+  width: 24px;
+  height: 30px;
+}
+
+.active{
+  color: #fff;
+  background-color: #393f44;
+  border-left: 3px solid #39a5dc;
+}
+.active a span{
+  color: #39a5dc;
+}
+
+.collapsed,
+.collapsed a{
+  width: 75px;
+}
+.collapsed a i{
+  display: none;
+}
+
+
+.spacer{
+  /* Espaciado entre listas ligado a altura de padre 1 */
+  flex-grow: 1;
+}
