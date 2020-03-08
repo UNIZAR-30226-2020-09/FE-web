@@ -3,62 +3,45 @@ import { withRouter } from 'react-router-dom';
 import { OptionsTop, OptionsLeft } from './constHeader.js';
 import './Header.css'
 
-function toogle() {
-  // console.log("onClick");
-  let x = document.getElementsByClassName("nav-vertical")[0];
-  let y = document.getElementsByClassName("app-container")[0];
-  if (x.classList.contains("resp-collapsed")){
-    // Modelo movil aka responsive
-    x.className = "nav-vertical responsive"
-    y.className = "app-container navbar-collapsed-responsive";
-  } else if (x.classList.contains("responsive")) {
-    x.className +=  " resp-collapsed";
-    y.className = "app-container navbar-collapsed-responsive";
-  } else {
-    // Modelo web
-    if (x.className === "nav-vertical") {
-      x.className += " collapsed";
-      if (y !== null) {
-         y.className += " navbar-collapsed";
-      }
+function setColl_Resp(mobile, collapse){
+  console.log("setColl_Resp");
+  let x = null, y = null;
+  x = document.getElementsByClassName("nav-vertical")[0];
+  y = document.getElementsByClassName("app-container")[0];
+  if (mobile) {
+    if(y !== null) y.className = "app-container navbar-collapsed-responsive";
+    if (collapse){
+      if(x !== null) x.className = "nav-vertical responsive resp-collapsed";
     } else {
-      x.className = "nav-vertical";
-      if (y !== null) {
-        y.className = "app-container";
-      }
+      if(x !== null) x.className = "nav-vertical responsive";
+    }
+  } else {
+    if (collapse){
+      if(x !== null) x.className = "nav-vertical collapsed";
+      if(y !== null) y.className = "app-container navbar-collapsed";
+    } else {
+      if(x !== null) x.className = "nav-vertical";
+      if(y !== null) y.className = "app-container";
     }
   }
 }
 
-const Static = props => {
-  return(
-    <nav id="navbar">
-      <div className="header">
-        <button className="toogle" onClick={toogle}>
-          <span className="icon-bar"/>
-          <span className="icon-bar"/>
-          <span className="icon-bar"/>
-        </button>
-        <span className="navbar-icon">
-          <img alt="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"/>
-        </span>
-      </div>
-      {props.top}
-      {props.left}
-    </nav>
-  );
-}
 
 class Header extends React.Component {
 
   constructor(props) {
     super(props);
     this.responsive = this.responsive.bind(this);
-    //this._getwidth = this._getwidth.bind(this);
-    this.state = {
-      mobile: 600 > this._getwidth()
-    };
+    this.parentState = props.parentState;
+    this.updateParent = props.updateParent;
     document.body.onresize = this.responsive;
+    if (this.parentState().mobile === null) {
+      let state = 600 > this._getwidth();
+      this.updateParent({
+        mobile: state,
+        collapsed: state? true:false
+      });
+    }
   }
 
   // Get width to all cost
@@ -72,51 +55,66 @@ class Header extends React.Component {
   }
 
   responsive(){
-    let mobile = this.state.mobile, width = this._getwidth();
-    //console.log("responsive: " + width);
+    let mobile = this.parentState().mobile, width = this._getwidth();
+    // console.log("Width: " + width);
 
     // Change state
     if (width > 600){
       if (mobile){
-        this.setState({mobile: false});
+        this.updateParent({mobile: false});
       }
     } else {
       if (!mobile){
-        this.setState({mobile: true});
+        this.updateParent({mobile: true});
       }
     }
+  }
+  toogle(){
+    let coll = this.parentState().collapsed;
+    this.updateParent({collapsed: !coll});
   }
 
   // Set event response
   componentDidMount() {
     window.addEventListener('resize', this.responsive);
-    if (this.state.mobile) toogle();
+    //console.log("componentDidMount", this.parentState());
+    //if (this.parentState().mobile) this.toogle();
+  }
+  componentDidUpdate(){
+    let state = this.parentState()
+    // console.log("componentDidUpdate",state);
+    setColl_Resp(state.mobile, state.collapsed)
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.responsive);
   }
 
-
   render(){
     //console.log("render " + this.state.mobile);
     //console.log(this.props.location);
-    //let user = null;
-    let user = {name: "ads"}, loc = this.props.location.pathname;
-    const tp = <OptionsTop mobile={this.state.mobile}
+    let mob = this.parentState().mobile, loc = this.props.location.pathname;
+    let user = {name: "ads"}; //user = null;
+
+    const top = <OptionsTop mobile={mob}
                     user={user} currentlocation={loc}/>;
-    const lf = <OptionsLeft mobile={this.state.mobile}
+    const left = <OptionsLeft mobile={mob}
                     user={user} currentlocation={loc}/>
-    /*if (!this.state.mobile){
-      return(
-        <Static top={tp} left={lf}/>
-      );
-    } else if (this.state.mobile)  {
-      return(
-        <Static top={tp} left={lf}/>
-      );
-    }
-    return null;*/
-    return (<Static top={tp} left={lf}/>);
+    return (
+      <nav id="navbar">
+        <div className="header">
+          <button className="toogle" onClick={this.toogle.bind(this)}>
+            <span className="icon-bar"/>
+            <span className="icon-bar"/>
+            <span className="icon-bar"/>
+          </button>
+          <span className="navbar-icon">
+            <img alt="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"/>
+          </span>
+        </div>
+        {top}
+        {left}
+      </nav>
+    );
   }
 }
 
