@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { OptionsTop, OptionsLeft } from './constHeader.js';
-import './Header.css'
+import './Header.css';
 
 function setColl_Resp(mobile, collapse){
-  console.log("setColl_Resp");
+  //console.log("setColl_Resp");
   let x = null, y = null;
   x = document.getElementsByClassName("nav-vertical")[0];
   y = document.getElementsByClassName("app-container")[0];
