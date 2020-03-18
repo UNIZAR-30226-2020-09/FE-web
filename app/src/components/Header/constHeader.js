@@ -1,41 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import LoginForm from './LoginForm.js';
 
 const top = [[
-  {id:1, name: 'Iniciar Sesión', link: '/login', icon: 'fas fa-sign-in-alt'},
+  /*{id:1, name: 'Iniciar Sesión', link: '/login', icon: 'fas fa-sign-in-alt'},*/
   {id:2, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
 ], [
   {id:3, name: 'Cerrar Sesión', link: '/login', icon: 'fas fa-sign-out-alt'},
   {id:4, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'},
 ]];
-const left = [[
-  {id:5, name: 'Inicio', link: '/', icon: 'fas fa-home'},
-  {id:6, name: 'Iniciar Sesión', link: '/login', icon: 'fas fa-sign-in-alt'}
-],[
+
+const left = [
   {id:7, name: 'Inicio', link: '/', icon: 'fas fa-home'},
   {id:8, name: 'Mis Contraseñas', link: '/passwords', icon: 'fas fa-key'},
   {id:9, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
-]];
+];
 
 
 const OptionsTop = props => {
-  if (props.mobile) {
-    return null;
-  }
-  let user = 0, log = null;
-  if (props.user){
-    /*log = (
-      <li key={user} className="nav-top-item nav-text">
-        {props.user.name}
-      </li>
-    )*/
-    user = 1
-  }
+  if (props.mobile) return null;
+  let user = 0;
+  if (props.user) user = 1
+
   return (
     <div className="collapse">
       <ul>
-      {log}
+        <li>
+          <LoginForm li_item={"nav-top-item"}/>
+        </li>
       {top[user].map((opt) =>
         <li key={opt.id}>
           <Link to={opt.link} className="nav-top-item">
@@ -62,18 +54,23 @@ function auxOptionsLeftmap(opt, props) {
 }
 
 const OptionsLeft = props => {
+  if (props.user === null && !props.mobile) return null;
   let cls = "nav-vertical"
   if (props.mobile) {
     cls += " responsive";
   }
-  let user = 0;//, log = null;
-  if (props.user){
-    user = 1
-  }
+  let user = props.user !== null? 1:0;//, log = null;
+
   return(
     <div className={cls}>
       <ul>
-      {left[user].map((opt) => auxOptionsLeftmap(opt, props))}
+        {props.user ?
+          left.map((opt) => auxOptionsLeftmap(opt, props))
+          :
+          <li>
+            <LoginForm li_item={"nav-left-item"}/>
+          </li>
+        }
       </ul>
       <div className="spacer"/>
       <ul>
