@@ -56,7 +56,6 @@ i {
 
 /* Boton menu */
 #navbar .toogle{
-
   position: relative;
   padding: 12px 10px;
   background-color: transparent;
@@ -132,8 +131,8 @@ i {
   height: auto;
   box-shadow: none;
   overflow: visible;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
   padding-bottom: 0;
   border-top: 0;
 }
@@ -187,7 +186,6 @@ i {
 .resp-collapsed{
   width:0px;
 }
-
 
 .active i{
   font-weight: 600;

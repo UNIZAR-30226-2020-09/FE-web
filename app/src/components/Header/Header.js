@@ -3,27 +3,18 @@ import { withRouter } from 'react-router-dom';
 import { OptionsTop, OptionsLeft } from './constHeader.js';
 import './Header.css';
 
-function setColl_Resp(mobile, collapse){
+function setColl_Resp(mobile, collapse, user){
   //console.log("setColl_Resp");
-  let x = null, y = null;
-  x = document.getElementsByClassName("nav-vertical")[0];
-  y = document.getElementsByClassName("app-container")[0];
+  let x = document.getElementsByClassName("nav-vertical")[0] || null;
+  let y = document.getElementsByClassName("app-container")[0] || null;
   if (mobile) {
-    if(y !== null) y.className = "app-container navbar-collapsed-responsive";
-    if (collapse){
-      if(x !== null) x.className = "nav-vertical responsive resp-collapsed";
-    } else {
-      if(x !== null) x.className = "nav-vertical responsive";
-    }
+    if(y !== null) y.className = "app-container navbar-hidden";
+    if(x !== null) x.className = "nav-vertical responsive " + (collapse? "resp-collapsed":null);
   } else {
-    if (collapse){
-      if(x !== null) x.className = "nav-vertical collapsed";
-      if(y !== null) y.className = "app-container navbar-collapsed";
-    } else {
-      if(x !== null) x.className = "nav-vertical";
-      if(y !== null) y.className = "app-container";
-    }
+    if(x !== null) x.className = "nav-vertical " + (collapse? "collapsed":null);
+    if(y !== null) y.className = "app-container navbar-" + (collapse? "collapsed":"active");
   }
+  if (user === null) if(y !== null) y.className = "app-container navbar-hidden";
 }
 
 
@@ -31,12 +22,16 @@ class Header extends React.Component {
 
   constructor(props) {
     super(props);
+    this.width_max = 690;
     this.responsive = this.responsive.bind(this);
     this.parentState = props.parentState;
     this.updateParent = props.updateParent;
+    //this.user = props.user;
+    this.user = null;
+    //this.user = {name: "ads"};
     document.body.onresize = this.responsive;
     if (this.parentState().mobile === null) {
-      let state = 600 > this._getwidth();
+      let state = this.width_max > this._getwidth();
       this.updateParent({
         mobile: state,
         collapsed: state? true:false
@@ -59,7 +54,7 @@ class Header extends React.Component {
     // console.log("Width: " + width);
 
     // Change state
-    if (width > 600){
+    if (width > this.width_max){
       if (mobile){
         this.updateParent({mobile: false});
       }
@@ -77,32 +72,39 @@ class Header extends React.Component {
   // Set event response
   componentDidMount() {
     window.addEventListener('resize', this.responsive);
-    //console.log("componentDidMount", this.parentState());
-    //if (this.parentState().mobile) this.toogle();
   }
   componentDidUpdate(){
-    let state = this.parentState()
+    let state = this.parentState();
     // console.log("componentDidUpdate",state);
-    setColl_Resp(state.mobile, state.collapsed)
+    setColl_Resp(state.mobile, state.collapsed, this.user);
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.responsive);
   }
 
   render(){
-    //console.log("render " + this.state.mobile);
-    //console.log(this.props.location);
     let mob = this.parentState().mobile, loc = this.props.location.pathname;
-    let user = {name: "ads"}; //user = null;
+    let user = this.user;
+    let cond = user===null && !mob;
 
     const top = <OptionsTop mobile={mob}
                     user={user} currentlocation={loc}/>;
     const left = <OptionsLeft mobile={mob}
                     user={user} currentlocation={loc}/>
+
+    //onClick={this.toogle.bind(this)}>
     return (
       <nav id="navbar">
         <div className="header">
-          <button className="toogle" onClick={this.toogle.bind(this)}>
+          <button className="toogle"
+                onClick={cond? null:this.toogle.bind(this)}
+                style={cond? {
+                  cursor: 'none',
+                  visibility : 'hidden',
+                  padding: '12px 0',
+                  margin: '10px 0'
+                }:null}
+                >
             <span className="icon-bar"/>
             <span className="icon-bar"/>
             <span className="icon-bar"/>
