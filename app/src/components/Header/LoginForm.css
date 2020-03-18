@@ -1,0 +1,87 @@
+
+
+#navbar form button{
+  background-color: transparent;
+  border: 0;
+}
+#navbar form a{
+  background-color: transparent;
+  /*color: #0088ce;*/
+  color: #FFF;
+  text-decoration: none;
+}
+#navbar form span{
+  color: #39a5dc;
+}
+
+.nav-vertical form{
+  margin: 25px 0 50px;
+  padding: 25px 0 0;
+  border: 1px solid #030303;
+  border-right: 0;
+  border-left: 0;
+}
+
+.input-label .nav-top-item{
+  padding: 12px 4px;
+  cursor: inherit;
+}
+.input-label .nav-left-item {
+  width: 87%;
+  margin: 5px auto;
+  border: 0;
+}
+
+/*.input-group{
+  position: relative;
+  width: 100%;
+}*/
+
+.input-group input {
+  border: none;
+  border-bottom: solid 4px #660B28;
+  transition: 240ms ease;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FFF;
+  background-color: #881238;
+}
+.nav-left-item input {
+  width: 100%;
+  padding: 11px 8px 6px 8px;
+}
+.nav-top-item input{
+  width: 150px;
+  padding: 11px 8px 6px 8px;
+}
+
+input:focus, input:active{
+  outline: none;
+}
+
+.input-group input:focus {
+  border-bottom: solid 4px #EE4540;
+}
+
+.input-group label{
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  font-size: 12px;
+  line-height: 15px;
+  pointer-events: none;
+  transition: 180ms ease;
+}
+
+.label-active{
+  font-size: 8px !important;
+  line-height: 10px !important;
+  color: #FF8B8B;
+}
+.nav-left-item .label-active{
+  top: 8px !important;
+}
+.nav-top-item .label-active{
+  top: 18px !important;
+}

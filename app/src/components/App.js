@@ -5,11 +5,28 @@ import Header from './Header/Header';
 // import './App.css';
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+      this.state = {
+        mobile: null,
+        collapsed: false,
+        token: null
+      };
+  }
+
+  updateState(state) {
+    // console.log("Update: " + state);
+    this.setState(state);
+  }
+  getState(){
+    return this.state;
+  }
 
   render() {
     return (
       <div>
-        <Header />
+        <Header updateParent={this.updateState.bind(this)}
+                parentState={this.getState.bind(this)}/>
         <Switch>
           <Route exact path="/" component={React_Home}/>
           <Route path="/login" component={React_Home} />

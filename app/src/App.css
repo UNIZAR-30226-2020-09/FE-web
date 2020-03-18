@@ -1,12 +1,15 @@
 
 .app-container {
+  position: relative;
   top: 60px;
+}
+.navbar-active {
   margin-left: 250px;
 }
 .navbar-collapsed{
   margin-left: 75px;
 }
-.navbar-collapsed-responsive{
+.navbar-hidden{
   margin-left: 0px;
 }
 
