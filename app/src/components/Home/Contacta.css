@@ -1,0 +1,45 @@
+
+
+.button-form{
+    margin-left: 100px;
+    width: 150px;
+    height: 50px;
+}
+
+.input-contacta input::placeholder{
+  color: #fff;
+}
+
+.input-contacta input:focus {
+  border-bottom: solid 4px #EE4540 !important;
+}
+
+.input-contacta input{
+  border: none;
+  border-bottom: solid 4px #660B28 !important;
+  box-sizing: content-box;
+  transition: 650ms ease;
+  font-size: 15px;
+  color: white;
+  background-color: #881238;
+  padding: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.contacta-position-1 input{
+  width: 750px;
+  height: 20px;
+
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+.contacta-position-2 input{
+  width: 750px;
+  height: 120px;
+  padding: 20px;
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
