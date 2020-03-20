@@ -1,25 +1,39 @@
-
-
-.button-form{
-    margin-left: 100px;
-    width: 150px;
-    height: 50px;
+.contacta-button:hover {
+  border: 4px solid #EE4540;
 }
+
+.contacta-button{
+  background-color: #881238;
+  border: 4px solid #660B28;
+  color: white;
+  transition: 650ms ease;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 150px;
+  height: 50px;
+  margin-left: 100px;
+}
+
 
 .input-contacta input::placeholder{
   color: #fff;
 }
 
 .input-contacta input:focus {
-  border-bottom: solid 4px #EE4540 !important;
+  border-bottom: solid 6px #EE4540 !important;
 }
 
 .input-contacta input{
   border: none;
-  border-bottom: solid 4px #660B28 !important;
+  border-bottom: solid 6px #660B28 !important;
   box-sizing: content-box;
   transition: 650ms ease;
-  font-size: 15px;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
   color: white;
   background-color: #881238;
   padding: 20px;
@@ -35,7 +49,31 @@
   margin-bottom: 0px;
 }
 
-.contacta-position-2 input{
+
+.input-contacta textarea::placeholder{
+  color: #fff;
+}
+
+.input-contacta textarea:focus {
+  border-bottom: solid 6px #EE4540 !important;
+}
+
+.input-contacta textarea{
+  border: none;
+  border-bottom: solid 6px #660B28 !important;
+  box-sizing: content-box;
+  transition: 650ms ease;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: #881238;
+  padding: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.contacta-position-2 textarea{
+  resize: vertical;
   width: 750px;
   height: 120px;
   padding: 20px;

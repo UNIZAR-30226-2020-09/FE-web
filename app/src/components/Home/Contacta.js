@@ -44,7 +44,7 @@ class Contacta extends Component{
                 </div>
 
                 <div className={"input-contacta contacta-position-2"}>
-                  <input
+                  <textarea
                   type="text"
                   name="Mensaje"
                   value={this.state.mensaje}
@@ -55,10 +55,8 @@ class Contacta extends Component{
 
 
 
-                <button type="submit" className="btn button-form">
-                <a>
-                    <span className="fas fa-sign-in-alt"/> Enviar
-                </a>
+                <button type="submit" className="contacta-button">
+                Enviar
                 </button>
 
              </form>
