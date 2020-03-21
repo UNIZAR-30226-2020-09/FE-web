@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../logo.svg';
-import '../App.css';
+import './App.css';
 
 
 class React_Home extends React.Component {
@@ -10,16 +10,8 @@ class React_Home extends React.Component {
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            404 - Page Not Found
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </div>
       </div>
     );

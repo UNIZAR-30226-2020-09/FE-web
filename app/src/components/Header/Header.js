@@ -3,20 +3,23 @@ import { withRouter } from 'react-router-dom';
 import { OptionsTop, OptionsLeft } from './constHeader.js';
 import './Header.css';
 
+import logo from '../cte/pandora-texto-blanco.png';
+
 function setColl_Resp(mobile, collapse, user){
   //console.log("setColl_Resp");
   let x = document.getElementsByClassName("nav-vertical")[0] || null;
   let y = document.getElementsByClassName("app-container")[0] || null;
   if (mobile) {
     if(y !== null) y.className = "app-container navbar-hidden";
-    if(x !== null) x.className = "nav-vertical responsive " + (collapse? "resp-collapsed":null);
+    if(x !== null) x.className = "nav-vertical responsive " + (collapse? "resp-collapsed":"");
   } else {
     if(x !== null) x.className = "nav-vertical " + (collapse? "collapsed":null);
     if(y !== null) y.className = "app-container navbar-" + (collapse? "collapsed":"active");
   }
-  if (user === null) if(y !== null) y.className = "app-container navbar-hidden";
+  if (user === null)
+    if(y !== null)
+      y.className = "app-container navbar-hidden" + (mobile? " responsive":"");
 }
-
 
 class Header extends React.Component {
 
@@ -24,6 +27,7 @@ class Header extends React.Component {
     super(props);
     this.width_max = 690;
     this.responsive = this.responsive.bind(this);
+    this.toogle = this.toogle.bind(this);
     this.parentState = props.parentState;
     this.updateParent = props.updateParent;
     //this.user = props.user;
@@ -92,12 +96,11 @@ class Header extends React.Component {
     const left = <OptionsLeft mobile={mob}
                     user={user} currentlocation={loc}/>
 
-    //onClick={this.toogle.bind(this)}>
     return (
       <nav id="navbar">
         <div className="header">
           <button className="toogle"
-                onClick={cond? null:this.toogle.bind(this)}
+                onClick={cond? null:this.toogle}
                 style={cond? {
                   cursor: 'none',
                   visibility : 'hidden',
@@ -110,7 +113,7 @@ class Header extends React.Component {
             <span className="icon-bar"/>
           </button>
           <span className="navbar-icon">
-            <img alt="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"/>
+            <img alt="logo" src={logo}/>
           </span>
         </div>
         {top}
@@ -119,6 +122,5 @@ class Header extends React.Component {
     );
   }
 }
-
 
 export default Header = withRouter(Header);

@@ -2,8 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import React_Home from '../components/React_home';
 import Header from './Header/Header';
-import Home from './Home/Home'
-// import './App.css';
+import Home from './Home/Home';
 
 class App extends React.Component {
   constructor(props){
