@@ -1,59 +1,46 @@
-.form-select {
-  border: none;
-  border-bottom: solid 4px #660B28 !important;
-  box-sizing: content-box;  
-  width: 250px;
-  height: 20px;
-  padding: 20px;  
-  border: 50px black ;
-  transition: 240ms ease;
-  font-size: 15px;
-  line-height: 30px;
+
+/* Base forms */
+@import "../cte/Forms.css";
+
+.registro{
+  width: 100%;
+  height: 500px;
+  background-color: #a997df;
+}
+
+.registro .box h1{
+  color: #d1d1d1;
+  margin: 0 15%;
+  padding: 25px 0;
+}
+
+.registro .input-group{
+  position: relative;
+  width: 70%;
+  margin: 10px auto 20px;
+}
+
+.registro .box{
+  position: relative;
+  top: 15%;
+  width: 90%;
+  height: 70%;
+  margin: 0;
+  margin-left: auto;
+  background-color: #23272a;
+}
+
+.registro .btn{
+  border: 0;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #2c2f33;
+  color: #d1d1d1;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.registro .btn:hover{
+  background-color: #373a3d;
   color: #FFF;
-  background-color: #881238;
-}
-
-.form-active {
-    border: none;
-    border-bottom: solid 4px #660B28 !important;
-    box-sizing: content-box;  
-    width: 250px;
-    height: 20px;
-    padding: 20px;  
-    border: 50px black ;
-    transition: 240ms ease;
-    font-size: 10px;
-    line-height: 30px;
-    color: #FFF;
-    background-color: #881238;  
-}
-
-.group-form{
-    margin: 10px;
-}
-.card-form {
-    margin-left: 110px;
-}
-
-.label-active{
-    font-size: 8px !important;
-    line-height: 10px !important;
-    color: #FF8B8B;
-}
-
-.input-label .nav-top-item{
-    padding: 12px 4px;
-    cursor: inherit;
-}
-
-.input-label .nav-left-item {
-    width: 87%;
-    margin: 5px auto;
-    border: 0;
-}
-
-.button-form{
-    margin-left: 100px;
-    width: 150px;
-    height: 50px;
 }

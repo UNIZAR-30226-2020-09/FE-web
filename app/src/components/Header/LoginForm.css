@@ -23,6 +23,9 @@
   border-right: 0;
   border-left: 0;
 }
+.nav-vertical input{
+  background-color: #373a3d;
+}
 
 .input-label .nav-top-item{
   padding: 12px 4px;
