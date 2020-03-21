@@ -30,9 +30,7 @@ class Header extends React.Component {
     this.toogle = this.toogle.bind(this);
     this.parentState = props.parentState;
     this.updateParent = props.updateParent;
-    //this.user = props.user;
-    this.user = null;
-    //this.user = {name: "ads"};
+    this.getUser = props.user;
     document.body.onresize = this.responsive;
     if (this.parentState().mobile === null) {
       let state = this.width_max > this._getwidth();
@@ -80,7 +78,7 @@ class Header extends React.Component {
   componentDidUpdate(){
     let state = this.parentState();
     // console.log("componentDidUpdate",state);
-    setColl_Resp(state.mobile, state.collapsed, this.user);
+    setColl_Resp(state.mobile, state.collapsed, this.getUser());
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.responsive);
@@ -88,12 +86,12 @@ class Header extends React.Component {
 
   render(){
     let mob = this.parentState().mobile, loc = this.props.location.pathname;
-    let user = this.user;
+    let user = this.getUser();
     let cond = user===null && !mob;
 
-    const top = <OptionsTop mobile={mob}
+    const top = <OptionsTop mobile={mob} setUser={this.updateParent}
                     user={user} currentlocation={loc}/>;
-    const left = <OptionsLeft mobile={mob}
+    const left = <OptionsLeft mobile={mob} setUser={this.updateParen}
                     user={user} currentlocation={loc}/>
 
     return (

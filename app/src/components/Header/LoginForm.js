@@ -1,9 +1,11 @@
 import React from 'react';
+import { history } from '../../utils';
 import './LoginForm.css';
 
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
+    this.setUser = props.setUser;
     this.li = props.li_item;
     this.state = {
       user: '',
@@ -24,8 +26,13 @@ class LoginForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
-    //event.preventDefault();
+    //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
+    this.setUser({ user: {
+      mail: this.state.user,
+      token: null
+    }});
+    //console.log(history);
+    history.push('/welcome');
   }
 
   render() {
@@ -49,9 +56,7 @@ class LoginForm extends React.Component {
         </li>
         <li>
           <button type="submit" className={this.li}>
-            <a href="/#">
-              <span className="fas fa-sign-in-alt"/> Iniciar Sesión
-            </a>
+            <span className="fas fa-sign-in-alt"/> Iniciar Sesión
           </button>
         </li>
       </form>
