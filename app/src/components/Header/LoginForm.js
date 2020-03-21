@@ -49,8 +49,8 @@ class LoginForm extends React.Component {
         </li>
         <li>
           <button type="submit" className={this.li}>
-            <a>
-            <span className="fas fa-sign-in-alt"/> Iniciar Sesión
+            <a href="/#">
+              <span className="fas fa-sign-in-alt"/> Iniciar Sesión
             </a>
           </button>
         </li>
