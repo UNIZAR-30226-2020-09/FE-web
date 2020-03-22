@@ -6,12 +6,12 @@ const top = [[
   /*{id:1, name: 'Iniciar Sesión', link: '/login', icon: 'fas fa-sign-in-alt'},*/
   {id:2, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
 ], [
-  {id:3, name: 'Cerrar Sesión', link: '/login', icon: 'fas fa-sign-out-alt'},
+  {id:3, name: 'Cerrar Sesión', link: {pathname: '/', state: {logout: true}}, icon: 'fas fa-sign-out-alt'},
   {id:4, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'},
 ]];
 
 const left = [
-  {id:7, name: 'Inicio', link: '/', icon: 'fas fa-home'},
+  {id:7, name: 'Inicio', link: '/welcome', icon: 'fas fa-home'},
   {id:8, name: 'Mis Contraseñas', link: '/passwords', icon: 'fas fa-key'},
   {id:9, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
 ];
@@ -19,15 +19,17 @@ const left = [
 
 const OptionsTop = props => {
   if (props.mobile) return null;
-  let user = 0;
-  if (props.user) user = 1
+  let user = props.user !== null? 1:0;
 
   return (
     <div className="collapse">
       <ul>
-        <li>
-          <LoginForm li_item={"nav-top-item"}/>
-        </li>
+        { props.user === null?
+          <li>
+            <LoginForm setUser={props.setUser} li_item={"nav-top-item"}/>
+          </li>
+          : null
+        }
       {top[user].map((opt) =>
         <li key={opt.id}>
           <Link to={opt.link} className="nav-top-item">
@@ -68,7 +70,7 @@ const OptionsLeft = props => {
           left.map((opt) => auxOptionsLeftmap(opt, props))
           :
           <li>
-            <LoginForm li_item={"nav-left-item"}/>
+            <LoginForm setUser={props.setUser} li_item={"nav-left-item"}/>
           </li>
         }
       </ul>

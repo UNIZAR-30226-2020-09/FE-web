@@ -3,7 +3,7 @@ import logo from '../logo.svg';
 import './App.css';
 
 
-class React_Home extends React.Component {
+class Err_404 extends React.Component {
   render() {
     return (
       <div className="app-container">
@@ -18,4 +18,4 @@ class React_Home extends React.Component {
   }
 }
 
-export default (React_Home);
+export default (Err_404);
