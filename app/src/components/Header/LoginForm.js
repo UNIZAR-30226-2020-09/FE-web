@@ -9,10 +9,8 @@ class LoginForm extends React.Component {
     this.setUser = props.setUser;
     this.li = props.li_item;
     this.state = {
-      //user: '',
-      //password: ''
-      user: 'ddanidanidani@gmail.com',
-      password: 'nj'
+      user: '',
+      password: ''
     };
 
     this.handleChangeUser = this.handleChangeUser.bind(this);
@@ -33,14 +31,19 @@ class LoginForm extends React.Component {
     if (mailValidation(this.state.user)){
       if (passwValidation(this.state.password)) {
         let x = await Usuario.login(this.state.user, this.state.password);
-        console.log(x, x.status, x.body);
-        //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
-        setToken(null);
-        this.setUser({ user: {
-          mail: this.state.user,
-          token: null
-        }});
-        history.push('/welcome');
+        console.log(x);
+        if (x.http_status === 200){
+          //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
+          let token = x.token.replace('Bearer ', '');
+          setToken(token);
+          this.setUser({ user: {
+            mail: this.state.user,
+            token: token
+          }});
+          history.push('/welcome');
+        } else {
+          window.alert('Error ' + x.http_status + '\n' + x.text);
+        }
       } else {
         window.alert('Contraseña no válida');
       }
@@ -65,7 +68,7 @@ class LoginForm extends React.Component {
             <label className={this.state.password!=="" ? "label-active":null}>
               Contraseña:
             </label>
-            <input type="text" value={this.state.password} onChange={this.handleChangePass}/>
+            <input type="password" value={this.state.password} onChange={this.handleChangePass}/>
           </div>
         </li>
         <li className={this.li}>
