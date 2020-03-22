@@ -1,15 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Switch } from 'react-router-dom';
+import {history} from './utils';
 
-//import createHistory from 'history/createBrowserHistory'; // Warning deprecated
-import { createBrowserHistory as createHistory } from 'history'
-
-import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-
-const history = createHistory();
 
 ReactDOM.render((
   <Router history={history}>

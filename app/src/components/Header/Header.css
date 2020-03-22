@@ -1,38 +1,5 @@
 /* Header CSS*/
 
-*, ::after, ::before {
-  box-sizing: border-box;
-}
-
-body {
-  /* Fuente + color letra predeter */
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  color: #363636;
-}
-
-button {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  cursor: pointer;
-  text-transform: none;
-  color: inherit;
-  font: inherit;
-}
-
-a {
-  background-color: transparent;
-  color: #0088ce;
-  text-decoration: none;
-}
-
-i {
-  font-style: normal;
-  text-decoration: none;
-}
-
 #navbar {
   /* Contenidos de navbar */
   display: block;
@@ -48,7 +15,7 @@ i {
   border-radius: 0;
   border-top: 2px solid #39a5dc;
   margin-bottom: 0;
-  background-color: #202020;
+  background-color: #23272a;
 }
 #navbar .header{
   float: left;
@@ -158,6 +125,12 @@ i {
 .nav-top-item:hover {
   color: #fff;
 }
+.nav-top-item a{
+  color: #d1d1d1;
+}
+.nav-top-item a:hover{
+  color: #fff;
+}
 
 .nav-vertical{
   /* Requerido para SPACER */
@@ -169,7 +142,7 @@ i {
   top: 60px;
   left: 0;
   bottom: 0;
-  background: #292e34;
+  background: #2c2f33;
   border-right: 1px solid #292e34;
   overflow-x: hidden;
   /*overflow-y: auto;*/
@@ -203,7 +176,8 @@ i {
   background-color: transparent;
   border-color: #030303;
 }
-.nav-left-item a{
+.nav-left-item a,
+.nav-left-item button{
   display: flex;
   position: relative;
   color: #d1d1d1;
@@ -219,7 +193,7 @@ i {
   /*padding-right: 0;
   padding: 17px 20px 17px 25px;*/
 }
-.nav-left-item a span{
+.nav-left-item span{
   color: #72767b;
   float: left;
   font-size: 20px;
@@ -232,7 +206,7 @@ i {
 
 .active{
   color: #fff;
-  background-color: #393f44;
+  background-color: #373a3d;
   border-left: 3px solid #39a5dc;
 }
 .active a span{

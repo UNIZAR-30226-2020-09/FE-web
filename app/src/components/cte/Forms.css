@@ -1,0 +1,49 @@
+
+/* Base Forms */
+
+/* Objetos medificables */
+form, form span, form button, form a{}
+.input-label{}
+form label{
+  color: #999;
+}
+
+.input-group input {
+  border: none;
+  border-bottom: solid 4px #ddc4dd;
+  transition: 240ms ease;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FFF;
+  background-color: #2c2f33;/*#3f4145*/
+  width: 100%;
+  padding: 11px 8px 6px 8px;
+}
+/* Redefinir input->width, padding si necesario */
+
+input:focus, input:active{
+  outline: none;
+}
+
+.input-group input:focus {
+  border-bottom: solid 4px #a997df;
+}
+
+.input-group label{
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  font-size: 12px;
+  line-height: 15px;
+  pointer-events: none;
+  transition: 180ms ease;
+}
+
+.label-active{
+  top: 8px !important;
+  font-size: 8px !important;
+  line-height: 10px !important;
+  color: #d1d1d1;
+}
+/* Redefinir .label-active->top si necesario */

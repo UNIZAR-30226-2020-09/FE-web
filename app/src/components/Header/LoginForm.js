@@ -1,9 +1,12 @@
 import React from 'react';
+import { history, mailValidation, passwValidation } from '../../utils';
+import { Usuario, setToken } from '../../agent';
 import './LoginForm.css';
 
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
+    this.setUser = props.setUser;
     this.li = props.li_item;
     this.state = {
       user: '',
@@ -22,10 +25,31 @@ class LoginForm extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
-    //event.preventDefault();
+
+    if (mailValidation(this.state.user)){
+      if (passwValidation(this.state.password)) {
+        let x = await Usuario.login(this.state.user, this.state.password);
+        console.log(x);
+        if (x.http_status === 200){
+          //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
+          let token = x.token.replace('Bearer ', '');
+          setToken(token);
+          this.setUser({ user: {
+            mail: this.state.user,
+            token: token
+          }});
+          history.push('/welcome');
+        } else {
+          window.alert('Error ' + x.http_status + '\n' + x.text);
+        }
+      } else {
+        window.alert('Contraseña no válida');
+      }
+    } else {
+      window.alert('Email no válido');
+    }
   }
 
   render() {
@@ -44,14 +68,12 @@ class LoginForm extends React.Component {
             <label className={this.state.password!=="" ? "label-active":null}>
               Contraseña:
             </label>
-            <input type="text" value={this.state.password} onChange={this.handleChangePass}/>
+            <input type="password" value={this.state.password} onChange={this.handleChangePass}/>
           </div>
         </li>
-        <li>
-          <button type="submit" className={this.li}>
-            <a>
+        <li className={this.li}>
+          <button type="submit" >
             <span className="fas fa-sign-in-alt"/> Iniciar Sesión
-            </a>
           </button>
         </li>
       </form>

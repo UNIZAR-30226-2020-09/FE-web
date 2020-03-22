@@ -1,4 +1,39 @@
 
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+body {
+  /* Fuente + color letra predeter */
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  margin: 0;
+  color: #363636;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  text-transform: none;
+  color: inherit;
+  font: inherit;
+}
+
+a {
+  background-color: transparent;
+  color: #0088ce;
+  text-decoration: none;
+}
+
+i {
+  font-style: normal;
+  text-decoration: none;
+}
+
 .app-container {
   position: relative;
   top: 60px;
@@ -12,7 +47,11 @@
 .navbar-hidden{
   margin-left: 0px;
 }
+.responsive{}
 
+
+
+/* ------------------ REACT_HOME ----------------------- */
 .App {
   text-align: center;
 }

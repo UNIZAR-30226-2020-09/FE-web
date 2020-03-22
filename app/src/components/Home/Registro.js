@@ -5,9 +5,9 @@ class Registro extends Component{
     constructor(props){
         super(props);
         this.state = {
-            Correo: "",
-            Contraseña: "",
-            Confirmar: ""
+            email: "",
+            password: "",
+            confirm: ""
         };
         this.InputChange = this.InputChange.bind(this);
         this.Register = this.Register.bind(this);
@@ -15,7 +15,6 @@ class Registro extends Component{
 
     InputChange(event){
       const {value,name} = event.target;
-      console.log(value,name);
       this.setState({
           [name]: value
       });
@@ -35,47 +34,41 @@ class Registro extends Component{
 
 
     render(){
-        return(
-            <div className="card card-form">
-             <form onSubmit={this.Register} className="card-body">
-                <div className="form-group group-form">
-                  <input
-                   type="text"
-                   name="Correo"
-                   className="form-control form-select"
-                   value={this.state.correo}
-                   onChange={this.InputChange}
-                   placeholder="Correo:"
-                  />
-                </div>  
-                <div className="form-group group-form">
-                 <input
-                  type="text"
-                  name="Contraseña"
-                  className="form-control form-select"
-                  value={this.state.contra}
-                  onChange={this.InputChange}
-                  placeholder="Contraseña:"
-                 />
-                </div>
-                <div className="form-group group-form">
-                 <input
-                  type="text"
-                  name="Confirmar"
-                  className="form-control form-select"
-                  value={this.state.contraRep}
-                  onChange={this.InputChange}
-                  placeholder="Confirme Contraseña:"
-                 />
-                </div>
-                <button type="submit" className="btn button-form">
-                <a>
-                    <span className="fas fa-sign-in-alt"/> Registrarse
-                </a>
+      return(
+        <div className="registro">
+          <div className="box">
+            <h1>Registrate</h1>
+            <form onSubmit={this.Register}>
+              <div className="input-group">
+                <label className={this.state.email!=="" ? "label-active":null}>
+                  Correo:
+                </label>
+                <input type="text" name="email"
+                  value={this.state.email} onChange={this.InputChange}/>
+              </div>
+              <div className="input-group">
+                <label className={this.state.password!=="" ? "label-active":null}>
+                  Contraseña:
+                </label>
+                <input type="text" name="password"
+                  value={this.state.password} onChange={this.InputChange}/>
+              </div>
+              <div className="input-group">
+                <label className={this.state.confirm!=="" ? "label-active":null}>
+                  Repetir contraseña:
+                </label>
+                <input type="text" name="confirm"
+                  value={this.state.confirm} onChange={this.InputChange}/>
+              </div>
+              <div className="input-group">
+                <button type="submit" className="btn">
+                  <span className="fas fa-sign-in-alt"/> Registrarse
                 </button>
-             </form>
-            </div>
-        )
+              </div>
+            </form>
+          </div>
+        </div>
+      );
     }
 }
 

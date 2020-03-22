@@ -1,0 +1,75 @@
+.contacta-button:hover {
+  border: none;
+  border-bottom: 6px solid #EE4540;
+}
+.contacta-button{
+  background-color: #881238;
+  border: none;
+  border-bottom: 6px solid #660B28;
+  color: white;
+  transition: 650ms ease;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 150px;
+  height: 50px;
+  margin-left: 100px;
+}
+
+.input-contacta input::placeholder{
+  color: #fff;
+}
+.input-contacta input:focus {
+  border-bottom: solid 6px #EE4540 !important;
+}
+.input-contacta input{
+  border: none;
+  border-bottom: solid 6px #660B28 !important;
+  box-sizing: content-box;
+  transition: 650ms ease;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: #881238;
+  padding: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.contacta-position-1 input{
+  width: 750px;
+  height: 20px;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+.input-contacta textarea::placeholder{
+  color: #fff;
+}
+.input-contacta textarea:focus {
+  border-bottom: solid 6px #EE4540 !important;
+}
+.input-contacta textarea{
+  border: none;
+  border-bottom: solid 6px #660B28 !important;
+  box-sizing: content-box;
+  transition: 650ms ease;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: #881238;
+  padding: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.contacta-position-2 textarea{
+  resize: vertical;
+  width: 750px;
+  height: 120px;
+  padding: 20px;
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
