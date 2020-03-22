@@ -5,7 +5,7 @@ const superagent = superagentPromise(_superagent, global.Promise);
 
 const API_ROOT = 'https://pandorapp.herokuapp.com/api';
 
-const encode = encodeURIComponent;
+//const encode = encodeURIComponent;
 const responseBody = res => res.body;
 
 let token = null;
@@ -36,7 +36,7 @@ const Usuario = {
     null
 };
 
-export default {
-  Usuario,
-  setToken: _token => { token = _token; }
+export {
+  Usuario
 };
+export const setToken = (_token) => { token = _token; }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { history } from '../../utils';
+import { history, mailValidation, passwValidation } from '../../utils';
+import { Usuario, setToken } from '../../agent';
 import './LoginForm.css';
 
 class LoginForm extends React.Component {
@@ -8,8 +9,10 @@ class LoginForm extends React.Component {
     this.setUser = props.setUser;
     this.li = props.li_item;
     this.state = {
-      user: '',
-      password: ''
+      //user: '',
+      //password: ''
+      user: 'ddanidanidani@gmail.com',
+      password: 'nj'
     };
 
     this.handleChangeUser = this.handleChangeUser.bind(this);
@@ -24,15 +27,26 @@ class LoginForm extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
-    this.setUser({ user: {
-      mail: this.state.user,
-      token: null
-    }});
-    //console.log(history);
-    history.push('/welcome');
+
+    if (mailValidation(this.state.user)){
+      if (passwValidation(this.state.password)) {
+        let x = await Usuario.login(this.state.user, this.state.password);
+        console.log(x, x.status, x.body);
+        //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
+        setToken(null);
+        this.setUser({ user: {
+          mail: this.state.user,
+          token: null
+        }});
+        history.push('/welcome');
+      } else {
+        window.alert('Contraseña no válida');
+      }
+    } else {
+      window.alert('Email no válido');
+    }
   }
 
   render() {
@@ -54,8 +68,8 @@ class LoginForm extends React.Component {
             <input type="text" value={this.state.password} onChange={this.handleChangePass}/>
           </div>
         </li>
-        <li>
-          <button type="submit" className={this.li}>
+        <li className={this.li}>
+          <button type="submit" >
             <span className="fas fa-sign-in-alt"/> Iniciar Sesión
           </button>
         </li>

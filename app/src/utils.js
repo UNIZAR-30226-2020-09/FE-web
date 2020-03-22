@@ -19,3 +19,14 @@ export const Cookie = {
   clear: () =>
     window.sessionStorage.setItem(cookie, null)
 }
+
+
+export const mailValidation = (mail) => {
+  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return mail.match(mailformat);
+}
+
+export const passwValidation = (mail) => {
+  //var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return true;
+}

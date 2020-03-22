@@ -125,6 +125,12 @@
 .nav-top-item:hover {
   color: #fff;
 }
+.nav-top-item a{
+  color: #d1d1d1;
+}
+.nav-top-item a:hover{
+  color: #fff;
+}
 
 .nav-vertical{
   /* Requerido para SPACER */
@@ -170,7 +176,8 @@
   background-color: transparent;
   border-color: #030303;
 }
-.nav-left-item a{
+.nav-left-item a,
+.nav-left-item button{
   display: flex;
   position: relative;
   color: #d1d1d1;
@@ -186,7 +193,7 @@
   /*padding-right: 0;
   padding: 17px 20px 17px 25px;*/
 }
-.nav-left-item a span{
+.nav-left-item span{
   color: #72767b;
   float: left;
   font-size: 20px;
