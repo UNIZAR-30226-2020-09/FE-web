@@ -1,13 +1,15 @@
 import React,{Component} from 'react';
 import './Registro.css';
+import { history, mailValidation, passwValidation } from '../../utils';
+import { Usuario, setToken } from '../../agent';
 
 class Registro extends Component{
     constructor(props){
         super(props);
         this.state = {
-            email: "",
-            password: "",
-            confirm: ""
+            email: '',
+            password: '',
+            confirm: ''
         };
         this.InputChange = this.InputChange.bind(this);
         this.Register = this.Register.bind(this);
@@ -20,16 +22,33 @@ class Registro extends Component{
       });
     }
 
-    Register(event){
-        console.log(this.state);
-        //event.preventDefault();
-        if(this.state.Contraseña !== this.state.Confirmar){
-            window.confirm('Las contraseñas no coinciden');
-        }
-        // Habria que comprobar si el correo ya existe en la base de datos
-        else{
-            window.confirm('Te has registrado satisfactoriamente');
-        }
+    async Register(event){
+        event.preventDefault();
+            if (mailValidation(this.state.email)){
+              if (passwValidation(this.state.password)){
+                  if(this.state.password === this.state.confirm){
+                    let x = await Usuario.registro(this.state.email, this.state.password);
+                    console.log(this.state);
+                    console.log(this.state.email, this.state.password);
+                    console.log(x);
+                    if (x.http_status === 200){
+                      window.alert(x.text);
+                    }
+                    else{
+                      window.alert('Error ' + x.text);
+                    }
+                  }
+                  else{
+                    window.alert('Las contraseñas no coinciden');
+                  }
+              }
+              else{
+                window.alert('Contraseña no válida');
+              }
+            }
+            else{
+              window.alert('Email no válido');
+            }
     }
 
 

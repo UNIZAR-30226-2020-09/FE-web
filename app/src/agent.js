@@ -30,7 +30,7 @@ const requests = {
 
 const Usuario = {
   registro: (mail, password) =>
-    requests.post(`/usuarios/registro`, { email: mail, contra: password }),
+    requests.post(`/usuarios/registro`, { mail: mail, masterPassword: password }),
   login: (email, password) =>
     requests.post('/usuarios/login', { mail: email, masterPassword: password }),
   logout: () =>
