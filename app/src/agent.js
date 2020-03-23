@@ -2,12 +2,16 @@ import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
-console.log(global.Promise);
 
 const API_ROOT = 'https://pandorapp.herokuapp.com/api';
 
 //const encode = encodeURIComponent;
-const responseBody = res => res.body;
+const responseBody = res => {
+  let response = res.body;
+  response.statusType = res.statusType;
+  response.status = res.status;
+  return response;
+};
 
 let token = null;
 const tokenPlugin = req => {

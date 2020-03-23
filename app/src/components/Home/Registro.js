@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import './Registro.css';
-import { history, mailValidation, passwValidation } from '../../utils';
-import { Usuario, setToken } from '../../agent';
+import { mailValidation, passwValidation } from '../../utils';
+import { Usuario } from '../../agent';
 
 class Registro extends Component{
     constructor(props){
@@ -28,14 +28,14 @@ class Registro extends Component{
               if (passwValidation(this.state.password)){
                   if(this.state.password === this.state.confirm){
                     let x = await Usuario.registro(this.state.email, this.state.password);
-                    console.log(this.state);
-                    console.log(this.state.email, this.state.password);
-                    console.log(x);
-                    if (x.http_status === 200){
-                      window.alert(x.text);
+                    //console.log(this.state);
+                    //console.log(this.state.email, this.state.password);
+                    //console.log(x);
+                    if (x.status === 200){
+                      window.alert(x.statusText);
                     }
                     else{
-                      window.alert('Error ' + x.text);
+                      window.alert('Error ' + x.statusText);
                     }
                   }
                   else{
@@ -56,25 +56,25 @@ class Registro extends Component{
       return(
         <div className="registro">
           <div className="box">
-            <h1>Registrate</h1>
+            <h1>Regístrate</h1>
             <form onSubmit={this.Register}>
               <div className="input-group">
                 <label className={this.state.email!=="" ? "label-active":null}>
-                  Correo:
+                  Correo
                 </label>
                 <input type="text" name="email"
                   value={this.state.email} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
                 <label className={this.state.password!=="" ? "label-active":null}>
-                  Contraseña:
+                  Contraseña
                 </label>
                 <input type="text" name="password"
                   value={this.state.password} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
                 <label className={this.state.confirm!=="" ? "label-active":null}>
-                  Repetir contraseña:
+                  Repetir contraseña
                 </label>
                 <input type="text" name="confirm"
                   value={this.state.confirm} onChange={this.InputChange}/>

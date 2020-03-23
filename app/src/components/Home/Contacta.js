@@ -1,5 +1,5 @@
 import React from 'react';
-import { history, mailValidation } from '../../utils';
+import { mailValidation } from '../../utils';
 import { ContactaAgent } from '../../agent';
 import './Contacta.css';
 
@@ -8,8 +8,8 @@ class Contacta extends React.Component{
     constructor(props){
       super(props);
       this.state = {
-          mail: "",
-          body: ""
+          mail: '',
+          body: ''
       };
       this.handleChangeMail = this.handleChangeMail.bind(this);
       this.handleChangeBody = this.handleChangeBody.bind(this);
@@ -28,9 +28,10 @@ class Contacta extends React.Component{
       if (mailValidation(this.state.mail)){
         let x = await ContactaAgent.contactar(this.state.mail, this.state.body);
         console.log(x);
-        if (x.http_status === 200){
+        if (x.status === 200){
+          window.alert('Mensaje Enviado.');
         }else{
-          window.alert('Error ' + x.http_status + '\n' + x.text);
+          window.alert('Error ' + x.status + '\n' + x.statusText);
         }
       }else{
         window.alert('Email no válido');
@@ -41,9 +42,8 @@ class Contacta extends React.Component{
     render(){
       return(
         <div className="contacta">
-
           <div className="contacta-box">
-            <h1>Contácta con nosotros</h1>
+            <h1>Contacta con nosotros</h1>
             <form onSubmit={this.handleSubmit} >
               <div className="input-group">
                 <label className={this.state.mail!=="" ? "label-active":null}>

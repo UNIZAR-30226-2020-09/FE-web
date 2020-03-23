@@ -1,3 +1,7 @@
+
+/* Base forms */
+@import "../cte/Forms.css";
+
 .contacta{
   position: relative;
   top: 10%;
@@ -5,11 +9,6 @@
   width: 100%;
   height: 600px;
   background-color: #a997df;
-}
-.contacta .contacta-box h1{
-  color: #d1d1d1;
-  margin: 0% 15%;
-  padding: 25px 0;
 }
 .contacta .contacta-box{
   position: relative;
@@ -20,6 +19,11 @@
   margin-left: auto;
   background-color: #23272a;
   color: #d1d1d1;
+}
+.contacta .contacta-box h1{
+  color: #d1d1d1;
+  margin: 0% 15%;
+  padding: 25px 0;
 }
 
 .contacta .input-group{
@@ -37,7 +41,15 @@
   font-size: 1rem;
   font-weight: bold;
 }
-.rcontacta .btn:hover{
+.contacta .btn:hover{
   background-color: #373a3d;
   color: #FFF;
+}
+
+
+/* Objetivo -> responsive */
+@media screen and (max-width: 800px) {
+  .contacta .contacta-box{
+    width: 90%;
+  }
 }

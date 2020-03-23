@@ -6,11 +6,6 @@ import './Home.css';
 import logo_p from '../cte/pandora-logo.png';
 import logo from '../cte/pandora-texto.png';
 
-const pStyle = {
-  height: '200px',
-  background: 'black'
-};
-
 class Home extends React.Component {
   render() {
     return (
@@ -22,7 +17,7 @@ class Home extends React.Component {
             <div className="row">
               <div className="col-100">
                 <h2>Protege, guarda, recuerda ... </h2>
-                <h1>tus contraseñas.</h1>
+                <h1>Tus contraseñas.</h1>
               </div>
             </div>
           </div>
@@ -30,9 +25,7 @@ class Home extends React.Component {
            <Registro/>
           </div>
         </div>
-        <div className="row colorBorrable" style={{height: '300px'}}>
-          --
-        </div>
+        <div className="row colorBorrable" style={{height: '300px'}}/>
         <div className="row">
             <Contacta/>
         </div>
