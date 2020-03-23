@@ -6,6 +6,11 @@ import './Home.css';
 import logo_p from '../cte/pandora-logo.png';
 import logo from '../cte/pandora-texto.png';
 
+const pStyle = {
+  height: '200px',
+  background: 'black'
+};
+
 class Home extends React.Component {
   render() {
     return (
@@ -25,12 +30,11 @@ class Home extends React.Component {
            <Registro/>
           </div>
         </div>
-        <div className="row wireframe">
-          <div className="column col-100"
-            style={{height: '200px'}}> SIN ADJUDICAR </div>
+        <div className="row colorBorrable" style={{height: '300px'}}>
+          --
         </div>
         <div className="row">
-          <Contacta/>
+            <Contacta/>
         </div>
       </div>
     );
