@@ -25,7 +25,7 @@ class Header extends React.Component {
 
   constructor(props) {
     super(props);
-    this.width_max = 690;
+    this.width_max = 705;
     this.responsive = this.responsive.bind(this);
     this.toogle = this.toogle.bind(this);
     this.parentState = props.parentState;

@@ -5,7 +5,7 @@
 form, form span, form button, form a{}
 .input-label{}
 form label{
-  color: #d1d1d1;
+  color: #999;
 }
 
 .input-group input {
@@ -44,6 +44,6 @@ input:focus, input:active{
   top: 8px !important;
   font-size: 8px !important;
   line-height: 10px !important;
-  color: #FF8B8B;
+  color: #d1d1d1;
 }
 /* Redefinir .label-active->top si necesario */

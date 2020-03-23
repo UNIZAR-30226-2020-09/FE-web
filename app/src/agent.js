@@ -2,6 +2,7 @@ import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
+console.log(global.Promise);
 
 const API_ROOT = 'https://pandorapp.herokuapp.com/api';
 
@@ -10,6 +11,7 @@ const responseBody = res => res.body;
 
 let token = null;
 const tokenPlugin = req => {
+  req.set('accept', 'application/json').ok(res => true);
   if (token) {
     req.set('authorization', `${token}`);
   }
@@ -25,7 +27,6 @@ const requests = {
   post: (url, body) =>
     superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
 };
-
 
 const Usuario = {
   registro: (mail, password) =>
