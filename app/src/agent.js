@@ -28,15 +28,21 @@ const requests = {
 
 
 const Usuario = {
-  registro: (email, password) =>
-    requests.post(`/usuarios/registro`, { mail: email, masterPassword: password }),
-  login: (mail, password) =>
-    requests.post('/users/login', { email: mail, contra: password }),
+  registro: (mail, password) =>
+    requests.post(`/usuarios/registro`, { email: mail, contra: password }),
+  login: (email, password) =>
+    requests.post('/usuarios/login', { mail: email, masterPassword: password }),
   logout: () =>
     null
 };
 
-export {
-  Usuario
+const ContactaAgent = {
+  contacta: (mail_, body_) =>
+    requests.post(`/mensaje`, { mail: 'mail', body: 'body_' })
+};
+
+export{
+  Usuario,
+  ContactaAgent
 };
 export const setToken = (_token) => { token = _token; }

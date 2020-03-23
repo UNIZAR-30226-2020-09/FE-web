@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import './Contacta.css';
+import { ContactaAgent } from '../../agent';
 
 class Contacta extends Component{
     constructor(props){
@@ -20,9 +21,10 @@ class Contacta extends Component{
         this.setState({ mensaje: event.target.value });
       }
 
-      handleSubmit(event) {
+      async handleSubmit(event) {
         event.preventDefault();
         console.log('Login:{correo:', this.state.correo, ";mensaje:", this.state.mensaje, "}");
+        await ContactaAgent.contacta(this.state.correo, this.state.mensaje);
       }
 
 
