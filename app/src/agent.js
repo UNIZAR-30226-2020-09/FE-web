@@ -2,12 +2,16 @@ import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
-console.log(global.Promise);
 
 const API_ROOT = 'https://pandorapp.herokuapp.com/api';
 
 //const encode = encodeURIComponent;
-const responseBody = res => res.body;
+const responseBody = res => {
+  let response = res.body;
+  response.statusType = res.statusType;
+  response.status = res.status;
+  return response;
+};
 
 let token = null;
 const tokenPlugin = req => {
@@ -30,20 +34,20 @@ const requests = {
 
 const Usuario = {
   registro: (mail, password) =>
-    requests.post(`/usuarios/registro`, { email: mail, contra: password }),
+    requests.post(`/usuarios/registro`, { mail: mail, masterPassword: password }),
   login: (email, password) =>
     requests.post('/usuarios/login', { mail: email, masterPassword: password }),
   logout: () =>
     null
 };
 
-const Contacto = {
-  contactar: () =>
-    null
+const ContactaAgent = {
+  contactar: (mail_, body_) =>
+    requests.post(`/mensaje`, { mail: mail_, body: body_ })
 }
 
 export {
   Usuario,
-  Contacto
+  ContactaAgent
 };
 export const setToken = (_token) => { token = _token; }

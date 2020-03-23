@@ -51,7 +51,7 @@
 /* Subdivisiones de HOME */
 .col-port {
   width: 60%;
-  height: 500px;
+  height: 600px;
   background-color: #a997df;
   overflow: hidden;
 }
@@ -81,7 +81,9 @@
   margin: 8px 0;
 }
 
-
+.colorBorrable{
+  background: #23272a;
+}
 
 
 /* Objetivo -> responsive */

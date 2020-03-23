@@ -1,68 +1,83 @@
-import React,{Component} from 'react';
+import React from 'react';
+import { mailValidation } from '../../utils';
+import { ContactaAgent } from '../../agent';
 import './Contacta.css';
 
-class Contacta extends Component{
+
+class Contacta extends React.Component{
     constructor(props){
-        super(props);
-        this.state = {
-            correo: "",
-            mensaje: ""
-        };
-        this.handleChangeCorreo = this.handleChangeCorreo.bind(this);
-        this.handleChangeMensaje = this.handleChangeMensaje.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-      }
+      super(props);
+      this.state = {
+          mail: '',
+          body: ''
+      };
+      this.handleChangeMail = this.handleChangeMail.bind(this);
+      this.handleChangeBody = this.handleChangeBody.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
-      handleChangeCorreo(event) {
-        this.setState({ correo: event.target.value });
-      }
-      handleChangeMensaje(event) {
-        this.setState({ mensaje: event.target.value });
-      }
+    handleChangeMail(event) {
+      this.setState({ mail: event.target.value });
+    }
+    handleChangeBody(event) {
+      this.setState({ body: event.target.value });
+    }
 
-      handleSubmit(event) {
-        event.preventDefault();
-        console.log('Login:{correo:', this.state.correo, ";mensaje:", this.state.mensaje, "}");
+    async handleSubmit(event) {
+      event.preventDefault();
+      if (mailValidation(this.state.mail)){
+        let x = await ContactaAgent.contactar(this.state.mail, this.state.body);
+        console.log(x);
+        if (x.status === 200){
+          window.alert('Mensaje Enviado.');
+        }else{
+          window.alert('Error ' + x.status + '\n' + x.statusText);
+        }
+      }else{
+        window.alert('Email no válido');
       }
+    }
 
 
     render(){
-        return(
-            <div className="card card-form">
-             <form onSubmit={this.Contacta} className="card-body">
-
-                <h1>Contacta con nosotros</h1>
-
-                <div className={"input-contacta contacta-position-1"}>
-                  <input
+      return(
+        <div className="contacta">
+          <div className="contacta-box">
+            <h1>Contacta con nosotros</h1>
+            <form onSubmit={this.handleSubmit} >
+              <div className="input-group">
+                <label className={this.state.mail!=="" ? "label-active":null}>
+                  Correo:
+                </label>
+                <input
                   type="text"
-                  name="Correo"
-                  value={this.state.correo}
-                  onChange={this.handleChangeCorreo}
-                  placeholder="Correo:"
-                  />
-                </div>
-
-                <div className={"input-contacta contacta-position-2"}>
-                  <textarea
-                  type="text"
-                  name="Mensaje"
-                  value={this.state.mensaje}
-                  onChange={this.handleChangeMensaje}
-                  placeholder="Mensaje:"
-                  />
-                </div>
-
-
-
-                <button type="submit" className="contacta-button">
-                Enviar
+                  name="mail"
+                  value={this.state.mail}
+                  onChange={this.handleChangeMail}
+                />
+              </div>
+              <div className="input-group">
+                <label className={this.state.body!=="" ? "label-active": "textarea-correction"}>
+                  Mensaje:
+                </label>
+                <textarea
+                type="text"
+                name="body"
+                value={this.state.body}
+                onChange={this.handleChangeBody}
+                />
+              </div>
+              <div className="input-group">
+                <button type="submit" className="btn">
+                  <span className="fas"/> Enviar
                 </button>
-
-             </form>
-            </div>
-        )
+              </div>
+            </form>
+          </div>
+        </div>
+      )
     }
+
 }
 
 export default Contacta;

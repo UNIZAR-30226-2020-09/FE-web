@@ -31,18 +31,19 @@ class LoginForm extends React.Component {
     if (mailValidation(this.state.user)){
       if (passwValidation(this.state.password)) {
         let x = await Usuario.login(this.state.user, this.state.password);
-        console.log(x);
-        if (x.http_status === 200){
+        //console.log(x);
+        if (x.status === 200){
           //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
           let token = x.token.replace('Bearer ', '');
           setToken(token);
           this.setUser({ user: {
             mail: this.state.user,
+            password: this.state.password,
             token: token
           }});
           history.push('/welcome');
         } else {
-          window.alert('Error ' + x.http_status + '\n' + x.text);
+          window.alert('Error ' + x.status + '\n' + x.statusText);
         }
       } else {
         window.alert('Contraseña no válida');
@@ -58,7 +59,7 @@ class LoginForm extends React.Component {
         <li className="input-label">
           <div className={this.li + " input-group"}>
             <label className={this.state.user!=="" ? "label-active":null}>
-              Usuario:
+              Usuario
             </label>
             <input type="text" value={this.state.user} onChange={this.handleChangeUser}/>
           </div>
@@ -66,7 +67,7 @@ class LoginForm extends React.Component {
         <li className="input-label">
           <div className={this.li + " input-group"}>
             <label className={this.state.password!=="" ? "label-active":null}>
-              Contraseña:
+              Contraseña
             </label>
             <input type="password" value={this.state.password} onChange={this.handleChangePass}/>
           </div>

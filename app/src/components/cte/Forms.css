@@ -8,7 +8,7 @@ form label{
   color: #999;
 }
 
-.input-group input {
+.input-group input{
   border: none;
   border-bottom: solid 4px #ddc4dd;
   transition: 240ms ease;
@@ -27,6 +27,27 @@ input:focus, input:active{
 
 .input-group input:focus {
   border-bottom: solid 4px #a997df;
+}
+
+.input-group textarea{
+  resize: vertical;
+  border: none;
+  border-bottom: solid 4px #ddc4dd;
+  transition: 240ms ease;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FFF;
+  background-color: #2c2f33;/*#3f4145*/
+  width: 100%;
+  height: 180px;
+  padding: 11px 8px 6px 8px;
+}
+.input-group textarea:focus {
+  border-bottom: solid 4px #a997df;
+  outline: none;
+}
+.textarea-correction{
+  top: 20px !important;
 }
 
 .input-group label{
