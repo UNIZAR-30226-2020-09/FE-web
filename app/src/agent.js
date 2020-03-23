@@ -37,13 +37,13 @@ const Usuario = {
     null
 };
 
-const Contacto = {
-  contactar: () =>
-    null
+const ContactaAgent = {
+  contactar: (mail_, body_) =>
+    requests.post(`/mensaje`, { mail: mail_, body: body_ })
 }
 
 export {
   Usuario,
-  Contacto
+  ContactaAgent
 };
 export const setToken = (_token) => { token = _token; }

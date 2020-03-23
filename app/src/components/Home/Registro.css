@@ -4,7 +4,7 @@
 
 .registro{
   width: 100%;
-  height: 500px;
+  height: 100%;
   background-color: #a997df;
 }
 
@@ -24,7 +24,7 @@
   position: relative;
   top: 15%;
   width: 90%;
-  height: 70%;
+  height: 60%;
   margin: 0;
   margin-left: auto;
   background-color: #23272a;
