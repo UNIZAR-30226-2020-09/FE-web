@@ -44,6 +44,5 @@ const Contacto = {
 export {
   Usuario,
   Contacto
-
 };
 export const setToken = (_token) => { token = _token; }
