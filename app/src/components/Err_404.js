@@ -7,8 +7,8 @@ class Err_404 extends React.Component {
   render() {
     return (
       <div className="app-container">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+        <div className="Err-page">
+          <img src={logo} className="Err-logo" alt="logo" />
           <p>
             404 - Page Not Found
           </p>

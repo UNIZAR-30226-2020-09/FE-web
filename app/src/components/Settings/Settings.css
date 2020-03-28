@@ -1,0 +1,15 @@
+
+/* SETTINGS CSS */
+
+/* Subdivisiones Ajustes */
+
+.title {
+  margin: 0 5%;
+}
+.title h1 {}
+.title hr{
+  margin: -10px -2% 0;
+  border-width: 3px;
+  border-radius: 3px;
+  border-color: #2c2f33;
+}
