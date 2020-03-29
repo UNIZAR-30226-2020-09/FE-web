@@ -50,7 +50,10 @@ class App extends React.Component {
           <Route path="/home" component={Home} />
           <Route path="/welcome" component={Err_404} />
           <Route path="/passwords" component={Err_404} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/settings" component={ () =>
+             <Settings user={this.getUser.bind(this)}
+             updateParent={this.updateState.bind(this)}/>
+           } />
           <Route component={Err_404} />
         </Switch>
       </div>

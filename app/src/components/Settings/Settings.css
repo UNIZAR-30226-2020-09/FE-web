@@ -1,15 +1,56 @@
 
 /* SETTINGS CSS */
 
+.sett {}
+.sett .row{
+
+}
+
 /* Subdivisiones Ajustes */
 
 .title {
-  margin: 0 5%;
+  margin: 0 5% 15px;
+  padding: 0;
+  width: 90%;
+  height: auto;
 }
-.title h1 {}
+.title h1 {
+  font-size: 2rem;
+}
 .title hr{
   margin: -10px -2% 0;
   border-width: 3px;
   border-radius: 3px;
   border-color: #2c2f33;
+}
+
+.user{
+  margin: 0 5%;
+  width: 90%;
+  height: 200px;
+}
+.user .column{
+  display: flex;
+  align-items: center;
+}
+.user img{/*
+  display: block;
+  vertical-align: middle;*/
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  width: 80%;
+}
+.user h1{
+  font-size: 1.8rem;
+  text-align: left;
+  margin: 8px 0;
+  margin-left: 20px;
+  color: #000;
+}
+.user h2{
+  font-size: 1.4rem;
+  text-align: left;
+  margin: 8px 0;
+  margin-left: 5px;
 }

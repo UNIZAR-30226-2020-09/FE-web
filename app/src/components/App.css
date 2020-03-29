@@ -63,6 +63,11 @@ i {
 }
 .column {
   float: left;
+  flex-shrink: 0;
+}
+.col-40{
+  width: 40%;
+  height: auto;
 }
 .col-50{
   width: 50%;
@@ -81,13 +86,18 @@ i {
   flex-grow: 1;
   height: auto;
 }
+.hide-on-mobile{}
 
 /* Objetivo -> responsive */
 @media screen and (max-width: 800px) {
+  .hide-on-mobile{
+    width: 0;
+    height: 0;
+  }
   .row, .column{
     display: block;
   }
-  .col-50, .col-60, .col-rest{
+  .col-40, .col-50, .col-60, .col-rest{
     width: 100%;
   }
 }
@@ -98,14 +108,15 @@ i {
   font-size: 25px;
 }
 
-.wireframe {outline: 2px solid gray;
-   background:
-      linear-gradient(to top right,
-         transparent calc(50% - 1px), gray calc(50% - 1px),
-         gray calc(50% + 1px), transparent calc(50% + 1px)),
-      linear-gradient(to bottom right,
-         transparent calc(50% - 1px), gray calc(50% - 1px),
-         gray calc(50% + 1px), transparent calc(50% + 1px));
+.wireframe {
+  border: 2px solid gray;
+  background:
+    linear-gradient(to top right,
+       transparent calc(50% - 1px), gray calc(50% - 1px),
+       gray calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(to bottom right,
+       transparent calc(50% - 1px), gray calc(50% - 1px),
+       gray calc(50% + 1px), transparent calc(50% + 1px));
 }
 
 /* ------------------ Err Page ----------------------- */
