@@ -6,6 +6,7 @@ import Redirection from './Redirection';
 import Home from './Home/Home';
 import Settings from './Settings/Settings'
 import {Cookie} from '../utils';
+import { setToken } from '../agent';
 
 class App extends React.Component {
   constructor(props){
@@ -19,6 +20,7 @@ class App extends React.Component {
       };
     } else {
       this.state = pre_state;
+      setToken(this.state.user.token);
     }
   }
 

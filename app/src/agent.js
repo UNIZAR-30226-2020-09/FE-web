@@ -15,9 +15,10 @@ const responseBody = res => {
 
 let token = null;
 const tokenPlugin = req => {
-  req.set('accept', 'application/json').ok(res => true);
+  req.set('Accept', 'application/json').ok(res => true);
+  // console.log("Token:", token);
   if (token) {
-    req.set('authorization', `${token}`);
+    req.set('Authorization', `${token}`);
   }
 }
 
@@ -46,8 +47,21 @@ const ContactaAgent = {
     requests.post(`/mensaje`, { mail: mail_, body: body_ })
 }
 
+const Categorias = {
+  create: (cat_name) =>
+    requests.post(`/categorias/insertar`, { categoryName: cat_name }),
+  update: (cat_id, cat_name) =>
+    requests.put(`/categorias/editar`, { categoryId: cat_id, categoryName: cat_name }),
+  list: () =>
+    requests.get(`/categorias/listar`),
+  del: (cat_id) =>
+    requests.del(`/categorias/eliminar`, { categoryId: cat_id }),
+}
+
 export {
   Usuario,
-  ContactaAgent
+  ContactaAgent,
+  Categorias
 };
 export const setToken = (_token) => { token = _token; }
+export const getToken = () => { return token; }

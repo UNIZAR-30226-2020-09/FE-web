@@ -1,4 +1,5 @@
 import React from 'react';
+import AdminCat from './AdminCat';
 import './Settings.css';
 
 import logo from '../cte/pandora-texto.png';
@@ -31,7 +32,8 @@ class Settings extends React.Component {
               <img src={logo} alt="Pandora"/>
             </div>
           </div>
-          <div className="row user wireframe">
+          <div className="row">
+            <AdminCat/>
           </div>
           <div className="row user wireframe">
           </div>
