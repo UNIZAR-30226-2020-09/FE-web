@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Err_404 from '../components/Err_404';
 import Header from './Header/Header';
 import Home from './Home/Home';
+import Passwords from './Passwords/Passwords';
 import Redirection from './Redirection';
 import {Cookie} from '../utils';
 
@@ -47,6 +48,7 @@ class App extends React.Component {
              <Redirection updateParent={this.updateState.bind(this)}/>
            } />
           <Route path="/home" component={Home} />
+          <Route path="/passwords" component={Passwords} />
           <Route path="/welcome" component={Err_404} />
           <Route path="/passwords" component={Err_404} />
           <Route path="/settings" component={Err_404} />
