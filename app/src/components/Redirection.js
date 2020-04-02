@@ -17,7 +17,7 @@ class Redirection extends React.Component {
       history.push('/home');
     } else {
       if (this.state === null) history.push('/home');
-      if (this.state.logout){
+      else if (this.state.logout){
         Cookie.clear();
         this.update({user: null});
         history.push('/home');

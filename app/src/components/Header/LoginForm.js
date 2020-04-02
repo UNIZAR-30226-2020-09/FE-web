@@ -34,12 +34,11 @@ class LoginForm extends React.Component {
         //console.log(x);
         if (x.status === 200){
           //console.log('Login:{user:', this.state.user, ";password:", this.state.password, "}");
-          let token = x.token.replace('Bearer ', '');
-          setToken(token);
+          setToken(x.token);
           this.setUser({ user: {
             mail: this.state.user,
             password: this.state.password,
-            token: token
+            token: x.token
           }});
           history.push('/welcome');
         } else {

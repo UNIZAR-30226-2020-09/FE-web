@@ -1,53 +1,6 @@
 
 /* Home CSS */
 
-.app-container {
-  display: block;
-  background: rgb(169,151,223);
-  background: linear-gradient(0deg, rgba(169,151,223,1) 0%, rgba(235,228,244,1) 33%, rgba(242,237,248,1) 100%);
-}
-
-/* Estructuras basicas */
-.row{
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-}
-.column {
-  float: left;
-}
-.col-50{
-  width: 50%;
-  height: auto;
-}
-.col-100{
-  width: 100%;
-  height: auto;
-}
-.col-rest{
-  float: left;
-  flex-grow: 1;
-  height: auto;
-}
-
-/* ------------------- BORRAR ----------------------*/
-.wireframe{
-  text-align: center;
-  font-size: 25px;
-}
-
-.wireframe {outline: 2px solid gray;
-   background:
-      linear-gradient(to top right,
-         transparent calc(50% - 1px), gray calc(50% - 1px),
-         gray calc(50% + 1px), transparent calc(50% + 1px)),
-      linear-gradient(to bottom right,
-         transparent calc(50% - 1px), gray calc(50% - 1px),
-         gray calc(50% + 1px), transparent calc(50% + 1px));
-}
-
-
-
 /* Subdivisiones de HOME */
 .col-port {
   width: 60%;
@@ -88,10 +41,7 @@
 
 /* Objetivo -> responsive */
 @media screen and (max-width: 800px) {
-  .row, .column{
-    display: block;
-  }
-  .col-port, .col-50, .col-rest{
+  .col-port{
     width: 100%;
   }
 }

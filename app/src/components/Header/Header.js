@@ -74,6 +74,8 @@ class Header extends React.Component {
   // Set event response
   componentDidMount() {
     window.addEventListener('resize', this.responsive);
+    let state = this.parentState();
+    setColl_Resp(state.mobile, state.collapsed, this.getUser());
   }
   componentDidUpdate(){
     let state = this.parentState();
