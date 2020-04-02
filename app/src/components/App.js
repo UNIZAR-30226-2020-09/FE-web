@@ -20,7 +20,7 @@ class App extends React.Component {
       };
     } else {
       this.state = pre_state;
-      setToken(this.state.user.token);
+      if (this.state.user!==null) setToken(this.state.user.token);
     }
   }
 

@@ -51,11 +51,11 @@ const Categorias = {
   create: (cat_name) =>
     requests.post(`/categorias/insertar`, { categoryName: cat_name }),
   update: (cat_id, cat_name) =>
-    requests.put(`/categorias/editar`, { categoryId: cat_id, categoryName: cat_name }),
-  list: () =>
-    requests.get(`/categorias/listar`),
+    requests.post(`/categorias/modificar`, { id: cat_id, categoryName: cat_name }),
   del: (cat_id) =>
-    requests.del(`/categorias/eliminar`, { categoryId: cat_id }),
+    requests.del(`/categorias/eliminar`, { id: cat_id }),
+  list: () =>
+    requests.get(`/categorias/listar`)
 }
 
 export {

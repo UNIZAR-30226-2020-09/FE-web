@@ -38,7 +38,8 @@ class AdminCat extends React.Component {
     //onsole.log("estado listar:", this.state);
   }
 
-  oneditHandler(event, id){
+  // TODO: err_feedback ya existe la contra
+  async oneditHandler(event, id){
     // Obtener categoria
     let cat;
     for (cat in this.cats){
@@ -50,8 +51,13 @@ class AdminCat extends React.Component {
     let cpy = this.state.onedit;
     if (event.target.className !== quit) {
       if (b_edit) { //MANDAR A BASE DE DATOS CAMBIO
-        this.cats[cat].categoryName = event.target.parentElement.childNodes[0].value
+        await Categorias.update(id, event.target.parentElement.childNodes[0].value);
+        this.listar_cat();
+        return;
       }
+      if (cpy.filter(Boolean).length > 0) {
+        cpy = cpy.map( (a) => false);
+      };// quitar los otros edit!
       cpy[cat] = !b_edit;
       this.setState({onedit : cpy});
     } else {
@@ -72,6 +78,7 @@ class AdminCat extends React.Component {
     }
   }
 
+  // TODO: err_feedback ya existe la contra
   async onaddHandler(event){
     if(event.target.className === add){
       this.setState({new:true});
