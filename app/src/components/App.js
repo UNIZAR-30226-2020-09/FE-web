@@ -51,9 +51,10 @@ class App extends React.Component {
              <Redirection updateParent={this.updateState.bind(this)}/>
            } />
           <Route path="/home" component={Home} />
-          <Route path="/passwords" component={Passwords} />
+          <Route path="/passwords" component={ () =>
+            <Passwords user={this.getUser.bind(this)}/>
+           } />
           <Route path="/welcome" component={Err_404} />
-          <Route path="/passwords" component={Err_404} />
           <Route path="/settings" component={ () =>
              <Settings user={this.getUser.bind(this)}
              updateParent={this.updateState.bind(this)}/>

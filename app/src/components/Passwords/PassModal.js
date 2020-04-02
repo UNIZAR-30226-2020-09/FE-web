@@ -1,7 +1,6 @@
 import React from 'react';
 import './PassModal.css';
 
-
 const PassModal = ({ handleClose, show, children }) => {
 
   const showHideClassName = show ? "modal display-block" : "modal display-none";
@@ -10,10 +9,10 @@ const PassModal = ({ handleClose, show, children }) => {
     <div className={showHideClassName}>
       <div className="modal-main">
         <div>
-          {children}
+          <button className="butn" onClick={handleClose}>Cancelar</button>
         </div>
         <div>
-          <button onClick={handleClose}>close</button>
+          {children}
         </div>
       </div>
     </div>
