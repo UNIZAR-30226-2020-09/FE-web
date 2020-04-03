@@ -1,13 +1,9 @@
 import React from 'react';
 import './AdminCat.css';
-import { Categorias } from '../../agent';
-import { requests } from '../../agent';
+import { Usuario } from '../../agent';
+import { history } from '../../utils';
 
-const edit = "fas fa-pen";
 const del = "fas fa-trash-alt";
-const ok = "fas fa-check";
-const quit = "fas fa-times";
-const add = "fas fa-plus";
 
 class DeleteAcc extends React.Component {
   constructor(props) {
@@ -21,15 +17,16 @@ class DeleteAcc extends React.Component {
   async handdleClick(e) {
     //e.preventDefault();
     if(window.confirm("¿Estas seguro?")){
-      let x = await requests.del('/usuario/eliminar');
+      let x = await Usuario.del();
        console.log(x);
-       if(x.status === 0){
+       if(x.status === 200){
          window.alert('Usuario Eliminado');
+         history.push('/', {logout: true});
        }
        else{
          window.alert('Error: ' + x.text + ' ' + x.status);
        }
-  
+
     }
   }
 
@@ -41,7 +38,7 @@ class DeleteAcc extends React.Component {
         </div>
         <ul>
             <li className="slot inner">
-              <i>Eliminar Cuenta </i>                                  
+              <i>Eliminar Cuenta </i>
               <span className={del} onClick={this.handdleClick}/>
             </li>
         </ul>

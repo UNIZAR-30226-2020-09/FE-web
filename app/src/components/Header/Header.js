@@ -93,7 +93,7 @@ class Header extends React.Component {
 
     const top = <OptionsTop mobile={mob} setUser={this.updateParent}
                     user={user} currentlocation={loc}/>;
-    const left = <OptionsLeft mobile={mob} setUser={this.updateParen}
+    const left = <OptionsLeft mobile={mob} setUser={this.updateParent}
                     user={user} currentlocation={loc}/>
 
     return (

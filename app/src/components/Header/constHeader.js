@@ -2,23 +2,36 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm.js';
 
-const top = [[
-  /*{id:1, name: 'Iniciar Sesión', link: '/login', icon: 'fas fa-sign-in-alt'},*/
-  {id:2, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
-], [
-  {id:3, name: 'Cerrar Sesión', link: {pathname: '/', state: {logout: true}}, icon: 'fas fa-sign-out-alt'},
-  {id:4, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'},
-]];
-
-const left = [
-  {id:7, name: 'Inicio', link: '/welcome', icon: 'fas fa-home'},
-  {id:8, name: 'Mis Contraseñas', link: '/passwords', icon: 'fas fa-key'},
-  {id:9, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
+/* OPCIONES NAVBAR SUPERIOR */
+const top = [
+  [
+    {id: 1, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
+  ], [
+    {id: 2, name: 'Cerrar Sesión', link: {pathname: '/', state: {logout: true}}, icon: 'fas fa-sign-out-alt'},
+    {id: 3, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
+  ]
 ];
 
-//function DeleteAcc (){
-//  window.confirm('¿Seguro que desea eliminar la cuenta?');
-//}
+/* OPCIONES NAVBAR IZQUIERDO */
+const left = [
+  {id: 4, name: 'Inicio', link: '/welcome', icon: 'fas fa-home'},
+  {id: 5, name: 'Mis Contraseñas', link: '/passwords', icon: 'fas fa-key'},
+  {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
+];
+
+/* Map function -> list items */
+function map_item(obj, props, liclass){
+  let loc = props.currentlocation;
+  return (
+    <li key={obj.id} className={liclass + (obj.link !== loc ? "" : " active")}>
+      <Link to={obj.link}>
+        <span className={obj.icon}/>
+        <i>{obj.name}</i>
+      </Link>
+    </li>
+  );
+}
+
 const OptionsTop = props => {
   if (props.mobile) return null;
   let user = props.user !== null? 1:0;
@@ -26,59 +39,34 @@ const OptionsTop = props => {
   return (
     <div className="collapse">
       <ul>
-        { props.user === null?
-          <li>
-            <LoginForm setUser={props.setUser} li_item={"nav-top-item"}/>
-          </li>
-          : null
+        { user ? null:
+          <li> <LoginForm setUser={props.setUser} li_item={"nav-top-item"}/> </li>
         }
-      {top[user].map((opt) =>
-        <li key={opt.id}>
-          <Link to={opt.link} className="nav-top-item">
-            <span className={opt.icon}/> {opt.name}
-          </Link>
-        </li>
-      )}
+        {top[user].map((opt) => map_item(opt, props, "nav-top-item"))}
       </ul>
     </div>
   );
 };
 
-// Map function in OptionsLeft
-function auxOptionsLeftmap(opt, props) {
-  return (
-    <li key={opt.id} className={opt.link !== props.currentlocation ?
-                                "nav-left-item" : "nav-left-item active"}>
-      <Link to={opt.link}>
-        <span className={opt.icon}/>
-        <i>{opt.name}</i>
-      </Link>
-    </li>
-  );
-}
-
 const OptionsLeft = props => {
   if (props.user === null && !props.mobile) return null;
   let cls = "nav-vertical"
-  if (props.mobile) {
-    cls += " responsive";
-  }
-  let user = props.user !== null? 1:0;//, log = null;
+  if (props.mobile) cls += " responsive";
+  let user = props.user !== null? 1:0;
 
   return(
     <div className={cls}>
       <ul>
-        {props.user ?
-          left.map((opt) => auxOptionsLeftmap(opt, props))
-          :
+        {user ? left.map((opt) => map_item(opt, props, "nav-left-item")) :
           <li>
+            <i>Inicio de sesión</i>
             <LoginForm setUser={props.setUser} li_item={"nav-left-item"}/>
           </li>
         }
       </ul>
       <div className="spacer"/>
       <ul>
-        {props.mobile ? top[user].map((opt) => auxOptionsLeftmap(opt, props)) : null}
+        {props.mobile ? top[user].map((opt) => map_item(opt, props, "nav-left-item")) : null}
         <li className="nav-left-item">
           <a href="https://www.google.com/">
             <span className="fas fa-book"/>

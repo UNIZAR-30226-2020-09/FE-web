@@ -47,7 +47,7 @@
   background: #fff;
 }
 
-/* Icono en header */
+/* Icono en header (Logo Pandora) */
 #navbar .navbar-icon{
   color: #fff;
   height: auto;
@@ -69,11 +69,6 @@
 }
 
 /* Objetos Base */
-#navbar .nav-text{
-  font-size: 0.7rem;
-  text-decoration: none;
-  color: #aaa;
-}
 #navbar ul {
   font-size: 0;
   list-style: none;
@@ -84,11 +79,6 @@
 #navbar ul li {
   display: block;
   position: relative;
-}
-#navbar ul li .nav-text{
-  font-size: 1rem;
-  text-decoration: none;
-  color: #f2f2f2;
 }
 
 /* Menu navbar*/
@@ -110,27 +100,23 @@
   float: left;
 }
 
+/* Items barra navegación superior */
 .nav-top-item{
-  display: block;
   max-height: 58px;
-  padding: 21px 12px;
-  position: relative;
   color: #d1d1d1;
   font-size: 14px;
   cursor: pointer;
-  /*line-height: 1;
-  margin: 0;
-  border: 0;*/
 }
-.nav-top-item:hover {
-  color: #fff;
-}
-.nav-top-item a{
+.nav-top-item a, .nav-top-item button{
+  display:inline-block;
+  padding: 21px 10px;
   color: #d1d1d1;
 }
-.nav-top-item a:hover{
-  color: #fff;
+.nav-top-item span {
+  margin-right: 5px;
 }
+.nav-top-item:hover i{ color: #fff; }
+.nav-top-item:hover span{ color: #39a5dc; }
 
 .nav-vertical{
   /* Requerido para SPACER */
@@ -145,7 +131,6 @@
   background: #2c2f33;
   border-right: 1px solid #292e34;
   overflow-x: hidden;
-  /*overflow-y: auto;*/
   position: fixed;
   z-index: 10;
 }
@@ -155,43 +140,28 @@
 .responsive{
   width:100%
 }
-
 .resp-collapsed{
   width:0px;
 }
 
-.active i{
-  font-weight: 600;
-  color: #fff;
-}
-
 .nav-left-item{ /* Clase en .nav-vertical ul li */
-  display: block;
-  position: relative;
   margin-bottom: -1px;
   padding: 0;
-  border: 1px solid #f5f5f5;
+  border: 1px solid #030303;
   border-right: 0;
   border-left: 0;
-  background-color: transparent;
-  border-color: #030303;
 }
-.nav-left-item a,
-.nav-left-item button{
+.nav-left-item a, .nav-left-item button{
   display: flex;
   position: relative;
   color: #d1d1d1;
   cursor: pointer;
-  /*width: 250px;*/
   width: 100%;
   height: 63px;
   font-size: 14px;
   font-weight: 400;
   line-height: 26px;
   padding: 17px 0 17px 25px;
-  white-space: nowrap;
-  /*padding-right: 0;
-  padding: 17px 20px 17px 25px;*/
 }
 .nav-left-item span{
   color: #72767b;
@@ -201,18 +171,24 @@
   margin-right: 15px;
   text-align: center;
   width: 24px;
-  height: 30px;
 }
+.nav-left-item:hover i{ color: #fff; }
+.nav-left-item:hover span{ color: #39a5dc; }
 
 .active{
   color: #fff;
   background-color: #373a3d;
   border-left: 3px solid #39a5dc;
 }
-.active a span{
+.active i{
+  font-weight: 600;
+  color: #fff;
+}
+.active span{
   color: #39a5dc;
 }
 
+/* Cuando logueado -> todo son li-a-li */
 .collapsed,
 .collapsed a{
   width: 75px;
@@ -220,7 +196,6 @@
 .collapsed a i{
   display: none;
 }
-
 
 .spacer{
   /* Espaciado entre listas ligado a altura de padre 1 */

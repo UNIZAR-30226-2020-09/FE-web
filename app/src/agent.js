@@ -39,7 +39,9 @@ const Usuario = {
   login: (email, password) =>
     requests.post('/usuarios/login', { mail: email, masterPassword: password }),
   logout: () =>
-    null
+    null,
+  del: () =>
+    requests.del(`/usuarios/eliminar`)
 };
 
 const ContactaAgent = {

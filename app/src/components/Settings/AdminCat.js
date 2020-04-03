@@ -98,7 +98,7 @@ class AdminCat extends React.Component {
     return (
       <div className="categorias">
         <div className="slot title">
-          Administrar categorias
+          Administrar categorías
         </div>
         <ul>
           {this.cats.map( (cat, i) =>
@@ -117,13 +117,13 @@ class AdminCat extends React.Component {
           )}
           {this.state.new ?
             <li key={0} className="slot inner">
-              <input type="text" placeholder="Añadir categoria . . ." required/>
+              <input type="text" placeholder="Nueva categoría..." required/>
               <span className={ok} onClick={this.onaddHandler.bind(this)}/>
               <span className={quit} onClick={this.onaddHandler.bind(this)}/>
             </li>
             :
             <li key={0} className="slot inner">
-              <i>Añadir categoria . . .</i>
+              <i>Nueva categoría...</i>
               <span className={add} onClick={this.onaddHandler.bind(this)}/>
             </li>
           }

@@ -35,9 +35,13 @@ class Settings extends React.Component {
           <div className="row">
             <AdminCat/>
           </div>
-           <div className="row">
+          <div className="row">
             <DeleteAcc/>
+          </div>
+          <div className="row">
+            <div className="column col-100 wireframe" style={{height: "200px"}}>
             </div>
+          </div>
         </div>
       </div>
     );
