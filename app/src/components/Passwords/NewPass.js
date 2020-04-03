@@ -6,7 +6,6 @@ import './NewPass.css';
 class NewPass extends React.Component {
     constructor(props){
       super(props);
-      this.getUser = props.user;//para leer usuario
       this.handleClose = props.handleClose;//para cerrar modal
 
       this.state = {
@@ -15,7 +14,7 @@ class NewPass extends React.Component {
           expirationTime: 120,
           passwordCategoryId: 0,
           optionalText: '',
-          userName: this.getUser().mail
+          userName: ''
       };
 
       this.cats = [];//para listar categorías en desplegable
@@ -23,6 +22,7 @@ class NewPass extends React.Component {
 
       this.handleChangeName = this.handleChangeName.bind(this);
       this.handleChangePass = this.handleChangePass.bind(this);
+      this.handleChangeUser = this.handleChangeUser.bind(this);
       this.handleChangeTime = this.handleChangeTime.bind(this);
       this.handleChangeCat = this.handleChangeCat.bind(this);
       this.handleChangeText = this.handleChangeText.bind(this);
@@ -31,6 +31,9 @@ class NewPass extends React.Component {
 
     handleChangeName(event) {
       this.setState({ passwordName: event.target.value });
+    }
+    handleChangeUser(event) {
+      this.setState({ userName: event.target.value });
     }
     handleChangePass(event) {
       this.setState({ password: event.target.value });
@@ -77,7 +80,8 @@ class NewPass extends React.Component {
         password: '',
         expirationTime: 120,
         passwordCategoryId: this.cats[0].catId,
-        optionalText: ''
+        optionalText: '',
+        userName: ''
       });
       /* Cerramos el modal */
       this.handleClose();
@@ -99,6 +103,17 @@ class NewPass extends React.Component {
                   value={this.state.passwordName}
                   onChange={this.handleChangeName}
                   required
+                />
+              </div>
+
+              <div className="input-group">
+                <label className={this.state.userName!=="" ? "label-active":null}>
+                  Usuario
+                </label>
+                <input
+                  type="text" name="user"
+                  value={this.state.userName}
+                  onChange={this.handleChangeUser}
                 />
               </div>
 

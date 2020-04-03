@@ -9,7 +9,6 @@ class Passwords extends React.Component {
     this.state = {
         show: false
     };
-    this.getUser = props.user;
 
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
@@ -40,7 +39,7 @@ class Passwords extends React.Component {
           </div>
 
           <PassModal show={this.state.show} handleClose={this.hideModal}>
-            <NewPass user={this.getUser.bind(this)} handleClose={this.hideModal}/>
+            <NewPass handleClose={this.hideModal}/>
           </PassModal>
 
         </div>
