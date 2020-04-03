@@ -92,7 +92,7 @@ class NewPass extends React.Component {
 
               <div className="input-group">
                 <label className={this.state.passwordName!=="" ? "label-active":null}>
-                  Nombre:
+                  Nombre
                 </label>
                 <input
                   type="text" name="name"
@@ -104,7 +104,7 @@ class NewPass extends React.Component {
 
               <div className="input-group">
                 <label className={this.state.password!=="" ? "label-active":null}>
-                  Contraseña:
+                  Contraseña
                 </label>
                 <input
                   type="text" name="pass"
@@ -116,7 +116,7 @@ class NewPass extends React.Component {
 
               <div className="input-group">
                 <label className={this.state.expirationTime!=="" ? "label-active":null}>
-                  Tiempo de expiración:
+                  Tiempo de expiración
                 </label>
                 <input
                   type="number" name="time"
@@ -127,18 +127,18 @@ class NewPass extends React.Component {
               </div>
 
               <div className="input-group">
-                <select name="cat"
+                <select name="catt"
                 value={this.state.passwordCategoryId}
                 onChange={this.handleChangeCat}>
                   {this.cats.map( (cat, i) =>
-                    <option value={cat.catId}>{cat.categoryName}</option>
+                    <option key={i} value={cat.catId}>{cat.categoryName}</option>
                   )}
                 </select>
               </div>
 
               <div className="input-group">
                 <label className={this.state.optionalText!=="" ? "label-active": "textarea-correction"}>
-                  Texto opcional:
+                  Texto opcional
                 </label>
                 <textarea
                 type="text" name="text"
