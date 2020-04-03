@@ -61,7 +61,8 @@ const Categorias = {
 export {
   Usuario,
   ContactaAgent,
-  Categorias
+  Categorias,
+  requests
 };
 export const setToken = (_token) => { token = _token; }
 export const getToken = () => { return token; }

@@ -16,7 +16,9 @@ const left = [
   {id:9, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
 ];
 
-
+//function DeleteAcc (){
+//  window.confirm('¿Seguro que desea eliminar la cuenta?');
+//}
 const OptionsTop = props => {
   if (props.mobile) return null;
   let user = props.user !== null? 1:0;

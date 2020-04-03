@@ -3,6 +3,7 @@ import AdminCat from './AdminCat';
 import './Settings.css';
 
 import logo from '../cte/pandora-texto.png';
+import DeleteAcc from './DeleteAcc';
 
 class Settings extends React.Component {
   constructor(props){
@@ -10,7 +11,6 @@ class Settings extends React.Component {
     this.updateParent = props.updateParent;
     this.getUser = props.user;
   }
-
   render() {
     return (
       <div className="app-container">
@@ -35,8 +35,9 @@ class Settings extends React.Component {
           <div className="row">
             <AdminCat/>
           </div>
-          <div className="row user wireframe">
-          </div>
+           <div className="row">
+            <DeleteAcc/>
+            </div>
         </div>
       </div>
     );
