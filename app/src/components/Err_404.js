@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../logo.svg';
+import logo from '../logo.png';
 import './App.css';
 
 
@@ -10,7 +10,7 @@ class Err_404 extends React.Component {
         <div className="Err-page">
           <img src={logo} className="Err-logo" alt="logo" />
           <p>
-            404 - Page Not Found
+            Pagina no disponible
           </p>
         </div>
       </div>

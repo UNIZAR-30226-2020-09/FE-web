@@ -1,13 +1,8 @@
 import React from 'react';
 import './AdminCat.css';
-import { Categorias } from '../../agent';
 import { requests } from '../../agent';
 
-const edit = "fas fa-pen";
 const del = "fas fa-trash-alt";
-const ok = "fas fa-check";
-const quit = "fas fa-times";
-const add = "fas fa-plus";
 
 class DeleteAcc extends React.Component {
   constructor(props) {
