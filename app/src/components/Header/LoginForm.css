@@ -26,7 +26,7 @@
 }
 
 .input-label .nav-top-item{
-  padding: 12px 4px;
+  padding: 10px 4px; /*padding: 12px 4px;*/
   cursor: inherit;
 }
 .input-label .nav-left-item {
@@ -42,7 +42,7 @@
 }
 .nav-top-item input{
   width: 150px;
-  padding: 11px 8px 6px 8px;
+  padding: 14px 8px 6px 12px; /*padding: 11px 8px 6px 8px;*/
 }
 
 .nav-left-item .label-active{

@@ -1,0 +1,52 @@
+
+/* ALERTAS CSS */
+.alerts {
+  position: fixed;
+  top: 60px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 9990;
+}
+
+.alerts ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.alerts li{
+  display: flex;
+  width: 95%;
+  max-width: 500px;
+  border-radius: 5px;
+  margin: 10px auto;
+  /* Fuente */
+  background-color: #2c2f33;
+  color: #e0e0e0;
+  font-size: 15px;
+  /* Animate */
+  opacity: 1;
+  transition: opacity 0.6s;
+}
+
+.alerts span{
+  text-align: center;
+  margin-left: auto;
+  padding: 10px 15px;
+}
+.alerts span:first-child{
+  margin-left: 10px;
+  padding: 10px;
+}
+.alerts .fa-times{
+  cursor: pointer;
+}
+.alerts i{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.err{background-color: #f44336 !important;}
+.ok {background-color: #4CAF50 !important;}
+.info {background-color: #2196F3 !important;}
+.warning {background-color: #ff9800 !important;}

@@ -5,7 +5,8 @@ import Header from './Header/Header';
 import Passwords from './Passwords/Passwords';
 import Redirection from './Redirection';
 import Home from './Home/Home';
-import Settings from './Settings/Settings'
+import Settings from './Settings/Settings';
+import Alerts from './cte/Alerts'
 import {Cookie} from '../utils';
 import { setToken } from '../agent';
 
@@ -46,6 +47,7 @@ class App extends React.Component {
         <Header updateParent={this.updateState.bind(this)}
                 parentState={this.getState.bind(this)}
                 user={this.getUser.bind(this)}/>
+        <Alerts/>
         <Switch>
           <Route exact path="/" component={ () =>
              <Redirection updateParent={this.updateState.bind(this)}/>

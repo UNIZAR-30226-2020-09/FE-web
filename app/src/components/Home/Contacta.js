@@ -25,16 +25,23 @@ class Contacta extends React.Component{
 
     async handleSubmit(event) {
       event.preventDefault();
+      var e = null;
       if (mailValidation(this.state.mail)){
         let x = await ContactaAgent.contactar(this.state.mail, this.state.body);
         console.log(x);
         if (x.status === 200){
-          window.alert('Mensaje Enviado.');
+          e = new CustomEvent('PandoraAlert', { 'detail': {code:1, text:'Mensaje Enviado.'} });
+          window.dispatchEvent(e);
         }else{
-          window.alert('Error ' + x.status + '\n' + x.statusText);
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code: 4,
+            text: 'Error ' + x.status + ':' + x.statusText
+          }});
+          window.dispatchEvent(e);
         }
       }else{
-        window.alert('Email no válido');
+        e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Email no válido.'} });
+        window.dispatchEvent(e);
       }
     }
 

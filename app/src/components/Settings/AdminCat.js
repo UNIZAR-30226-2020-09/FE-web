@@ -34,11 +34,12 @@ class AdminCat extends React.Component {
         categoryName: "ERROR"
       }]
       this.setState( {onedit: [false]} );
+      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las categorías.'} });
+      window.dispatchEvent(e);
     }
     //onsole.log("estado listar:", this.state);
   }
 
-  // TODO: err_feedback ya existe la contra
   async oneditHandler(event, id){
     // Obtener categoria
     let cat;
@@ -51,7 +52,17 @@ class AdminCat extends React.Component {
     let cpy = this.state.onedit;
     if (event.target.className !== quit) {
       if (b_edit) { //MANDAR A BASE DE DATOS CAMBIO
-        await Categorias.update(id, event.target.parentElement.childNodes[0].value);
+        var e = null, txt = event.target.parentElement.childNodes[0].value;
+        let x = await Categorias.update(id, txt);
+        if (x.status === 200) {
+          e = new CustomEvent('PandoraAlert', { 'detail': {code:1, text:'Se ha editado la categoria ' + txt} });
+        } else {
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code: 4,
+            text: 'Error ' + x.status + ': ' + x.statusText
+          }});
+        }
+        if (e !== null) window.dispatchEvent(e);
         this.listar_cat();
         return;
       }
@@ -71,14 +82,25 @@ class AdminCat extends React.Component {
     for (cat in this.cats){
       if (this.cats[cat].catId === id){
         let x = await Categorias.del(id);
-        console.log(x);
+        var e = null;
+        if (x.status === 200) {
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code: 2,
+            text:'Se ha eliminado la categoria ' + this.cats[cat].categoryName
+          }});
+        } else {
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code: 4,
+            text: 'Error ' + x.status + ': ' + x.statusText
+          }});
+        }
+        if (e !== null) window.dispatchEvent(e);
         this.listar_cat();
         break;
       }
     }
   }
 
-  // TODO: err_feedback ya existe la contra
   async onaddHandler(event){
     if(event.target.className === add){
       this.setState({new:true});
@@ -86,7 +108,20 @@ class AdminCat extends React.Component {
       if (event.target.className === ok) { // Mandar categoria
         let new_Cat = event.target.parentElement.childNodes[0].value;
         if (new_Cat.length > 0){
-          await Categorias.create(new_Cat);
+          let x = await Categorias.create(new_Cat);
+          var e = null;
+          if (x.status === 200) {
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code: 2,
+              text:'Se ha creado la categoria ' + new_Cat
+            }});
+          } else {
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code: 4,
+              text: 'Error ' + x.status + ': ' + x.statusText
+            }});
+          }
+          if (e !== null) window.dispatchEvent(e);
           this.listar_cat();
         }
       }

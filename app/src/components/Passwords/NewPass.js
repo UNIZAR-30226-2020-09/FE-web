@@ -66,11 +66,17 @@ class NewPass extends React.Component {
       /* Comprobamos respuesta de la API */
       //console.log(this.state);
       //console.log(x);
+      var e = null;
       if (x.status === 200){
-        window.alert('Contraseña creada con éxito :)');
+        e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña creada con éxito :)'} });
       }else{
-        window.alert('Error ' + x.status + '\n' + x.statusText);
+        e = new CustomEvent('PandoraAlert', { 'detail': {
+          code:4,
+          text: 'Error ' + x.status + ': ' + x.statusText
+        }});
       }
+      if (e !== null) window.dispatchEvent(e);
+
       /* Reseteamos el formulario */
       this.setState({
         passwordName: '',

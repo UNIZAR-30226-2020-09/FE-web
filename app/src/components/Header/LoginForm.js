@@ -34,11 +34,13 @@ class LoginForm extends React.Component {
 
   async handleSubmitMail(event) {
     event.preventDefault();
-    /////// DEBUG NO 2FA
+    var e = null;
+    /////// DEBUG NO 2FA, NO BORRAR
+    /*
     if (!this.state.twofa){
       this.setState({ twofa: true });
       return;
-    }
+    }*/
 
     if (mailValidation(this.state.user)){
       if (passwValidation(this.state.password)) {
@@ -52,15 +54,26 @@ class LoginForm extends React.Component {
             password: this.state.password,
             token: x.token
           }});
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code: 1,
+            text:'Sesión iniciada (' + this.state.user + ')'
+          }});
+          window.dispatchEvent(e);
           history.push('/welcome');
         } else {
-          window.alert('Error ' + x.status + '\n' + x.statusText);
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code: 4,
+            text: 'Error ' + x.status + ': ' + x.statusText
+          }});
+          window.dispatchEvent(e);
         }
       } else {
-        window.alert('Contraseña no válida');
+        e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Contraseña no válida'} });
+        window.dispatchEvent(e);
       }
     } else {
-      window.alert('Email no válido');
+      e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Email no válido'} });
+      window.dispatchEvent(e);
     }
   }
   async handleSubmit2FA(event) {
