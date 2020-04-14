@@ -11,9 +11,7 @@ const PassModal = ({ handleClose, show, children }) => {
         <div>
           <button className="butn" onClick={handleClose}>Cancelar</button>
         </div>
-        <div>
           {children}
-        </div>
       </div>
     </div>
   );

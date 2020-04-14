@@ -3,13 +3,15 @@
 .newpass {
   position: relative;
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: 660px;
+  overflow: hidden;
   background-color: #23272a;
   color: #d1d1d1;
 }
 .newpass h1{
   color: #d1d1d1;
-  margin: 0% 15%;
+  margin: 2% 15%;
   padding: 25px 0;
 }
 
@@ -35,8 +37,21 @@
 
 
 /* Objetivo -> responsive */
-@media screen and (max-width: 800px) {
-  .contacta .contacta-box{
-    width: 90%;
+@media screen and (max-width: 600px) {
+  .newpass {
+    height: 460px;
+    overflow: hidden;
+  }
+  .newpass h1{
+    font-size: 20px;
+    margin: 1% 5%;
+    padding: 10px 0;
+  }
+  .input-group textarea{
+    height: 100px;
+  }
+  .newpass .input-group{
+    width: 80%;
+    margin: 5px auto 10px;
   }
 }
