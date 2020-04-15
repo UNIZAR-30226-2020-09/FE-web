@@ -66,11 +66,17 @@ const Contraseñas = {
       expirationTime: time, passwordCategoryId: cat, optionalText: text, userName: user }),
 }
 
+const StatsAgent = {
+  list: () =>
+    requests.get(`/estadisticas`)
+}
+
 export {
   Usuario,
   ContactaAgent,
   Categorias,
-  Contraseñas
+  Contraseñas,
+  StatsAgent
 };
 export const setToken = (_token) => { token = _token; }
 export const getToken = () => { return token; }
