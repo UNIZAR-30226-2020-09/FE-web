@@ -2,18 +2,43 @@ import React from 'react';
 import PassModal from './PassModal';
 import NewPass from './NewPass';
 import './Passwords.css';
+import {Contrasenas} from '../../agent';
 
+const del = "fas fa-trash-alt";
+const edit = "fas fa-pen";
 
 class ContraObj extends React.Component {
   constructor(props) {
     super(props);
     this.data = props.data;
   }
+
+  faux(ev){
+    let ch = ev.currentTarget.parentElement.parentElement;
+    if (ch.style.maxHeight) {
+      ch.style.maxHeight = null;
+    } else {
+      ch.style.maxHeight = 100 + "px";
+      //panel.scrollHeight + 20 + "px"; // TODO:
+    }
+  }
+
   render() {
     return (
       <li>
-        <div style={{height: "10px"}}>
-          dsaassda {this.data}
+        <div className="ctr-title">
+          <button onClick={this.faux}>
+            <i>{this.data.passwordName}</i>
+          </button>
+          <span className={edit} onClick={() => console.log("edit")}/>
+          <span className={del} onClick={() => console.log("del")}/>
+        </div>
+        <div className="ctr-body">
+          Usuario: {this.data.userName}
+          <br/>
+          Contraseña: {this.data.password}
+          <br/>
+          TextoOpcional: {this.data.optionalText}
         </div>
       </li>
     );
@@ -24,11 +49,17 @@ class ContraObj extends React.Component {
 class Passwords extends React.Component {
   constructor(props){
     super(props);
-    this.state = Object.assign({},{ addModal: false, busq: ''},this.recoverC());
+    this.mp = props.user.password;
+    this.state = {
+      addModal: false,
+      busq: '',
+      contras: [],
+      grupales: []
+    };
+    this.listar_contras();
 
     this.toggleModal = this.toggleModal.bind(this);
     this.handleBusqEdit = this.handleBusqEdit.bind(this);
-    this.forceUpdate = this.forceUpdate.bind(this);
 
     this.componentAux = function() {
       this.classList.toggle("active-arc");
@@ -36,18 +67,28 @@ class Passwords extends React.Component {
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
       } else {
-        panel.style.maxHeight = panel.scrollHeight + 20 + "px";
+        panel.style.maxHeight = panel.childElementCount*100 + "px";
+        //panel.scrollHeight + 20 + "px"; // TODO:
       }
     }
   }
 
-  recoverC(){
-    return { contras: [1,2,3,4], grupales: [5,6,7] };
+  async listar_contras(){
+    let x = await Contrasenas.listar(this.mp);
+    console.log(x);
+    if (x.status === 200) {
+      this.setState({ contras: x.passwords });
+    } else {
+      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
+      window.dispatchEvent(e);
+    }
+    var acc = document.getElementsByClassName("accordion");
+    var i, ev = new Event("click");
+    for (i = 0; i < acc.length; i++) {
+      acc[i].dispatchEvent(ev);
+    }
   }
-  forceUpdate(){
-    /* RECUPERAR DE NUEVO LAS CONTRASEÑAS */
-    this.setState(this.recoverC());
-  }
+
   toggleModal(){
     this.setState({ addModal: !this.state.addModal });
   }
@@ -56,12 +97,10 @@ class Passwords extends React.Component {
   }
 
   componentDidMount(){
-    this.forceUpdate();
     var acc = document.getElementsByClassName("accordion");
     var i, ev = new Event("click");
     for (i = 0; i < acc.length; i++) {
       acc[i].addEventListener("click", this.componentAux);
-      acc[i].dispatchEvent(ev);
     }
   }
   componentWillUnmount(){
@@ -76,7 +115,7 @@ class Passwords extends React.Component {
     return (
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>
-          <NewPass handleClose={this.toggleModal}/>
+          <NewPass handleClose={this.toggleModal} mp={this.mp}/>
         </PassModal>
         <div className="passwords">
           <div className="row">
@@ -110,12 +149,10 @@ class Passwords extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="column col-100" style={{height: "200px"}}>
+            <div className="column col-100">
               <button className="accordion">Contraseñas Grupales</button>
               <ul className="panel">
-                <div style={{height: "200px"}}>
-                  {this.state.grupales.map((c,i) => <ContraObj key={i} data={c}/>)}
-                </div>
+                {this.state.grupales.map((c,i) => <ContraObj key={i} data={c}/>)}
               </ul>
             </div>
           </div>

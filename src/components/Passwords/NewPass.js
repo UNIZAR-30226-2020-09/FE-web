@@ -1,5 +1,5 @@
 import React from 'react';
-import { Contraseñas } from '../../agent';
+import { Contrasenas } from '../../agent';
 import { Categorias } from '../../agent';
 import './NewPass.css';
 
@@ -7,6 +7,7 @@ class NewPass extends React.Component {
     constructor(props){
       super(props);
       this.handleClose = props.handleClose;//para cerrar modal
+      this.mp = props.mp;
 
       this.state = {
           passwordName: '',
@@ -63,7 +64,7 @@ class NewPass extends React.Component {
     async handleSubmit(event) {
       event.preventDefault();
       /* Enviamos peticion a la API */
-      let x = await Contraseñas.create(this.state.passwordName, this.state.password,
+      let x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
         this.state.expirationTime, this.state.passwordCategoryId,
         this.state.optionalText, this.state.userName);
       /* Comprobamos respuesta de la API */

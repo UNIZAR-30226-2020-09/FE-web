@@ -60,17 +60,19 @@ const Categorias = {
     requests.get(`/categorias/listar`)
 }
 
-const Contraseñas = {
-  create: (name, pass, time, cat, text, user) =>
-    requests.post(`/contrasenya/insertar`, { passwordName: name, password: pass,
+const Contrasenas = {
+  create: (mp, name, pass, time, cat, text, user) =>
+    requests.post(`/contrasenya/insertar`, { masterPassword: mp, passwordName: name, password: pass,
       expirationTime: time, passwordCategoryId: cat, optionalText: text, userName: user }),
+  listar: (mp) =>
+    requests.post(`/contrasenya/listar`, { masterPassword: mp })
 }
 
 export {
   Usuario,
   ContactaAgent,
   Categorias,
-  Contraseñas
+  Contrasenas
 };
 export const setToken = (_token) => { token = _token; }
 export const getToken = () => { return token; }

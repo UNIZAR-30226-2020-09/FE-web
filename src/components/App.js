@@ -54,7 +54,7 @@ class App extends React.Component {
            } />
           <Route path="/home" component={Home} />
           <Route path="/passwords" component={ () =>
-            <Passwords/>
+            <Passwords user={this.state.user}/>
            } />
           <Route path="/welcome" component={Err_404} />
           <Route path="/settings" component={ () =>
