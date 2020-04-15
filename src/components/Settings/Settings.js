@@ -14,7 +14,7 @@ class Settings extends React.Component {
   render() {
     return (
       <div className="app-container">
-        <div className="sett">
+        <div className="settings">
           <div className="row">
             <div className="column title">
               <h1>Ajustes</h1>
@@ -37,10 +37,6 @@ class Settings extends React.Component {
           </div>
           <div className="row">
             <DeleteAcc/>
-          </div>
-          <div className="row">
-            <div className="column col-100 wireframe" style={{height: "200px"}}>
-            </div>
           </div>
         </div>
       </div>

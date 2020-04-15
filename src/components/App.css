@@ -11,6 +11,9 @@ body {
   font-size: 12px;
   margin: 0;
   color: #363636;
+  background-color: #ebe4f4;
+  /*background: linear-gradient(0deg, rgba(169,151,223,1) 0%, rgba(235,228,244,1) 33%, rgba(242,237,248,1) 100%);*/
+  padding-bottom: 60px;
 }
 
 button {
@@ -51,8 +54,6 @@ i {
 
 .app-container {
   display: block;
-  background: rgb(169,151,223);
-  background: linear-gradient(0deg, rgba(169,151,223,1) 0%, rgba(235,228,244,1) 33%, rgba(242,237,248,1) 100%);
 }
 
 /* Estructuras basicas */
@@ -64,6 +65,10 @@ i {
 .column {
   float: left;
   flex-shrink: 0;
+}
+.col-30{
+  width: 30%;
+  height: auto;
 }
 .col-40{
   width: 40%;
@@ -86,6 +91,10 @@ i {
   flex-grow: 1;
   height: auto;
 }
+.col-sep{
+  width: 20px;
+  height: auto;
+}
 .hide-on-mobile{}
 
 /* Objetivo -> responsive */
@@ -97,7 +106,10 @@ i {
   .row, .column{
     display: block;
   }
-  .col-40, .col-50, .col-60, .col-rest{
+  .col-sep{
+    display: none;
+  }
+  .col-30, .col-40, .col-50, .col-60, .col-rest{
     width: 100%;
   }
 }
