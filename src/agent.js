@@ -68,11 +68,17 @@ const Contrasenas = {
     requests.post(`/contrasenya/listar`, { masterPassword: mp })
 }
 
+const StatsAgent = {
+  list: () =>
+    requests.get(`/estadisticas`)
+}
+
 export {
   Usuario,
   ContactaAgent,
   Categorias,
-  Contrasenas
+  Contrasenas,
+  StatsAgent
 };
 export const setToken = (_token) => { token = _token; }
 export const getToken = () => { return token; }

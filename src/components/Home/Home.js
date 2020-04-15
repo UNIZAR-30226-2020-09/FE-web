@@ -1,13 +1,27 @@
 import React from 'react';
 import Registro from './Registro.js';
 import Contacta from './Contacta.js';
+import Stats from './Stats.js';
+import Bienvenido from './Bienvenido.js';
 import './Home.css';
 
 import logo_p from '../cte/pandora-logo.png';
 import logo from '../cte/pandora-texto.png';
 
 class Home extends React.Component {
+  constructor(props){
+    super(props);
+    this.getUser = props.user;
+  }
+
   render() {
+    let box;
+    let user = this.getUser();
+    if (user === null){
+      box = <Registro/>
+    }else{
+      box = <Bienvenido user={user}/>
+    }
     return (
       <div className="app-container">
         <div className="row">
@@ -22,12 +36,14 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="column col-rest">
-           <Registro/>
+           {box}
           </div>
         </div>
-        <div className="row colorBorrable" style={{height: '300px'}}/>
         <div className="row">
-            <Contacta/>
+          <Stats/>
+        </div>
+        <div className="row">
+          <Contacta/>
         </div>
       </div>
     );
