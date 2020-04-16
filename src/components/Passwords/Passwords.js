@@ -11,6 +11,7 @@ class ContraObj extends React.Component {
   constructor(props) {
     super(props);
     this.data = props.data;
+    this.editPass = props.editPass;
   }
 
   faux(ev){
@@ -30,7 +31,7 @@ class ContraObj extends React.Component {
           <button onClick={this.faux}>
             <i>{this.data.passwordName}</i>
           </button>
-          <span className={edit} onClick={() => console.log("edit")}/>
+          <span className={edit} onClick={() => this.editPass(this.data)}/>
           <span className={del} onClick={() => console.log("del")}/>
         </div>
         <div className="ctr-body">
@@ -57,6 +58,11 @@ class Passwords extends React.Component {
       grupales: []
     };
     this.listar_contras();
+
+    this.edit = null;
+    this.getEdit = this.getEdit.bind(this);
+    this.editPass = this.editPass.bind(this);
+    this.newPass = this.newPass.bind(this);
 
     this.toggleModal = this.toggleModal.bind(this);
     this.handleBusqEdit = this.handleBusqEdit.bind(this);
@@ -89,6 +95,20 @@ class Passwords extends React.Component {
     }
   }
 
+  editPass(x){
+    this.edit = x;
+    this.refs.newpass.setEdit();
+    this.toggleModal();
+  }
+  newPass(){
+    this.edit = null;
+    this.refs.newpass.setNew();
+    this.toggleModal();
+  }
+  getEdit(){
+    return this.edit;
+  }
+
   toggleModal(){
     this.setState({ addModal: !this.state.addModal });
   }
@@ -115,7 +135,8 @@ class Passwords extends React.Component {
     return (
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>
-          <NewPass handleClose={this.toggleModal} mp={this.mp}/>
+          <NewPass handleClose={this.toggleModal} mp={this.mp}
+                    ref="newpass" edit={this.getEdit}/>
         </PassModal>
         <div className="passwords">
           <div className="row">
@@ -126,7 +147,7 @@ class Passwords extends React.Component {
           </div>
           <div className="row busq">
             <div className="column col-30">
-              <button type="button" className="btn" onClick={this.toggleModal}>
+              <button type="button" className="btn" onClick={this.newPass}>
                 <span className="fas fa-plus"/>
                 <i>Nueva contraseña</i>
               </button>
@@ -144,7 +165,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Mis Contraseñas</button>
               <ul className="panel">
-                {this.state.contras.map((c,i) => <ContraObj key={i} data={c}/>)}
+                {this.state.contras.map((c,i) => <ContraObj key={i} data={c}
+                  editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>
@@ -152,7 +174,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Contraseñas Grupales</button>
               <ul className="panel">
-                {this.state.grupales.map((c,i) => <ContraObj key={i} data={c}/>)}
+                {this.state.grupales.map((c,i) => <ContraObj key={i} data={c}
+                  editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>

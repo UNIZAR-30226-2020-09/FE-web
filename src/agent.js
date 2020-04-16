@@ -62,8 +62,13 @@ const Categorias = {
 
 const Contrasenas = {
   create: (mp, name, pass, time, cat, text, user) =>
-    requests.post(`/contrasenya/insertar`, { masterPassword: mp, passwordName: name, password: pass,
-      expirationTime: time, passwordCategoryId: cat, optionalText: text, userName: user }),
+    requests.post(`/contrasenya/insertar`, { masterPassword: mp,
+      passwordName: name, password: pass, expirationTime: time,
+      passwordCategoryId: cat, optionalText: text, userName: user }),
+  update: (mp, id, name, pass, time, cat, text, user) =>
+    requests.post(`/contrasenya/modificar`, { masterPassword: mp, id: id,
+      passwordName: name, password: pass, expirationTime: time, 
+      passwordCategoryId: cat, optionalText: text, userName: user }),
   listar: (mp) =>
     requests.post(`/contrasenya/listar`, { masterPassword: mp })
 }
