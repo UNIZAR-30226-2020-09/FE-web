@@ -11,6 +11,7 @@ class ContraObj extends React.Component {
   constructor(props) {
     super(props);
     this.data = props.data;
+    this.delPass = props.delPass;
   }
 
   faux(ev){
@@ -31,7 +32,7 @@ class ContraObj extends React.Component {
             <i>{this.data.passwordName}</i>
           </button>
           <span className={edit} onClick={() => console.log("edit")}/>
-          <span className={del} onClick={() => console.log("del")}/>
+          <span className={del} onClick={() => this.delPass(this.data)}/>
         </div>
         <div className="ctr-body">
           Usuario: {this.data.userName}
@@ -58,8 +59,10 @@ class Passwords extends React.Component {
     };
     this.listar_contras();
 
+    this.delPass = this.delPass.bind(this);
+
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleBusqEdit = this.handleBusqEdit.bind(this);
+    this.handleBusqEdit = this.handleBusqEdit.bind(this); 
 
     this.componentAux = function() {
       this.classList.toggle("active-arc");
@@ -87,6 +90,21 @@ class Passwords extends React.Component {
     for (i = 0; i < acc.length; i++) {
       acc[i].dispatchEvent(ev);
     }
+  }
+
+  async delPass(e){
+    let x = await Contrasenas.del(e.passId);
+    if(x.status === 200) {
+      var e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña borrada.'} });
+      window.dispatchEvent(e); 
+    }
+    else {
+      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido borrar la contraseña.'} });
+      window.dispatchEvent(e);
+    }
+
+    window.location.reload();
+
   }
 
   toggleModal(){
@@ -144,7 +162,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Mis Contraseñas</button>
               <ul className="panel">
-                {this.state.contras.map((c,i) => <ContraObj key={i} data={c}/>)}
+                {this.state.contras.map((c,i) => <ContraObj key={i} data={c}
+                delPass={this.delPass}/>)}
               </ul>
             </div>
           </div>
@@ -152,7 +171,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Contraseñas Grupales</button>
               <ul className="panel">
-                {this.state.grupales.map((c,i) => <ContraObj key={i} data={c}/>)}
+                {this.state.grupales.map((c,i) => <ContraObj key={i} data={c}
+                delPass={this.delPass}/>)}
               </ul>
             </div>
           </div>

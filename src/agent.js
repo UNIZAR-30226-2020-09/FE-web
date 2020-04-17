@@ -1,5 +1,6 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
+import { request } from 'https';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
@@ -23,8 +24,8 @@ const tokenPlugin = req => {
 }
 
 const requests = {
-  del: url =>
-    superagent.del(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+  del: (url,body) =>
+    superagent.del(`${API_ROOT}${url}?id=${body}`).use(tokenPlugin).then(responseBody),
   get: url =>
     superagent.get(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
   put: (url, body) =>
@@ -55,7 +56,7 @@ const Categorias = {
   update: (cat_id, cat_name) =>
     requests.post(`/categorias/modificar`, { id: cat_id, categoryName: cat_name }),
   del: (cat_id) =>
-    requests.del(`/categorias/eliminar`, { id: cat_id }),
+    requests.del(`/categorias/eliminar`,cat_id),
   list: () =>
     requests.get(`/categorias/listar`)
 }
@@ -65,7 +66,9 @@ const Contrasenas = {
     requests.post(`/contrasenya/insertar`, { masterPassword: mp, passwordName: name, password: pass,
       expirationTime: time, passwordCategoryId: cat, optionalText: text, userName: user }),
   listar: (mp) =>
-    requests.post(`/contrasenya/listar`, { masterPassword: mp })
+    requests.post(`/contrasenya/listar`, { masterPassword: mp }),
+  del: (cat) =>
+    requests.del(`/contrasenya/eliminar`,cat)
 }
 
 const StatsAgent = {

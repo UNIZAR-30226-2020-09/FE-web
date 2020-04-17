@@ -81,7 +81,9 @@ class AdminCat extends React.Component {
     let cat;
     for (cat in this.cats){
       if (this.cats[cat].catId === id){
+        console.log(id);
         let x = await Categorias.del(id);
+        console.log(x);
         var e = null;
         if (x.status === 200) {
           e = new CustomEvent('PandoraAlert', { 'detail': {
