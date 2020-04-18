@@ -7,7 +7,8 @@ class NewPass extends React.Component {
     constructor(props){
       super(props);
       this.handleClose = props.handleClose;//para cerrar modal
-      this.mp = props.mp;
+      this.mp = props.mp;//masterPassword
+      this.getEdit = props.edit;//contraseña que ha sido pulsada
 
       this.state = {
           passwordName: '',
@@ -17,7 +18,8 @@ class NewPass extends React.Component {
           optionalText: '',
           userName: ''
       };
-
+      this.id = 0;//id contraseña
+      this.edit = false;//edit o create
       this.cats = [];//para listar categorías en desplegable
       this.listar_cat();
 
@@ -49,10 +51,36 @@ class NewPass extends React.Component {
       this.setState({ optionalText: event.target.value });
     }
 
+    setEdit() {
+      let ed = this.getEdit();
+      this.setState({
+        passwordName: ed.passwordName,
+        password: ed.password,
+        expirationTime: ed.noDaysBeforeExpiration,
+        passwordCategoryId: ed.catId,
+        optionalText: ed.optionalText,
+        userName: ed.userName
+      });
+      this.id = ed.passId;
+      this.edit = true;
+    }
+
+    setNew() {
+      this.setState({
+        passwordName: '',
+        password: '',
+        expirationTime: 120,
+        passwordCategoryId: this.cats[0].catId,
+        optionalText: '',
+        userName: ''
+      });
+      this.id = 0;
+      this.edit = false;
+    }
+
     async listar_cat(){
       /* Pedimos categorías a la API */
       let x = await Categorias.list();
-      //console.log(x);
       if (x.status === 200){
         this.cats = x.categories;
         this.setState({ passwordCategoryId: this.cats[0].catId });
@@ -63,118 +91,135 @@ class NewPass extends React.Component {
 
     async handleSubmit(event) {
       event.preventDefault();
-      /* Enviamos peticion a la API */
-      let x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
-        this.state.expirationTime, this.state.passwordCategoryId,
-        this.state.optionalText, this.state.userName);
-      /* Comprobamos respuesta de la API */
-      //console.log(this.state);
-      //console.log(x);
       var e = null;
-      if (x.status === 200){
-        e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña creada con éxito :)'} });
-      }else{
+      /* Comprobamos carácteres máximos */
+      let correct = false;
+      if(this.state.passwordName.length > 30){
         e = new CustomEvent('PandoraAlert', { 'detail': {
           code:4,
-          text: 'Error ' + x.status + ': ' + x.statusText
-        }});
+          text:'Nombre de la contraseña demasiado largo (max 30 carácteres)'}});
+      }else if(this.state.userName.length > 30){
+        e = new CustomEvent('PandoraAlert', { 'detail': {
+          code:4,
+          text:'Nombre de usuario demasiado largo (max 30 carácteres)'}});
+      }else if(this.state.optionalText.length > 100){
+        e = new CustomEvent('PandoraAlert', { 'detail': {
+          code:4,
+          text:'Texto adicional demasiado largo (max 100 carácteres)'}});
+      }else{
+        correct = true;
       }
       if (e !== null) window.dispatchEvent(e);
-
-      /* Reseteamos el formulario */
-      this.setState({
-        passwordName: '',
-        password: '',
-        expirationTime: 120,
-        passwordCategoryId: this.cats[0].catId,
-        optionalText: '',
-        userName: ''
-      });
+      if(correct===true){
+        if(this.edit===false){
+          /* Enviamos peticion *CREAR* a la API */
+          let x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName);
+          /* Comprobamos respuesta de la API */
+          if (x.status === 200){
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code:2,
+              text:'Contraseña creada con éxito :)'}});
+          }else{
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code:4,
+              text: 'Error ' + x.status + ': ' + x.statusText}});
+          }
+        }else{
+          /* Enviamos peticion *EDITAR* a la API */
+          let x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName);
+          /* Comprobamos respuesta de la API */
+          if (x.status === 200){
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code:2,
+              text:'Contraseña modificada con éxito :)'}});
+          }else{
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code:4,
+              text: 'Error ' + x.status + ': ' + x.statusText}});
+          }
+        }
+        if (e !== null) window.dispatchEvent(e);
+      }
       /* Cerramos el modal */
       this.handleClose();
     }
 
 
     render(){
+      let titulo;
+      let boton;
+      if(this.edit===false){
+        titulo = "Crea tu nueva contraseña";
+        boton = "Crear contraseña";
+      }else{
+        titulo = "Edita tu contraseña";
+        boton = "Guardar cambios";
+      }
       return(
         <div className="newpass">
-            <h1>Crea una nueva contraseña</h1>
+            <h1>{titulo}</h1>
             <form id="newpassform" onSubmit={this.handleSubmit} >
-
               <div className="input-group">
                 <label className={this.state.passwordName!=="" ? "label-active":null}>
                   Nombre
                 </label>
-                <input
-                  type="text" name="name"
-                  value={this.state.passwordName}
-                  onChange={this.handleChangeName}
-                  required
+                <input type="text" name="name" value={this.state.passwordName}
+                  onChange={this.handleChangeName} required
                 />
               </div>
-
               <div className="input-group">
                 <label className={this.state.userName!=="" ? "label-active":null}>
                   Usuario
                 </label>
-                <input
-                  type="text" name="user"
-                  value={this.state.userName}
+                <input type="text" name="user" value={this.state.userName}
                   onChange={this.handleChangeUser}
                 />
               </div>
-
               <div className="input-group">
                 <label className={this.state.password!=="" ? "label-active":null}>
                   Contraseña
                 </label>
-                <input
-                  type="text" name="pass"
-                  value={this.state.password}
-                  onChange={this.handleChangePass}
-                  required
+                <input type="text" name="pass" value={this.state.password}
+                  onChange={this.handleChangePass} required
                 />
               </div>
-
               <div className="input-group">
-                <label className={this.state.expirationTime!=="" ? "label-active":null}>
-                  Tiempo de expiración
+                <label>
+                  Días de expiración
                 </label>
-                <input
-                  type="number" name="time"
-                  min="1" max="600"
+                <input type="number" name="time" min="1" max="600"
                   value={this.state.expirationTime}
                   onChange={this.handleChangeTime}
                 />
               </div>
-
-              <div className="input-group">
-                <select name="catt"
-                value={this.state.passwordCategoryId}
-                onChange={this.handleChangeCat}>
+              <div className="input-group cat">
+              <label>
+                Categoría
+              </label>
+                <select name="catt" value={this.state.passwordCategoryId}
+                  onChange={this.handleChangeCat}>
                   {this.cats.map( (cat, i) =>
                     <option key={i} value={cat.catId}>{cat.categoryName}</option>
                   )}
                 </select>
               </div>
-
               <div className="input-group">
                 <label className={this.state.optionalText!=="" ? "label-active": "textarea-correction"}>
                   Texto opcional
                 </label>
-                <textarea
-                type="text" name="text"
-                value={this.state.optionalText}
-                onChange={this.handleChangeText}
+                <textarea type="text" name="text" value={this.state.optionalText}
+                  onChange={this.handleChangeText}
                 />
               </div>
-
               <div className="input-group">
                 <button type="submit" className="btn">
-                  Enviar
+                  {boton}
                 </button>
               </div>
-
             </form>
         </div>
 

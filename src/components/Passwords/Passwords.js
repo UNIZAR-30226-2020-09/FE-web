@@ -12,6 +12,7 @@ class ContraObj extends React.Component {
     super(props);
     this.data = props.data;
     this.delPass = props.delPass;
+    this.editPass = props.editPass;
   }
 
   faux(ev){
@@ -31,7 +32,7 @@ class ContraObj extends React.Component {
           <button onClick={this.faux}>
             <i>{this.data.passwordName}</i>
           </button>
-          <span className={edit} onClick={() => console.log("edit")}/>
+          <span className={edit} onClick={() => this.editPass(this.data)}/>
           <span className={del} onClick={() => this.delPass(this.data)}/>
         </div>
         <div className="ctr-body">
@@ -60,9 +61,13 @@ class Passwords extends React.Component {
     this.listar_contras();
 
     this.delPass = this.delPass.bind(this);
+    this.edit = null;
+    this.getEdit = this.getEdit.bind(this);
+    this.editPass = this.editPass.bind(this);
+    this.newPass = this.newPass.bind(this);
 
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleBusqEdit = this.handleBusqEdit.bind(this); 
+    this.handleBusqEdit = this.handleBusqEdit.bind(this);
 
     this.componentAux = function() {
       this.classList.toggle("active-arc");
@@ -96,7 +101,7 @@ class Passwords extends React.Component {
     let x = await Contrasenas.del(e.passId);
     if(x.status === 200) {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña borrada.'} });
-      window.dispatchEvent(e); 
+      window.dispatchEvent(e);
     }
     else {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido borrar la contraseña.'} });
@@ -104,7 +109,20 @@ class Passwords extends React.Component {
     }
 
     window.location.reload();
+  }
 
+  editPass(x){
+    this.edit = x;
+    this.refs.newpass.setEdit();
+    this.toggleModal();
+  }
+  newPass(){
+    this.edit = null;
+    this.refs.newpass.setNew();
+    this.toggleModal();
+  }
+  getEdit(){
+    return this.edit;
   }
 
   toggleModal(){
@@ -133,7 +151,8 @@ class Passwords extends React.Component {
     return (
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>
-          <NewPass handleClose={this.toggleModal} mp={this.mp}/>
+          <NewPass handleClose={this.toggleModal} mp={this.mp}
+                    ref="newpass" edit={this.getEdit}/>
         </PassModal>
         <div className="passwords">
           <div className="row">
@@ -144,7 +163,7 @@ class Passwords extends React.Component {
           </div>
           <div className="row busq">
             <div className="column col-30">
-              <button type="button" className="btn" onClick={this.toggleModal}>
+              <button type="button" className="btn" onClick={this.newPass}>
                 <span className="fas fa-plus"/>
                 <i>Nueva contraseña</i>
               </button>
@@ -162,8 +181,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Mis Contraseñas</button>
               <ul className="panel">
-                {this.state.contras.map((c,i) => <ContraObj key={i} data={c}
-                delPass={this.delPass}/>)}
+                {this.state.contras.map((c,i) =>
+                  <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>
@@ -171,8 +190,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Contraseñas Grupales</button>
               <ul className="panel">
-                {this.state.grupales.map((c,i) => <ContraObj key={i} data={c}
-                delPass={this.delPass}/>)}
+                {this.state.grupales.map((c,i) =>
+                  <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>
