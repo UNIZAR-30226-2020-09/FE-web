@@ -97,17 +97,12 @@ class Passwords extends React.Component {
     }
   }
 
-  async delPass(e){
-    let x = await Contrasenas.del(e.passId);
-    if(x.status === 200) {
-      var e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña borrada.'} });
-      window.dispatchEvent(e);
-    }
-    else {
-      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido borrar la contraseña.'} });
-      window.dispatchEvent(e);
-    }
-
+  async delPass(pass){
+    let x = await Contrasenas.del(pass.passId);
+    var e = null;
+    if(x.status === 200) e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña borrada.'} });
+    else e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido borrar la contraseña.'} });
+    if (e !== null) window.dispatchEvent(e);
     window.location.reload();
   }
 
@@ -133,8 +128,7 @@ class Passwords extends React.Component {
   }
 
   componentDidMount(){
-    var acc = document.getElementsByClassName("accordion");
-    var i, ev = new Event("click");
+    var acc = document.getElementsByClassName("accordion"), i;
     for (i = 0; i < acc.length; i++) {
       acc[i].addEventListener("click", this.componentAux);
     }
@@ -199,7 +193,6 @@ class Passwords extends React.Component {
       </div>
     );
   }
-
 }
 
 export default Passwords;

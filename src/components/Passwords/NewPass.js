@@ -120,7 +120,7 @@ class NewPass extends React.Component {
           if (x.status === 200){
             e = new CustomEvent('PandoraAlert', { 'detail': {
               code:2,
-              text:'Contraseña creada con éxito :)'}});
+              text:'Contraseña creada con éxito.'}});
           }else{
             e = new CustomEvent('PandoraAlert', { 'detail': {
               code:4,
@@ -142,7 +142,10 @@ class NewPass extends React.Component {
               text: 'Error ' + x.status + ': ' + x.statusText}});
           }
         }
-        if (e !== null) window.dispatchEvent(e);
+        if (e !== null) {
+          window.dispatchEvent(e);
+          if (e.detail.code === 2)window.location.reload();
+        }
       }
       /* Cerramos el modal */
       this.handleClose();

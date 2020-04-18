@@ -1,6 +1,6 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
-import { request } from 'https';
+//import { request } from 'https';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
@@ -68,7 +68,7 @@ const Contrasenas = {
       passwordCategoryId: cat, optionalText: text, userName: user }),
   update: (mp, id, name, pass, time, cat, text, user) =>
     requests.post(`/contrasenya/modificar`, { masterPassword: mp, id: id,
-      passwordName: name, password: pass, expirationTime: time, 
+      passwordName: name, password: pass, expirationTime: time,
       passwordCategoryId: cat, optionalText: text, userName: user }),
   listar: (mp) =>
     requests.post(`/contrasenya/listar`, { masterPassword: mp }),

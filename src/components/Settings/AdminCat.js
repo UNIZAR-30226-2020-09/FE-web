@@ -55,7 +55,7 @@ class AdminCat extends React.Component {
         var e = null, txt = event.target.parentElement.childNodes[0].value;
         let x = await Categorias.update(id, txt);
         if (x.status === 200) {
-          e = new CustomEvent('PandoraAlert', { 'detail': {code:1, text:'Se ha editado la categoria ' + txt} });
+          e = new CustomEvent('PandoraAlert', { 'detail': {code:1, text:'Se ha editado la categoría "' + txt + '".'} });
         } else {
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code: 4,

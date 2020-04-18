@@ -33,7 +33,7 @@ class Registro extends Component{
           //console.log(this.state.email, this.state.password);
           //console.log(x);
           if (x.status === 200) {
-            e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text: x.statusText}});
+            e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text: 'Se ha registrado correctamente. Puede iniciar sesión.'}});
             this.setState({email: '', password: '', confirm: ''});
           }
           else e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'Error: ' + x.statusText}});
@@ -65,14 +65,14 @@ class Registro extends Component{
                 <label className={this.state.password!=="" ? "label-active":null}>
                   Contraseña
                 </label>
-                <input type="text" name="password"
+                <input type="password" name="password"
                   value={this.state.password} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
                 <label className={this.state.confirm!=="" ? "label-active":null}>
                   Repetir contraseña
                 </label>
-                <input type="text" name="confirm"
+                <input type="password" name="confirm"
                   value={this.state.confirm} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
