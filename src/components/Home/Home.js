@@ -30,7 +30,7 @@ class Home extends React.Component {
             <img src={logo} alt="Pandora"/>
             <div className="row">
               <div className="col-100">
-                <h2>Protege, guarda, recuerda...</h2>
+                <h2>Proteja, guarde, recuerde...</h2>
                 <h1>Sus contraseñas</h1>
               </div>
             </div>
