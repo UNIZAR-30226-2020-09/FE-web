@@ -31,7 +31,7 @@ class Home extends React.Component {
             <div className="row">
               <div className="col-100">
                 <h2>Protege, guarda, recuerda...</h2>
-                <h1>Tus contraseñas</h1>
+                <h1>Sus contraseñas</h1>
               </div>
             </div>
           </div>
