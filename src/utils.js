@@ -27,6 +27,25 @@ export const mailValidation = (mail) => {
   return mail.match(mailformat);
 }
 
-export const passwValidation = (mail) => {
-  return true;
+export const passwValidation = (pass) => {
+  var mayusc = /.*[A-Z].*/;
+  var minusc = /.*[a-z].*/;
+  var num = /.*[0-9].*/;
+  var espe = /.*\W.*/;
+  var aux = pass.length;
+  console.log(pass);
+  console.log(aux);
+  console.log(pass.match(mayusc));
+  console.log(pass.match(minusc));
+  console.log(pass.match(num));
+  console.log(pass.match(espe));
+  if (aux < 8 || aux > 40){
+    return false
+  }
+  else if (!pass.match(mayusc) || !pass.match(minusc) || !pass.match(num) || !pass.match(espe) ){
+    return false;
+  }
+  else{
+    return true;
+  }
 }

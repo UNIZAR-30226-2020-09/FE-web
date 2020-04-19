@@ -42,7 +42,7 @@ class Registro extends Component{
           e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Las contraseñas no coinciden.'}});
         }
       } else {
-        e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Contraseña no válida.'}});
+        e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Contraseña no válida.  Recuerde la contraseña debe contener: • mínimo 8 caracteres • maximo 40 caracteres • 1 minúscula • 1 mayúscula • 1 número • 1 carácter especial'}});
       }
     } else e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Email no válido.'}});
     if (e !== null) window.dispatchEvent(e);
