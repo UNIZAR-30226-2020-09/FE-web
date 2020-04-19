@@ -13,6 +13,7 @@ class Registro extends Component{
     };
     this.InputChange = this.InputChange.bind(this);
     this.Register = this.Register.bind(this);
+    this.popUp = this.popUp.bind(this);
   }
 
   InputChange(event){
@@ -48,6 +49,12 @@ class Registro extends Component{
     if (e !== null) window.dispatchEvent(e);
   }
 
+  popUp(){
+    console.log("Lanzando popup");
+    var popup=document.getElementById("regInstructions");
+    popup.classList.toggle("show");
+  }
+
     render(){
       return(
         <div className="registro">
@@ -61,7 +68,8 @@ class Registro extends Component{
                 <input type="text" name="email"
                   value={this.state.email} onChange={this.InputChange}/>
               </div>
-              <div className="input-group">
+              <div className="input-group" onClick={this.popUp}>
+                <span className="popuptext" id="regInstructions">• Mínimo 8 caracteres <br/> • Máximo 40 caracteres <br/> • 1 minúscula <br/> • 1 mayúscula <br/> • 1 número <br/> • 1 carácter especial</span>
                 <label className={this.state.password!=="" ? "label-active":null}>
                   Contraseña
                 </label>
