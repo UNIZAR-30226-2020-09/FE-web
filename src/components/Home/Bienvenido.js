@@ -13,7 +13,7 @@ class Bienvenido extends React.Component{
           <div className="box">
             <div className="row">
               <h1>Bienvenido a Pandora</h1>
-              <h1>{this.getUser.mail}</h1>
+              <h2>{this.getUser.mail}</h2>
             </div>
           </div>
         </div>
