@@ -1,5 +1,6 @@
 import React from 'react';
 import AdminCat from './AdminCat';
+import { truncateText } from '../../utils';
 import './Settings.css';
 
 import logo from '../cte/pandora-texto.png';
@@ -25,7 +26,7 @@ class Settings extends React.Component {
             <div className="column col-50">
               <span>
                 <h2>Usuario actual:</h2>
-                <h1>{this.getUser().mail}</h1>
+                <h1>{truncateText(this.getUser().mail,30)}</h1>
               </span>
             </div>
             <div className="column col-50 hide-on-mobile">

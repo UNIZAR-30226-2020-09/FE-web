@@ -35,3 +35,11 @@ export const passwValidation = (pass) => {
   if (!pass.match(mayusc) || !pass.match(minusc) || !pass.match(num) || !pass.match(espe)) return false;
   return true;
 }
+
+export const truncateText = (text, maxLength) => {
+  var truncated = text;
+  if (text.length > maxLength) {
+      truncated = truncated.substr(0,maxLength) + '...';
+  }
+  return truncated;
+}
