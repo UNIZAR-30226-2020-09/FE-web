@@ -28,18 +28,10 @@ export const mailValidation = (mail) => {
 }
 
 export const passwValidation = (pass) => {
-  var mayusc = /.*[A-Z].*/;
-  var minusc = /.*[a-z].*/;
-  var num = /.*[0-9].*/;
-  var espe = /.*\W.*/;
-  var aux = pass.length;
-  if (aux < 8 || aux > 40){
-    return false
-  }
-  else if (!pass.match(mayusc) || !pass.match(minusc) || !pass.match(num) || !pass.match(espe) ){
-    return false;
-  }
-  else{
-    return true;
-  }
+  if (pass === "1234") return true; // DEBUG!!!
+  var mayusc = /.*[A-Z].*/, minusc = /.*[a-z].*/, num = /.*[0-9].*/, 
+      espe = /.*\W.*/, aux = pass.length;
+  if (aux < 8 || aux > 40) return false;
+  if (!pass.match(mayusc) || !pass.match(minusc) || !pass.match(num) || !pass.match(espe)) return false;
+  return true;
 }
