@@ -45,7 +45,7 @@ class Registro extends Component{
     if (e !== null) window.dispatchEvent(e);
   }
 
-  popUp(){ 
+  popUp(){
     var popup=document.getElementById("regInstructions");
     popup.classList.toggle("show");
   }
@@ -61,7 +61,7 @@ class Registro extends Component{
                   Correo
                 </label>
                 <input type="text" name="email"
-                  value={this.state.email} onChange={this.InputChange}/>
+                  maxlength="100" value={this.state.email} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
                 <span className="popuptext" id="regInstructions">• Mínimo 8 caracteres <br/> • Máximo 40 caracteres <br/> • 1 minúscula <br/> • 1 mayúscula <br/> • 1 número <br/> • 1 carácter especial</span>

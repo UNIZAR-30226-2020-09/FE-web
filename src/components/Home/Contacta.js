@@ -59,6 +59,7 @@ class Contacta extends React.Component{
                 <input
                   type="text"
                   name="mail"
+                  maxlength="100"
                   value={this.state.mail}
                   onChange={this.handleChangeMail}
                 />
