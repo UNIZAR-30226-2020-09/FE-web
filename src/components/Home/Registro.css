@@ -56,13 +56,14 @@
   width: 160px;
   background-color: #555;
   color: #fff;
-  text-align: center;
+  text-align: initial;
   border-radius: 6px;
   padding: 8px 0;
+  padding-left: 10px;
   position: absolute;
   z-index: 1;
   bottom: 125%;
-  left: 50%;
+  left: 60%;
   margin-left: -25%;
 }
 

@@ -194,7 +194,7 @@ class NewPass extends React.Component {
                 <label>
                   Días de expiración
                 </label>
-                <input type="number" name="time" min="1" max="600"
+                <input type="number" name="time" min="1" max="365"
                   value={this.state.expirationTime}
                   onChange={this.handleChangeTime}
                 />
