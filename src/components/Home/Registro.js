@@ -69,14 +69,14 @@ class Registro extends Component{
                   Contraseña
                 </label>
                 <input type="password" name="password"
-                  value={this.state.password} onChange={this.InputChange} onFocus={this.popUp} onBlur={this.popUp}/>
+                  maxlength="40" value={this.state.password} onChange={this.InputChange} onFocus={this.popUp} onBlur={this.popUp}/>
               </div>
               <div className="input-group">
                 <label className={this.state.confirm!=="" ? "label-active":null}>
                   Repetir contraseña
                 </label>
                 <input type="password" name="confirm"
-                  value={this.state.confirm} onChange={this.InputChange}/>
+                  maxlength="40" value={this.state.confirm} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
                 <button type="submit" className="btn">
