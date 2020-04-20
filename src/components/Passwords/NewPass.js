@@ -92,55 +92,35 @@ class NewPass extends React.Component {
     async handleSubmit(event) {
       event.preventDefault();
       var e = null;
-      /* Comprobamos carácteres máximos */
-      let correct = false;
-      if(this.state.passwordName.length > 30){
-        e = new CustomEvent('PandoraAlert', { 'detail': {
-          code:4,
-          text:'Nombre de la contraseña demasiado largo (max 30 carácteres)'}});
-      }else if(this.state.userName.length > 30){
-        e = new CustomEvent('PandoraAlert', { 'detail': {
-          code:4,
-          text:'Nombre de usuario demasiado largo (max 30 carácteres)'}});
-      }else if(this.state.optionalText.length > 100){
-        e = new CustomEvent('PandoraAlert', { 'detail': {
-          code:4,
-          text:'Texto adicional demasiado largo (max 100 carácteres)'}});
-      }else{
-        correct = true;
-      }
-      if (e !== null) window.dispatchEvent(e);
-      if(correct===true){
-        if(this.edit===false){
-          /* Enviamos peticion *CREAR* a la API */
-          let x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
-            this.state.expirationTime, this.state.passwordCategoryId,
-            this.state.optionalText, this.state.userName);
-          /* Comprobamos respuesta de la API */
-          if (x.status === 200){
-            e = new CustomEvent('PandoraAlert', { 'detail': {
-              code:2,
-              text:'Contraseña creada con éxito.'}});
-          }else{
-            e = new CustomEvent('PandoraAlert', { 'detail': {
-              code:4,
-              text: 'Error ' + x.status + ': ' + x.statusText}});
-          }
+      if(this.edit===false){
+        /* Enviamos peticion *CREAR* a la API */
+        let x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
+          this.state.expirationTime, this.state.passwordCategoryId,
+          this.state.optionalText, this.state.userName);
+        /* Comprobamos respuesta de la API */
+        if (x.status === 200){
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code:2,
+            text:'Contraseña creada con éxito.'}});
         }else{
-          /* Enviamos peticion *EDITAR* a la API */
-          let x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
-            this.state.expirationTime, this.state.passwordCategoryId,
-            this.state.optionalText, this.state.userName);
-          /* Comprobamos respuesta de la API */
-          if (x.status === 200){
-            e = new CustomEvent('PandoraAlert', { 'detail': {
-              code:2,
-              text:'Contraseña modificada con éxito :)'}});
-          }else{
-            e = new CustomEvent('PandoraAlert', { 'detail': {
-              code:4,
-              text: 'Error ' + x.status + ': ' + x.statusText}});
-          }
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code:4,
+            text: 'Error ' + x.status + ': ' + x.statusText}});
+        }
+      }else{
+        /* Enviamos peticion *EDITAR* a la API */
+        let x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
+          this.state.expirationTime, this.state.passwordCategoryId,
+          this.state.optionalText, this.state.userName);
+        /* Comprobamos respuesta de la API */
+        if (x.status === 200){
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code:2,
+            text:'Contraseña modificada con éxito :)'}});
+        }else{
+          e = new CustomEvent('PandoraAlert', { 'detail': {
+            code:4,
+            text: 'Error ' + x.status + ': ' + x.statusText}});
         }
         if (e !== null) {
           window.dispatchEvent(e);
@@ -170,7 +150,7 @@ class NewPass extends React.Component {
                 <label className={this.state.passwordName!=="" ? "label-active":null}>
                   Nombre
                 </label>
-                <input type="text" name="name" value={this.state.passwordName}
+                <input type="text" maxlength="30" name="name" value={this.state.passwordName}
                   onChange={this.handleChangeName} required
                 />
               </div>
@@ -178,7 +158,7 @@ class NewPass extends React.Component {
                 <label className={this.state.userName!=="" ? "label-active":null}>
                   Usuario
                 </label>
-                <input type="text" name="user" value={this.state.userName}
+                <input type="text" maxlength="30" name="user" value={this.state.userName}
                   onChange={this.handleChangeUser}
                 />
               </div>
@@ -214,7 +194,7 @@ class NewPass extends React.Component {
                 <label className={this.state.optionalText!=="" ? "label-active": "textarea-correction"}>
                   Texto opcional
                 </label>
-                <textarea type="text" name="text" value={this.state.optionalText}
+                <textarea type="text" maxlength="100" name="text" value={this.state.optionalText}
                   onChange={this.handleChangeText}
                 />
               </div>

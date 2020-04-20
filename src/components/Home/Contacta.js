@@ -70,6 +70,7 @@ class Contacta extends React.Component{
                 <textarea
                 type="text"
                 name="body"
+                maxlength="250"
                 value={this.state.body}
                 onChange={this.handleChangeBody}
                 />
