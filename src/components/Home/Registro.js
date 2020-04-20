@@ -15,7 +15,6 @@ class Registro extends Component{
     this.Register = this.Register.bind(this);
     this.popUp = this.popUp.bind(this);
   }
-
   InputChange(event){
     const {value,name} = event.target;
     this.setState({
@@ -30,9 +29,6 @@ class Registro extends Component{
       if (passwValidation(this.state.password)){
         if(this.state.password === this.state.confirm){
           let x = await Usuario.registro(this.state.email, this.state.password);
-          //console.log(this.state);
-          //console.log(this.state.email, this.state.password);
-          //console.log(x);
           if (x.status === 200) {
             e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text: 'Se ha registrado correctamente. Puede iniciar sesión.'}});
             this.setState({email: '', password: '', confirm: ''});
@@ -49,8 +45,7 @@ class Registro extends Component{
     if (e !== null) window.dispatchEvent(e);
   }
 
-  popUp(){
-    console.log("Lanzando popup");
+  popUp(){ 
     var popup=document.getElementById("regInstructions");
     popup.classList.toggle("show");
   }
@@ -68,13 +63,13 @@ class Registro extends Component{
                 <input type="text" name="email"
                   value={this.state.email} onChange={this.InputChange}/>
               </div>
-              <div className="input-group" onClick={this.popUp}>
+              <div className="input-group">
                 <span className="popuptext" id="regInstructions">• Mínimo 8 caracteres <br/> • Máximo 40 caracteres <br/> • 1 minúscula <br/> • 1 mayúscula <br/> • 1 número <br/> • 1 carácter especial</span>
                 <label className={this.state.password!=="" ? "label-active":null}>
                   Contraseña
                 </label>
                 <input type="password" name="password"
-                  value={this.state.password} onChange={this.InputChange}/>
+                  value={this.state.password} onChange={this.InputChange} onFocus={this.popUp} onBlur={this.popUp}/>
               </div>
               <div className="input-group">
                 <label className={this.state.confirm!=="" ? "label-active":null}>
