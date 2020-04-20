@@ -33,12 +33,6 @@ export const passwValidation = (pass) => {
   var num = /.*[0-9].*/;
   var espe = /.*\W.*/;
   var aux = pass.length;
-  console.log(pass);
-  console.log(aux);
-  console.log(pass.match(mayusc));
-  console.log(pass.match(minusc));
-  console.log(pass.match(num));
-  console.log(pass.match(espe));
   if (aux < 8 || aux > 40){
     return false
   }
