@@ -59,7 +59,7 @@ class Contacta extends React.Component{
                 <input
                   type="text"
                   name="mail"
-                  maxlength="100"
+                  maxLength="100"
                   value={this.state.mail}
                   onChange={this.handleChangeMail}
                 />
@@ -71,7 +71,7 @@ class Contacta extends React.Component{
                 <textarea
                 type="text"
                 name="body"
-                maxlength="250"
+                maxLength="250"
                 value={this.state.body}
                 onChange={this.handleChangeBody}
                 />
