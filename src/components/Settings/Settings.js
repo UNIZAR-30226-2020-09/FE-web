@@ -13,6 +13,7 @@ class Settings extends React.Component {
     this.getUser = props.user;
   }
   render() {
+    document.body.style.backgroundColor = "#ebe4f4";
     return (
       <div className="app-container">
         <div className="settings">

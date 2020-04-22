@@ -26,6 +26,7 @@ class ContraObj extends React.Component {
   }
 
   render() {
+    document.body.style.backgroundColor = "#ebe4f4";
     return (
       <li>
         <div className="ctr-title">
