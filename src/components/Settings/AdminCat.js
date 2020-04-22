@@ -89,7 +89,7 @@ class AdminCat extends React.Component {
         if (x.status === 200) {
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code: 2,
-            text:'Se ha eliminado la categoria ' + this.cats[cat].categoryName
+            text:'Se ha eliminado la categoría ' + this.cats[cat].categoryName
           }});
         } else {
           e = new CustomEvent('PandoraAlert', { 'detail': {
@@ -116,7 +116,7 @@ class AdminCat extends React.Component {
           if (x.status === 200) {
             e = new CustomEvent('PandoraAlert', { 'detail': {
               code: 2,
-              text:'Se ha creado la categoria ' + new_Cat
+              text:'Se ha creado la categoría ' + new_Cat
             }});
           } else {
             e = new CustomEvent('PandoraAlert', { 'detail': {

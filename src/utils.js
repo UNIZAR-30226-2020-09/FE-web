@@ -11,13 +11,34 @@ export const history = createHistory();
 /* ssessionStorage */
 
 const cookie = "pandora-react";
+let ck = {
+  user: null
+};
 export const Cookie = {
-  set: (state) =>
-    window.sessionStorage.setItem(cookie, JSON.stringify(state)),
-  get: () =>
-    JSON.parse(window.sessionStorage.getItem(cookie)),
+  set: (state) => {
+    let update = false;
+    // Para cada elemento de 'state' que esté en ck, se actualiza el valor de ck
+    for (let v in state) {
+      if (v !== ck[v] && v in ck) {
+        update = true;
+        ck[v] = state[v]
+      }
+    }
+    // Si se ha modificado algo de ck, actualizamos cookie
+    if (update) window.localStorage.setItem(cookie, JSON.stringify(ck))
+  },
+  get: () => {
+    ck = JSON.parse(window.localStorage.getItem(cookie));
+    return ck;
+  },
   clear: () =>
-    window.sessionStorage.setItem(cookie, null)
+    window.localStorage.setItem(cookie, null),
+  confirm: (ev) => {
+    if (ev.key === cookie) {
+      ck = JSON.parse(ev.newValue);
+      return ck;
+    }
+  }
 }
 
 
