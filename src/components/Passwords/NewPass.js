@@ -122,10 +122,10 @@ class NewPass extends React.Component {
             code:4,
             text: 'Error ' + x.status + ': ' + x.statusText}});
         }
-        if (e !== null) {
-          window.dispatchEvent(e);
-          if (e.detail.code === 2)window.location.reload();
-        }
+      }
+      if (e !== null) {
+        window.dispatchEvent(e);
+        if (e.detail.code === 2)window.location.reload();
       }
       /* Cerramos el modal */
       this.handleClose();
