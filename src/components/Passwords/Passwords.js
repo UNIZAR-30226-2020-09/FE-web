@@ -81,7 +81,7 @@ class Passwords extends React.Component {
     }
   }
 
-  async listar_contras(){
+  async listar_contras(acordeon=true){
     let x = await Contrasenas.listar(this.mp);
     console.log(x);
     if (x.status === 200) {
@@ -90,10 +90,12 @@ class Passwords extends React.Component {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
       window.dispatchEvent(e);
     }
-    var acc = document.getElementsByClassName("accordion");
-    var i, ev = new Event("click");
-    for (i = 0; i < acc.length; i++) {
-      acc[i].dispatchEvent(ev);
+    if(acordeon){
+      var acc = document.getElementsByClassName("accordion");
+      var i, ev = new Event("click");
+      for (i = 0; i < acc.length; i++) {
+        acc[i].dispatchEvent(ev);
+      }
     }
   }
 
@@ -103,7 +105,7 @@ class Passwords extends React.Component {
     if(x.status === 200) e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña borrada.'} });
     else e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido borrar la contraseña.'} });
     if (e !== null) window.dispatchEvent(e);
-    window.location.reload();
+    this.listar_contras(false);
   }
 
   editPass(x){
@@ -146,7 +148,7 @@ class Passwords extends React.Component {
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>
           <NewPass handleClose={this.toggleModal} mp={this.mp}
-                    ref="newpass" edit={this.getEdit}/>
+                    ref="newpass" edit={this.getEdit} listar={this.listar_contras.bind(this)}/>
         </PassModal>
         <div className="passwords">
           <div className="row">

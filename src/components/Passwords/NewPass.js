@@ -9,6 +9,7 @@ class NewPass extends React.Component {
       this.handleClose = props.handleClose;//para cerrar modal
       this.mp = props.mp;//masterPassword
       this.getEdit = props.edit;//contraseña que ha sido pulsada
+      this.listarC = props.listar;
 
       this.state = {
           passwordName: '',
@@ -125,7 +126,7 @@ class NewPass extends React.Component {
       }
       if (e !== null) {
         window.dispatchEvent(e);
-        if (e.detail.code === 2)window.location.reload();
+        if (e.detail.code === 2) this.listarC(false);
       }
       /* Cerramos el modal */
       this.handleClose();
@@ -150,7 +151,7 @@ class NewPass extends React.Component {
                 <label className={this.state.passwordName!=="" ? "label-active":null}>
                   Nombre
                 </label>
-                <input type="text" maxlength="30" name="name" value={this.state.passwordName}
+                <input type="text" maxLength="30" name="name" value={this.state.passwordName}
                   onChange={this.handleChangeName} required
                 />
               </div>
@@ -158,7 +159,7 @@ class NewPass extends React.Component {
                 <label className={this.state.userName!=="" ? "label-active":null}>
                   Usuario
                 </label>
-                <input type="text" maxlength="30" name="user" value={this.state.userName}
+                <input type="text" maxLength="30" name="user" value={this.state.userName}
                   onChange={this.handleChangeUser}
                 />
               </div>
@@ -194,7 +195,7 @@ class NewPass extends React.Component {
                 <label className={this.state.optionalText!=="" ? "label-active": "textarea-correction"}>
                   Texto opcional
                 </label>
-                <textarea type="text" maxlength="100" name="text" value={this.state.optionalText}
+                <textarea type="text" maxLength="100" name="text" value={this.state.optionalText}
                   onChange={this.handleChangeText}
                 />
               </div>
