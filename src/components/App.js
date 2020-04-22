@@ -88,9 +88,7 @@ class App extends React.Component {
           <Route path="/passwords" component={ () =>
             <Passwords getUser={this.getUser.bind(this)}/>
           } />
-          <Route path="/categories" component={ () =>
-            <Err_404/>
-          } />
+          <Route path="/categories" component={Err_404} />
           <Route path="/settings" component={ () =>
             <Settings getUser={this.getUser.bind(this)}
               updateParent={this.updateState.bind(this)}/>
