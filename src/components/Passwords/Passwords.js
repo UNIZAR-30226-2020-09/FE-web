@@ -51,7 +51,8 @@ class ContraObj extends React.Component {
 class Passwords extends React.Component {
   constructor(props){
     super(props);
-    this.mp = props.user.password;
+    this.mp = props.getUser(); // SI NULL, REDIRECCION DESDE PADRE
+    if (this.mp !== null) this.mp = this.mp.password;
     this.state = {
       addModal: false,
       busq: '',
@@ -144,6 +145,7 @@ class Passwords extends React.Component {
   }
 
   render() {
+    if (this.mp === null) return null;
     return (
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>

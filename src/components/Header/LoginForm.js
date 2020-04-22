@@ -59,7 +59,7 @@ class LoginForm extends React.Component {
             text:'Sesión iniciada (' + this.state.user + ')'
           }});
           window.dispatchEvent(e);
-          history.push('/welcome');
+          history.push('/home');
         } else {
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code: 4,

@@ -22,7 +22,7 @@ class Redirection extends React.Component {
         this.update({user: null});
         history.push('/home');
       } else {
-        history.push('/welcome');
+        history.push('/home');
       }
     }
   }

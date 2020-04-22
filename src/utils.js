@@ -19,7 +19,7 @@ export const Cookie = {
     let update = false;
     // Para cada elemento de 'state' que esté en ck, se actualiza el valor de ck
     for (let v in state) {
-      if (v !== ck[v] && v in ck) {
+      if (v in ck && state[v] !== ck[v]) {
         update = true;
         ck[v] = state[v]
       }
@@ -28,7 +28,10 @@ export const Cookie = {
     if (update) window.localStorage.setItem(cookie, JSON.stringify(ck))
   },
   get: () => {
-    ck = JSON.parse(window.localStorage.getItem(cookie));
+    let c = JSON.parse(window.localStorage.getItem(cookie));
+    if (c !== null) {
+      for (let v in c) if (v in ck && c[v] !== ck[v]) ck[v] = c[v];
+    }
     return ck;
   },
   clear: () =>
