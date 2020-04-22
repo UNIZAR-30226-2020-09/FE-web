@@ -13,8 +13,7 @@ class Bienvenido extends React.Component{
       <div className="bienvenido">
         <div className="box">
           <div className="row">
-            <h1>Bienvenido a Pandora</h1>
-            <h2 maxlength="20">{truncateText(this.getUser.mail,23)}</h2>
+            <h1>Bienvenido a Pandora {truncateText(this.getUser.mail,23)}</h1>
           </div>
         </div>
       </div>

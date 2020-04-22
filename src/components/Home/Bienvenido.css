@@ -8,19 +8,13 @@
 .bienvenido .box h1{
   color: #d1d1d1;
   margin: auto;
-  font-size: 40px;
-  text-align: center;
-}
-
-.bienvenido .box h2{
-  color: #d1d1d1;
-  margin: auto;
-  font-size: 35px;
+  font-size: calc(1em + 1vw);
   text-align: center;
 }
 
 .bienvenido .box{
   position: relative;
+  overflow: hidden;
   top: 15%;
   width: 90%;
   height: 60%;
@@ -30,11 +24,16 @@
 }
 
 .bienvenido .box .row{
-  display:block;
+  position: relative;
+  overflow: hidden;
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
-  position: relative;
   top: 35%;
   margin-bottom: auto;
+}
+
+/* Objetivo -> responsive */
+@media screen and (max-width: 800px) {
+
 }
