@@ -71,10 +71,11 @@ class Contacta extends React.Component{
                 <textarea
                 type="text"
                 name="body"
+                minLength="5"
                 maxLength="250"
                 value={this.state.body}
                 onChange={this.handleChangeBody}
-                />
+                required/>
               </div>
               <div className="input-group">
                 <button type="submit" className="btn">

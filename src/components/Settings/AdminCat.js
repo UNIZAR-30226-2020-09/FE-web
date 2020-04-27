@@ -149,7 +149,7 @@ class AdminCat extends React.Component {
           {this.cats.map( (cat, i) =>
             this.state.onedit[i] ?
             <li key={cat.catId} className="slot inner">
-              <input type="text" defaultValue={cat.categoryName} onKeyUp={this.inputEnter}/>
+              <input type="text" maxLength="30" defaultValue={cat.categoryName} onKeyUp={this.inputEnter} required/>
               <span className={ok} onClick={(e) => this.oneditHandler(e,cat.catId)}/>
               <span className={quit} onClick={(e) => this.oneditHandler(e,cat.catId)}/>
             </li>
@@ -162,7 +162,7 @@ class AdminCat extends React.Component {
           )}
           {this.state.new ?
             <li key={0} className="slot inner">
-              <input type="text" placeholder="Nueva categoría..." onKeyUp={this.inputEnter} required/>
+              <input type="text" maxLength="30" placeholder="Nueva categoría..." onKeyUp={this.inputEnter} required/>
               <span className={ok} onClick={this.onaddHandler.bind(this)}/>
               <span className={quit} onClick={this.onaddHandler.bind(this)}/>
             </li>

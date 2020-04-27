@@ -20,12 +20,14 @@ class ContraObj extends React.Component {
     if (ch.style.maxHeight) {
       ch.style.maxHeight = null;
     } else {
-      ch.style.maxHeight = 100 + "px";
+      ch.style.maxHeight = 310 + "px";
       //panel.scrollHeight + 20 + "px"; // TODO:
     }
   }
 
   render() {
+    let twoR = {'margin-right': '5px'};
+    let twoL = {'margin-left': '5px'};
     return (
       <li>
         <div className="ctr-title">
@@ -36,11 +38,26 @@ class ContraObj extends React.Component {
           <span className={del} onClick={() => this.delPass(this.data)}/>
         </div>
         <div className="ctr-body">
-          Usuario: {this.data.userName}
-          <br/>
-          Contraseña: {this.data.password}
-          <br/>
-          TextoOpcional: {this.data.optionalText}
+          <div className="box break">
+            <h1>Usuario</h1>
+            <h2>{this.data.userName}</h2>
+          </div>
+          <div className="box break">
+            <h1>Contraseña</h1>
+            <h2>{this.data.password}</h2>
+          </div>
+          <div className="box" style={twoR}>
+            <h1>Expira en</h1>
+            <h2>{this.data.noDaysBeforeExpiration} dias</h2>
+          </div>
+          <div className="box" style={twoL}>
+            <h1>Categoría</h1>
+            <h2>{this.data.categoryName}</h2>
+          </div>
+          <div className="box break">
+            <h1>Texto Opcional</h1>
+            <h2>{this.data.userName}</h2>
+          </div>
         </div>
       </li>
     );
@@ -76,7 +93,7 @@ class Passwords extends React.Component {
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
       } else {
-        panel.style.maxHeight = panel.childElementCount*100 + "px";
+        panel.style.maxHeight = panel.childElementCount*310 + "px";
         //panel.scrollHeight + 20 + "px"; // TODO:
       }
     }
