@@ -72,6 +72,8 @@ const Contrasenas = {
       passwordCategoryId: cat, optionalText: text, userName: user }),
   listar: (mp) =>
     requests.post(`/contrasenya/listar`, { masterPassword: mp }),
+  filtrar: (mp,id) =>
+    requests.post(`/contrasenya/listarPorCategoria`, { masterPassword: mp, idCat: id }),
   del: (cat) =>
     requests.del(`/contrasenya/eliminar`,cat)
 }

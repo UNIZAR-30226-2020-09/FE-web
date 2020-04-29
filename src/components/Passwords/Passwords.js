@@ -2,7 +2,7 @@ import React from 'react';
 import PassModal from './PassModal';
 import NewPass from './NewPass';
 import './Passwords.css';
-import {Contrasenas} from '../../agent';
+import {Contrasenas, Categorias} from '../../agent';
 
 const del = "fas fa-trash-alt";
 const edit = "fas fa-pen";
@@ -56,10 +56,16 @@ class Passwords extends React.Component {
     this.state = {
       addModal: false,
       busq: '',
+      filtrarCat: false,
+      filtrarCatId: 0,
+      filtrarBusq: false,
+      filtrarBusqText: '',
       contras: [],
       grupales: []
     };
     this.listar_contras();
+    this.cats = [];//para listar categorías en desplegable
+    this.listar_cat();
 
     this.delPass = this.delPass.bind(this);
     this.edit = null;
@@ -68,7 +74,9 @@ class Passwords extends React.Component {
     this.newPass = this.newPass.bind(this);
 
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleBusqEdit = this.handleBusqEdit.bind(this);
+    this.handleFiltrarBusq = this.handleFiltrarBusq.bind(this);
+    this.handleChangeBusq = this.handleChangeBusq.bind(this);
+    this.handleFiltrarCat = this.handleFiltrarCat.bind(this);
 
     this.componentAux = function() {
       this.classList.toggle("active-arc");
@@ -83,10 +91,30 @@ class Passwords extends React.Component {
   }
 
   async listar_contras(acordeon=true){
-    let x = await Contrasenas.listar(this.mp);
-    console.log(x);
+    let x;
+    if(this.state.filtrarCat){
+      x = await Contrasenas.filtrar(this.mp, this.state.filtrarCatId);
+    }else{
+      x = await Contrasenas.listar(this.mp);
+    }
+
     if (x.status === 200) {
-      this.setState({ contras: x.passwords });
+      if(this.state.filtrarBusq){
+        let x1 = x.passwords;
+        let x2 = [];
+        let j = 0;
+        for (let i = 0; i < x1.length; i++) {
+          if(x1[i].passwordName.includes(this.state.filtrarBusqText)){
+            x2[j] = x1[i];
+            j++;
+          }
+        }
+        this.setState({ contras: x2 });
+        console.log("PSWDS",x2);
+      }else{
+        this.setState({ contras: x.passwords });
+        console.log("PSWDS",x);
+      }
     } else {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
       window.dispatchEvent(e);
@@ -97,6 +125,17 @@ class Passwords extends React.Component {
       for (i = 0; i < acc.length; i++) {
         acc[i].dispatchEvent(ev);
       }
+    }
+  }
+
+  async listar_cat(){
+    /* Pedimos categorías a la API */
+    let x = await Categorias.list();
+    console.log("CATS",x);
+    if (x.status === 200){
+      this.cats = x.categories;
+    }else{
+      this.cats = [{catId: -1,categoryName: "ERROR"}]
     }
   }
 
@@ -126,8 +165,29 @@ class Passwords extends React.Component {
   toggleModal(){
     this.setState({ addModal: !this.state.addModal });
   }
-  handleBusqEdit(event){
-    this.setState({ busq: event.target.value });
+
+  async handleFiltrarBusq(event){
+    event.preventDefault();
+    let x = this.state.filtrarBusqText;
+    if(x === ''){
+      await this.setState({ filtrarBusq: false });
+    }else{
+      await this.setState({ filtrarBusq: true });
+    }
+    this.listar_contras(false);
+  }
+  handleChangeBusq(event) {
+    this.setState({ filtrarBusqText: event.target.value });
+  }
+  async handleFiltrarCat(event){
+    let x = event.target.value;
+    await this.setState({ filtrarCatId: x });
+    if(x === 'todas'){
+      await this.setState({ filtrarCat: false });
+    }else{
+      await this.setState({ filtrarCat: true });
+    }
+    this.listar_contras(false);
   }
 
   componentDidMount(){
@@ -169,8 +229,15 @@ class Passwords extends React.Component {
             <div className="column col-rest">
               <div className="busq-bar">
                 <span className="fas fa-search"/>
-                <input type="text" placeholder="Buscar . . ."
-                  value={this.state.busq} onChange={this.handleBusqEdit}/>
+                <select name="catt" onChange={this.handleFiltrarCat}>
+                    <option key='0' value='todas'>Todas</option>
+                  {this.cats.map( (cat, i) =>
+                    <option key={i} value={cat.catId}>{cat.categoryName}</option>
+                  )}
+                  </select>
+                <input type="text" placeholder=" Inserta palabras clave"
+                  value={this.state.filtrarBusqText} onChange={this.handleChangeBusq}/>
+                <button onClick={this.handleFiltrarBusq}/>
               </div>
             </div>
           </div>
@@ -190,10 +257,10 @@ class Passwords extends React.Component {
                 {this.state.grupales.map((c,i) =>
                   <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
-            </div>
           </div>
         </div>
       </div>
+    </div>
     );
   }
 }
