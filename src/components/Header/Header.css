@@ -13,7 +13,7 @@
   /* Prop forma */
   border: none;
   border-radius: 0;
-  border-top: 2px solid #39a5dc;
+  border-top: 2px solid #a997df;
   margin-bottom: 0;
   background-color: #23272a;
 }
@@ -116,7 +116,7 @@
   margin-right: 5px;
 }
 .nav-top-item:hover i{ color: #fff; }
-.nav-top-item:hover span{ color: #39a5dc; }
+.nav-top-item:hover span{ color: #a997df; }
 
 .nav-vertical{
   /* Requerido para SPACER */
@@ -173,19 +173,19 @@
   width: 24px;
 }
 .nav-left-item:hover i{ color: #fff; }
-.nav-left-item:hover span{ color: #39a5dc; }
+.nav-left-item:hover span{ color: #a997df; }
 
 .active{
   color: #fff;
   background-color: #373a3d;
-  border-left: 3px solid #39a5dc;
+  border-left: 3px solid #a997df;
 }
 .active i{
   font-weight: 600;
   color: #fff;
 }
 .active span{
-  color: #39a5dc;
+  color: #a997df;
 }
 
 /* Cuando logueado -> todo son li-a-li */
