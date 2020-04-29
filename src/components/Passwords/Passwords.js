@@ -60,12 +60,13 @@ class Passwords extends React.Component {
       filtrarCatId: 0,
       filtrarBusq: false,
       filtrarBusqText: '',
+      objKey: 1,
+      cats: [],
       contras: [],
       grupales: []
     };
-    this.listar_contras();
-    this.cats = [];//para listar categorías en desplegable
     this.listar_cat();
+    this.listar_contras();
 
     this.delPass = this.delPass.bind(this);
     this.edit = null;
@@ -74,8 +75,8 @@ class Passwords extends React.Component {
     this.newPass = this.newPass.bind(this);
 
     this.toggleModal = this.toggleModal.bind(this);
+
     this.handleFiltrarBusq = this.handleFiltrarBusq.bind(this);
-    this.handleChangeBusq = this.handleChangeBusq.bind(this);
     this.handleFiltrarCat = this.handleFiltrarCat.bind(this);
 
     this.componentAux = function() {
@@ -90,6 +91,17 @@ class Passwords extends React.Component {
     }
   }
 
+  async listar_cat(){
+    /* Pedimos categorías a la API */
+    let x = await Categorias.list();
+    console.log("CATS",x.categories);
+    if (x.status === 200){
+      this.setState({ cats: x.categories });
+    }else{
+      this.setState({ cats: [{catId: -1,categoryName: "ERROR"}] });
+    }
+  }
+
   async listar_contras(acordeon=true){
     let x;
     if(this.state.filtrarCat){
@@ -97,7 +109,6 @@ class Passwords extends React.Component {
     }else{
       x = await Contrasenas.listar(this.mp);
     }
-
     if (x.status === 200) {
       if(this.state.filtrarBusq){
         let x1 = x.passwords;
@@ -113,7 +124,7 @@ class Passwords extends React.Component {
         console.log("PSWDS",x2);
       }else{
         this.setState({ contras: x.passwords });
-        console.log("PSWDS",x);
+        console.log("PSWDS",x.passwords);
       }
     } else {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
@@ -126,17 +137,9 @@ class Passwords extends React.Component {
         acc[i].dispatchEvent(ev);
       }
     }
-  }
-
-  async listar_cat(){
-    /* Pedimos categorías a la API */
-    let x = await Categorias.list();
-    console.log("CATS",x);
-    if (x.status === 200){
-      this.cats = x.categories;
-    }else{
-      this.cats = [{catId: -1,categoryName: "ERROR"}]
-    }
+    let g1 = this.state.objKey;
+    let g2 = this.state.cats.length;
+    this.setState({ objKey: g1+g2 });
   }
 
   async delPass(pass){
@@ -168,7 +171,8 @@ class Passwords extends React.Component {
 
   async handleFiltrarBusq(event){
     event.preventDefault();
-    let x = this.state.filtrarBusqText;
+    let x = event.target.value;
+    await this.setState({ filtrarBusqText: x });
     if(x === ''){
       await this.setState({ filtrarBusq: false });
     }else{
@@ -176,10 +180,8 @@ class Passwords extends React.Component {
     }
     this.listar_contras(false);
   }
-  handleChangeBusq(event) {
-    this.setState({ filtrarBusqText: event.target.value });
-  }
   async handleFiltrarCat(event){
+    event.preventDefault();
     let x = event.target.value;
     await this.setState({ filtrarCatId: x });
     if(x === 'todas'){
@@ -231,13 +233,12 @@ class Passwords extends React.Component {
                 <span className="fas fa-search"/>
                 <select name="catt" onChange={this.handleFiltrarCat}>
                     <option key='0' value='todas'>Todas</option>
-                  {this.cats.map( (cat, i) =>
+                  {this.state.cats.map( (cat, i) =>
                     <option key={i} value={cat.catId}>{cat.categoryName}</option>
                   )}
                   </select>
                 <input type="text" placeholder=" Inserta palabras clave"
-                  value={this.state.filtrarBusqText} onChange={this.handleChangeBusq}/>
-                <button onClick={this.handleFiltrarBusq}/>
+                  value={this.state.filtrarBusqText} onChange={this.handleFiltrarBusq}/>
               </div>
             </div>
           </div>
@@ -246,7 +247,7 @@ class Passwords extends React.Component {
               <button className="accordion">Mis Contraseñas</button>
               <ul className="panel">
                 {this.state.contras.map((c,i) =>
-                  <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
+                  <ContraObj key={i+this.state.objKey} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>
