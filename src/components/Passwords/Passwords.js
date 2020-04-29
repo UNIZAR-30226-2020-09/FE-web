@@ -55,12 +55,11 @@ class Passwords extends React.Component {
     this.mp = props.user.password;
     this.state = {
       addModal: false,
-      busq: '',
       filtrarCat: false,
       filtrarCatId: 0,
       filtrarBusq: false,
       filtrarBusqText: '',
-      objKey: 1,
+      objKey: 0,
       cats: [],
       contras: [],
       grupales: []
@@ -92,9 +91,7 @@ class Passwords extends React.Component {
   }
 
   async listar_cat(){
-    /* Pedimos categorías a la API */
     let x = await Categorias.list();
-    console.log("CATS",x.categories);
     if (x.status === 200){
       this.setState({ cats: x.categories });
     }else{
@@ -121,10 +118,8 @@ class Passwords extends React.Component {
           }
         }
         this.setState({ contras: x2 });
-        console.log("PSWDS",x2);
       }else{
         this.setState({ contras: x.passwords });
-        console.log("PSWDS",x.passwords);
       }
     } else {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
@@ -138,7 +133,7 @@ class Passwords extends React.Component {
       }
     }
     let g1 = this.state.objKey;
-    let g2 = this.state.cats.length;
+    let g2 = this.state.contras.length;
     this.setState({ objKey: g1+g2 });
   }
 
@@ -237,7 +232,7 @@ class Passwords extends React.Component {
                     <option key={i} value={cat.catId}>{cat.categoryName}</option>
                   )}
                   </select>
-                <input type="text" placeholder=" Inserta palabras clave"
+                <input type="text" placeholder="Inserta palabras clave"
                   value={this.state.filtrarBusqText} onChange={this.handleFiltrarBusq}/>
               </div>
             </div>
@@ -258,10 +253,10 @@ class Passwords extends React.Component {
                 {this.state.grupales.map((c,i) =>
                   <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     );
   }
 }
