@@ -2,6 +2,7 @@ import React from 'react';
 import { Contrasenas } from '../../agent';
 import { Categorias } from '../../agent';
 import './NewPass.css';
+import Generator from './Generator.js';
 
 class NewPass extends React.Component {
     constructor(props){
@@ -30,6 +31,7 @@ class NewPass extends React.Component {
       this.handleChangeCat = this.handleChangeCat.bind(this);
       this.handleChangeText = this.handleChangeText.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleCloseCancel = this.handleCloseCancel.bind(this);
     }
 
     handleChangeName(event) {
@@ -131,6 +133,22 @@ class NewPass extends React.Component {
       this.handleClose();
     }
 
+    handleCloseCancel(){
+      window.location.reload()
+      this.handleClose();
+    }
+
+    showGenerator(event){
+      event.preventDefault();
+      var generator=document.getElementById("generatorForm");
+      generator.classList.toggle("generator-show");
+      var all=document.getElementById("allForm");
+      all.classList.toggle("newpass-gen-on")
+    }
+
+    handleGen = (pass) => {
+      this.setState({ password: pass});
+    }
 
     render(){
       let titulo;
@@ -143,7 +161,7 @@ class NewPass extends React.Component {
         boton = "Guardar cambios";
       }
       return(
-        <div className="newpass">
+        <div className="newpass" id="allForm">
             <h1>{titulo}</h1>
             <form id="newpassform" onSubmit={this.handleSubmit} >
               <div className="input-group">
@@ -169,6 +187,12 @@ class NewPass extends React.Component {
                 <input type="text" name="pass" value={this.state.password}
                   onChange={this.handleChangePass} required
                 />
+              </div>
+              <button onClick={this.showGenerator} className="btn-generator">
+                  Generar
+              </button>
+              <div className="generator-default" id ="generatorForm">
+                <Generator handleGen={this.handleGen}> </Generator>
               </div>
               <div className="input-group">
                 <label>
@@ -198,9 +222,12 @@ class NewPass extends React.Component {
                   onChange={this.handleChangeText}
                 />
               </div>
-              <div className="input-group">
+              <div className="input-group-bottons">
                 <button type="submit" className="btn">
                   {boton}
+                </button>
+                <button onClick={this.handleCloseCancel} className="btn-can">
+                    Cancelar
                 </button>
               </div>
             </form>

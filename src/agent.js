@@ -1,5 +1,6 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
+import { request } from 'https';
 //import { request } from 'https';
 
 const superagent = superagentPromise(_superagent, global.Promise);
@@ -73,7 +74,9 @@ const Contrasenas = {
   listar: (mp) =>
     requests.post(`/contrasenya/listar`, { masterPassword: mp }),
   del: (cat) =>
-    requests.del(`/contrasenya/eliminar`,cat)
+    requests.del(`/contrasenya/eliminar`,cat),
+  gen: (min,may,num,spec,long) => 
+    requests.post(`/contrasenya/generar`,{minus: min, mayus: may, numbers: num, specialCharacters: spec, length:long})
 }
 
 const StatsAgent = {

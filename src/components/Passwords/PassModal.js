@@ -8,9 +8,6 @@ const PassModal = ({ handleClose, show, children }) => {
   return (
     <div className={showHideClassName}>
       <div className="modal-main">
-        <div>
-          <button className="butn" onClick={handleClose}>Cancelar</button>
-        </div>
           {children}
       </div>
     </div>

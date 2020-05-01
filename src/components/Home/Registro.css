@@ -72,10 +72,6 @@
   border-color: #555 transparent transparent transparent;
 }
 
-.erase{
-  display: none;
-}
-
 .show {
   visibility: visible;
   -webkit-animation: fadeIn 1s;
