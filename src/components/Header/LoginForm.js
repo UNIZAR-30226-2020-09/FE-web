@@ -59,7 +59,7 @@ class LoginForm extends React.Component {
             text:'Sesión iniciada (' + this.state.user + ')'
           }});
           window.dispatchEvent(e);
-          history.push('/welcome');
+          history.push('/home');
         } else {
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code: 4,
@@ -91,7 +91,7 @@ class LoginForm extends React.Component {
               <label className={this.state.user!=="" ? "label-active":null}>
                 Usuario
               </label>
-              <input type="text" maxlength="100" value={this.state.user} onChange={this.handleChangeUser}/>
+              <input type="text" maxLength="100" value={this.state.user} onChange={this.handleChangeUser}/>
             </div>
           </li>
           <li className="input-label">
@@ -99,7 +99,7 @@ class LoginForm extends React.Component {
               <label className={this.state.password!=="" ? "label-active":null}>
                 Contraseña
               </label>
-              <input type="password" maxlength="40" value={this.state.password} onChange={this.handleChangePass}/>
+              <input type="password" maxLength="40" value={this.state.password} onChange={this.handleChangePass}/>
             </div>
           </li>
           <li className={this.li}>

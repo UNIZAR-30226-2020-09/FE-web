@@ -17,6 +17,13 @@ class AdminCat extends React.Component {
      new: false,
      onedit: []
     };
+    this.inputEnter = function(event){
+      if (event.key === 'Enter') {
+        let span_ok = event.target.nextElementSibling;
+        span_ok.click();
+      }
+      return;
+    }
   }
 
   async listar_cat(){
@@ -89,7 +96,7 @@ class AdminCat extends React.Component {
         if (x.status === 200) {
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code: 2,
-            text:'Se ha eliminado la categoria ' + this.cats[cat].categoryName
+            text:'Se ha eliminado la categoría ' + this.cats[cat].categoryName
           }});
         } else {
           e = new CustomEvent('PandoraAlert', { 'detail': {
@@ -116,7 +123,7 @@ class AdminCat extends React.Component {
           if (x.status === 200) {
             e = new CustomEvent('PandoraAlert', { 'detail': {
               code: 2,
-              text:'Se ha creado la categoria ' + new_Cat
+              text:'Se ha creado la categoría ' + new_Cat
             }});
           } else {
             e = new CustomEvent('PandoraAlert', { 'detail': {
@@ -142,7 +149,7 @@ class AdminCat extends React.Component {
           {this.cats.map( (cat, i) =>
             this.state.onedit[i] ?
             <li key={cat.catId} className="slot inner">
-              <input type="text" defaultValue={cat.categoryName}/>
+              <input type="text" maxLength="30" defaultValue={cat.categoryName} onKeyUp={this.inputEnter} required/>
               <span className={ok} onClick={(e) => this.oneditHandler(e,cat.catId)}/>
               <span className={quit} onClick={(e) => this.oneditHandler(e,cat.catId)}/>
             </li>
@@ -155,7 +162,7 @@ class AdminCat extends React.Component {
           )}
           {this.state.new ?
             <li key={0} className="slot inner">
-              <input type="text" placeholder="Nueva categoría..." required/>
+              <input type="text" maxLength="30" placeholder="Nueva categoría..." onKeyUp={this.inputEnter} required/>
               <span className={ok} onClick={this.onaddHandler.bind(this)}/>
               <span className={quit} onClick={this.onaddHandler.bind(this)}/>
             </li>

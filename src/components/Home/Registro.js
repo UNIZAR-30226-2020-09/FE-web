@@ -61,7 +61,7 @@ class Registro extends Component{
                   Correo
                 </label>
                 <input type="text" name="email"
-                  maxlength="100" value={this.state.email} onChange={this.InputChange}/>
+                  maxLength="100" value={this.state.email} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
                 <span className="popuptext" id="regInstructions">• Mínimo 8 caracteres <br/> • Máximo 40 caracteres <br/> • 1 minúscula <br/> • 1 mayúscula <br/> • 1 número <br/> • 1 carácter especial</span>
@@ -69,14 +69,14 @@ class Registro extends Component{
                   Contraseña
                 </label>
                 <input type="password" name="password"
-                  maxlength="40" value={this.state.password} onChange={this.InputChange} onFocus={this.popUp} onBlur={this.popUp}/>
+                  maxLength="40" value={this.state.password} onChange={this.InputChange} onFocus={this.popUp} onBlur={this.popUp}/>
               </div>
               <div className="input-group">
                 <label className={this.state.confirm!=="" ? "label-active":null}>
                   Repetir contraseña
                 </label>
                 <input type="password" name="confirm"
-                  maxlength="40" value={this.state.confirm} onChange={this.InputChange}/>
+                  maxLength="40" value={this.state.confirm} onChange={this.InputChange}/>
               </div>
               <div className="input-group">
                 <button type="submit" className="btn">

@@ -20,12 +20,14 @@ class ContraObj extends React.Component {
     if (ch.style.maxHeight) {
       ch.style.maxHeight = null;
     } else {
-      ch.style.maxHeight = 100 + "px";
+      ch.style.maxHeight = 310 + "px";
       //panel.scrollHeight + 20 + "px"; // TODO:
     }
   }
 
   render() {
+    let twoR = {'margin-right': '5px'};
+    let twoL = {'margin-left': '5px'};
     return (
       <li>
         <div className="ctr-title">
@@ -36,11 +38,26 @@ class ContraObj extends React.Component {
           <span className={del} onClick={() => this.delPass(this.data)}/>
         </div>
         <div className="ctr-body">
-          Usuario: {this.data.userName}
-          <br/>
-          Contraseña: {this.data.password}
-          <br/>
-          TextoOpcional: {this.data.optionalText}
+          <div className="box break">
+            <h1>Usuario</h1>
+            <h2>{this.data.userName}</h2>
+          </div>
+          <div className="box break">
+            <h1>Contraseña</h1>
+            <h2>{this.data.password}</h2>
+          </div>
+          <div className="box" style={twoR}>
+            <h1>Expira en</h1>
+            <h2>{this.data.noDaysBeforeExpiration} dias</h2>
+          </div>
+          <div className="box" style={twoL}>
+            <h1>Categoría</h1>
+            <h2>{this.data.categoryName}</h2>
+          </div>
+          <div className="box break">
+            <h1>Texto Opcional</h1>
+            <h2>{this.data.userName}</h2>
+          </div>
         </div>
       </li>
     );
@@ -51,7 +68,8 @@ class ContraObj extends React.Component {
 class Passwords extends React.Component {
   constructor(props){
     super(props);
-    this.mp = props.user.password;
+    this.mp = props.getUser(); // SI NULL, REDIRECCION DESDE PADRE
+    if (this.mp !== null) this.mp = this.mp.password;
     this.state = {
       addModal: false,
       busq: '',
@@ -75,13 +93,13 @@ class Passwords extends React.Component {
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
       } else {
-        panel.style.maxHeight = panel.childElementCount*100 + "px";
+        panel.style.maxHeight = panel.childElementCount*310 + "px";
         //panel.scrollHeight + 20 + "px"; // TODO:
       }
     }
   }
 
-  async listar_contras(){
+  async listar_contras(acordeon=true){
     let x = await Contrasenas.listar(this.mp);
     console.log(x);
     if (x.status === 200) {
@@ -90,10 +108,12 @@ class Passwords extends React.Component {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
       window.dispatchEvent(e);
     }
-    var acc = document.getElementsByClassName("accordion");
-    var i, ev = new Event("click");
-    for (i = 0; i < acc.length; i++) {
-      acc[i].dispatchEvent(ev);
+    if(acordeon){
+      var acc = document.getElementsByClassName("accordion");
+      var i, ev = new Event("click");
+      for (i = 0; i < acc.length; i++) {
+        acc[i].dispatchEvent(ev);
+      }
     }
   }
 
@@ -103,7 +123,7 @@ class Passwords extends React.Component {
     if(x.status === 200) e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña borrada.'} });
     else e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido borrar la contraseña.'} });
     if (e !== null) window.dispatchEvent(e);
-    window.location.reload();
+    this.listar_contras(false);
   }
 
   editPass(x){
@@ -142,11 +162,12 @@ class Passwords extends React.Component {
   }
 
   render() {
+    if (this.mp === null) return null;
     return (
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>
           <NewPass handleClose={this.toggleModal} mp={this.mp}
-                    ref="newpass" edit={this.getEdit}/>
+                    ref="newpass" edit={this.getEdit} listar={this.listar_contras.bind(this)}/>
         </PassModal>
         <div className="passwords">
           <div className="row">

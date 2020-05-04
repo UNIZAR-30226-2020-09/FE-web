@@ -91,5 +91,5 @@ export {
   Contrasenas,
   StatsAgent
 };
-export const setToken = (_token) => { token = _token; }
+export const setToken = (_token) => { token = _token; console.log("Token: ", _token)}
 export const getToken = () => { return token; }
