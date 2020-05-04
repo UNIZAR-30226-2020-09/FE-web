@@ -2,7 +2,7 @@ import React from 'react';
 import PassModal from './PassModal';
 import NewPass from './NewPass';
 import './Passwords.css';
-import {Contrasenas} from '../../agent';
+import {Contrasenas, Categorias} from '../../agent';
 
 const del = "fas fa-trash-alt";
 const edit = "fas fa-pen";
@@ -28,6 +28,7 @@ class ContraObj extends React.Component {
   render() {
     let twoR = {'margin-right': '5px'};
     let twoL = {'margin-left': '5px'};
+    document.body.style.backgroundColor = "#ebe4f4";
     return (
       <li>
         <div className="ctr-title">
@@ -72,10 +73,16 @@ class Passwords extends React.Component {
     if (this.mp !== null) this.mp = this.mp.password;
     this.state = {
       addModal: false,
-      busq: '',
+      filtrarCat: false,
+      filtrarCatId: 0,
+      filtrarBusq: false,
+      filtrarBusqText: '',
+      objKey: 0,
+      cats: [],
       contras: [],
       grupales: []
     };
+    this.listar_cat();
     this.listar_contras();
 
     this.delPass = this.delPass.bind(this);
@@ -85,7 +92,9 @@ class Passwords extends React.Component {
     this.newPass = this.newPass.bind(this);
 
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleBusqEdit = this.handleBusqEdit.bind(this);
+
+    this.handleFiltrarBusq = this.handleFiltrarBusq.bind(this);
+    this.handleFiltrarCat = this.handleFiltrarCat.bind(this);
 
     this.componentAux = function() {
       this.classList.toggle("active-arc");
@@ -99,11 +108,37 @@ class Passwords extends React.Component {
     }
   }
 
+  async listar_cat(){
+    let x = await Categorias.list();
+    if (x.status === 200){
+      this.setState({ cats: x.categories });
+    }else{
+      this.setState({ cats: [{catId: -1,categoryName: "ERROR"}] });
+    }
+  }
+
   async listar_contras(acordeon=true){
-    let x = await Contrasenas.listar(this.mp);
-    console.log(x);
+    let x;
+    if(this.state.filtrarCat){
+      x = await Contrasenas.filtrar(this.mp, this.state.filtrarCatId);
+    }else{
+      x = await Contrasenas.listar(this.mp);
+    }
     if (x.status === 200) {
-      this.setState({ contras: x.passwords });
+      if(this.state.filtrarBusq){
+        let x1 = x.passwords;
+        let x2 = [];
+        let j = 0;
+        for (let i = 0; i < x1.length; i++) {
+          if(x1[i].passwordName.includes(this.state.filtrarBusqText)){
+            x2[j] = x1[i];
+            j++;
+          }
+        }
+        this.setState({ contras: x2 });
+      }else{
+        this.setState({ contras: x.passwords });
+      }
     } else {
       var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
       window.dispatchEvent(e);
@@ -115,6 +150,9 @@ class Passwords extends React.Component {
         acc[i].dispatchEvent(ev);
       }
     }
+    let g1 = this.state.objKey;
+    let g2 = this.state.contras.length;
+    this.setState({ objKey: g1+g2 });
   }
 
   async delPass(pass){
@@ -143,8 +181,28 @@ class Passwords extends React.Component {
   toggleModal(){
     this.setState({ addModal: !this.state.addModal });
   }
-  handleBusqEdit(event){
-    this.setState({ busq: event.target.value });
+
+  async handleFiltrarBusq(event){
+    event.preventDefault();
+    let x = event.target.value;
+    await this.setState({ filtrarBusqText: x });
+    if(x === ''){
+      await this.setState({ filtrarBusq: false });
+    }else{
+      await this.setState({ filtrarBusq: true });
+    }
+    this.listar_contras(false);
+  }
+  async handleFiltrarCat(event){
+    event.preventDefault();
+    let x = event.target.value;
+    await this.setState({ filtrarCatId: x });
+    if(x === 'todas'){
+      await this.setState({ filtrarCat: false });
+    }else{
+      await this.setState({ filtrarCat: true });
+    }
+    this.listar_contras(false);
   }
 
   componentDidMount(){
@@ -187,8 +245,14 @@ class Passwords extends React.Component {
             <div className="column col-rest">
               <div className="busq-bar">
                 <span className="fas fa-search"/>
-                <input type="text" placeholder="Buscar . . ."
-                  value={this.state.busq} onChange={this.handleBusqEdit}/>
+                <select name="catt" onChange={this.handleFiltrarCat}>
+                    <option key='0' value='todas'>Todas</option>
+                  {this.state.cats.map( (cat, i) =>
+                    <option key={i} value={cat.catId}>{cat.categoryName}</option>
+                  )}
+                  </select>
+                <input type="text" placeholder="Inserta palabras clave"
+                  value={this.state.filtrarBusqText} onChange={this.handleFiltrarBusq}/>
               </div>
             </div>
           </div>
@@ -197,7 +261,7 @@ class Passwords extends React.Component {
               <button className="accordion">Mis Contraseñas</button>
               <ul className="panel">
                 {this.state.contras.map((c,i) =>
-                  <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
+                  <ContraObj key={i+this.state.objKey} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>

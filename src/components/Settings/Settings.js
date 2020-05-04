@@ -15,6 +15,7 @@ class Settings extends React.Component {
   render() {
     let user = this.getUser();
     if (user === null) return null;
+    document.body.style.backgroundColor = "#ebe4f4";
     return (
       <div className="app-container">
         <div className="settings">

@@ -22,6 +22,7 @@ class Home extends React.Component {
     }else{
       box = <Bienvenido user={user}/>
     }
+    document.body.style.backgroundColor = "#a997df";
     return (
       <div className="app-container">
         <div className="row">
