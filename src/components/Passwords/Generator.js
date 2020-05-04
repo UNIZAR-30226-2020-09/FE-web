@@ -13,13 +13,13 @@ class Generator extends React.Component{
             mayus: true,
             numbers: true,
             specialCharacters: true,
-            length: 1
+            length: 6
         };
         this.handleChangeCheck=this.handleChangeCheck.bind(this);
         this.handleChangeNum=this.handleChangeNum.bind(this);
         this.submitHandle=this.submitHandle.bind(this);
     }
-    
+
     handleChangeCheck(event){
         const target = event.target;
         const value = target.checked;
@@ -27,7 +27,7 @@ class Generator extends React.Component{
         this.setState({[name]: value});
     }
 
-        
+
     handleChangeNum(event){
         const target = event.target;
         const value = target.value;
@@ -36,53 +36,61 @@ class Generator extends React.Component{
     }
     async submitHandle(event){
         event.preventDefault();
-        var e = null;
-        let x = await Contrasenas.gen(this.state.minus,this.state.mayus,
-            this.state.numbers,this.state.specialCharacters,this.state.length);
-        console.log(x);
-        if (x.status === 200){
-            this.handleGen(x.password);
-        }
-        else{
-            e = new CustomEvent('PandoraAlert', { 'detail': {
-                code:4,
-                text: 'Error ' + x.status + ': ' + x.statusText}});
+        if((this.state.minus === false)&(this.state.mayus === false)&
+            (this.state.numbers === false)&(this.state.specialCharacters === false)){
+              var e = new CustomEvent('PandoraAlert', { 'detail': {
+                  code: 4,
+                  text: 'Debe marcar al menos una casilla'}});
+              if (e !== null) {
+                window.dispatchEvent(e);
+              }
+        }else{
+          let x = await Contrasenas.gen(this.state.minus,this.state.mayus,
+              this.state.numbers,this.state.specialCharacters,this.state.length);
+          //console.log(x);
+          if (x.status === 200){
+              this.handleGen(x.password);
+          }
+          else{
+              var e = new CustomEvent('PandoraAlert', { 'detail': {
+                  code:4,
+                  text: 'Error ' + x.status + ': ' + x.statusText}});
+              if (e !== null) {
+                window.dispatchEvent(e);
+              }
+          }
         }
     }
     render(){
         return(
-            <div className="generator">
-                <label> <br/> </label>
-                <form className="generator-form">
-                    <label className = "generator-label">
-                        <input name="minus" type="checkbox" checked={this.state.minus} onChange={this.handleChangeCheck} />
-                        Minusculas
-                    </label>
-                    <label className = "generator-label">
+            <div className="row generator">
+              <div className="column col-50">
+                <div className="input-group">
+                    <input name="minus" type="checkbox" checked={this.state.minus} onChange={this.handleChangeCheck} />
+                    <label>Letras minúsculas</label>
+                </div>
+                <div className="input-group">
                     <input name="mayus" type="checkbox" checked={this.state.mayus} onChange={this.handleChangeCheck} />
-                        Mayusculas
-                    </label>
-                </form>
-                <form className="generator-form">
-                    <label className = "generator-label">
-                        <input name="numbers" type="checkbox" checked={this.state.numbers} onChange={this.handleChangeCheck} />
-                        Numeros
-                    </label>
-                    <label className = "generator-label-car">
-                        <input name="specialCharacters" type="checkbox" checked={this.state.specialCharacters} onChange={this.handleChangeCheck} />
-                        Caracteres Especiales
-                    </label>
-                </form>
-                <form className="generator-form">
-                    <label className = "generator-label">
-                        Longitud &nbsp;
-                        <input name="length" type="number" min= "1" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
-                    </label>
-                </form>
+                    <label>Letras mayúsculas</label>
+                </div>
+                <div className="input-group">
+                    <input name="length" type="number" min= "6" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
+                    <label>Longitud</label>
+                </div>
+              </div>
+              <div className="column col-50">
+                <div className="input-group">
+                    <input name="numbers" type="checkbox" checked={this.state.numbers} onChange={this.handleChangeCheck} />
+                    <label>Carácteres numéricos</label>
+                </div>
+                <div className="input-group">
+                    <input name="specialCharacters" type="checkbox" checked={this.state.specialCharacters} onChange={this.handleChangeCheck} />
+                    <label>Carácteres especiales</label>
+                </div>
                 <button onClick={this.submitHandle} className="btn-gen">
-                   <span className="fas fa-check" />
+                   Generar Contraseña
                 </button>
-                
+              </div>
             </div>
         )
       }
