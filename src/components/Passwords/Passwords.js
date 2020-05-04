@@ -26,8 +26,6 @@ class ContraObj extends React.Component {
   }
 
   render() {
-    let twoR = {'margin-right': '5px'};
-    let twoL = {'margin-left': '5px'};
     document.body.style.backgroundColor = "#ebe4f4";
     return (
       <li>
@@ -47,11 +45,11 @@ class ContraObj extends React.Component {
             <h1>Contraseña</h1>
             <h2>{this.data.password}</h2>
           </div>
-          <div className="box" style={twoR}>
+          <div className="box twoR">
             <h1>Expira en</h1>
             <h2>{this.data.noDaysBeforeExpiration} dias</h2>
           </div>
-          <div className="box" style={twoL}>
+          <div className="box twoL">
             <h1>Categoría</h1>
             <h2>{this.data.categoryName}</h2>
           </div>

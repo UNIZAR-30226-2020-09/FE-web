@@ -8,6 +8,7 @@
   width: 100%;
   height: auto;
   background: rgba(0, 0, 0, 0.6);
+  z-index: 15;
 }
 
 .modal-main {
