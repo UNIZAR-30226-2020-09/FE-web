@@ -10,8 +10,7 @@
   columns: 1;
   column-gap: 0;
   list-style: none;
-  background-color: #EEE;
-  border: 1px solid #2c2f33;
+  background-color: transparent;
   /*
   -webkit-columns: 2;
   -moz-columns: 2;*/
@@ -19,15 +18,30 @@
 
 .categorias .slot {
   display: flex;
-  width: 50%;
+  width: 46%;
+  margin: 16px 2%;
+  height: 45px;
+  border-radius: 10px;
   text-align: left;
-  border: 1px solid #2c2f33;
-  border-top: 0;
   padding: 3px 0 3px 15px;
+  background-color: #a997df;
+  color: #2c2f33;
+  font-size: 30px !important;
+  font-weight: bold;
 }
-
+.categorias .slot input{
+  background-color: #a997df;
+  color: #2c2f33;
+  font-weight: bold;
+  border: none;
+}
+.categorias .slot ::placeholder{
+  color: #2c2f33;
+}
 .inner {
     float: left;
+
+
 }
 .inner:nth-child(2n+1) {
     clear: left;
