@@ -7,7 +7,6 @@ class Generator extends React.Component{
     constructor(props){
         super(props);
         this.handleGen=props.handleGen;
-        this.showGenerator=props.showGenerator;
 
         this.state ={
             minus: true,
@@ -27,24 +26,34 @@ class Generator extends React.Component{
         const name = target.name;
         this.setState({[name]: value});
     }
-
-
     handleChangeNum(event){
         const target = event.target;
         const value = target.value;
         const name = target.name;
         this.setState({[name]: value});
     }
+
     async submitHandle(event){
         event.preventDefault();
-        if((this.state.minus === false)&(this.state.mayus === false)&
-            (this.state.numbers === false)&(this.state.specialCharacters === false)){
-              var e = new CustomEvent('PandoraAlert', { 'detail': {
-                  code: 4,
-                  text: 'Debe marcar al menos una casilla'}});
-              if (e !== null) {
-                window.dispatchEvent(e);
-              }
+        var cont = 0;
+        if(this.state.minus === true) cont++;
+        if(this.state.mayus === true) cont++;
+        if(this.state.numbers === true) cont++;
+        if(this.state.specialCharacters === true) cont++;
+        if(cont===0){
+          var e = new CustomEvent('PandoraAlert', { 'detail': {
+              code: 4,
+              text: 'Debe marcar al menos una casilla'}});
+          if (e !== null) {
+            window.dispatchEvent(e);
+          }
+        }else if(cont > this.state.length){
+          var e = new CustomEvent('PandoraAlert', { 'detail': {
+              code: 4,
+              text: 'La longitud debe ser igual o mayor al número de casillas marcadas'}});
+          if (e !== null) {
+            window.dispatchEvent(e);
+          }
         }else{
           let x = await Contrasenas.gen(this.state.minus,this.state.mayus,
               this.state.numbers,this.state.specialCharacters,this.state.length);
@@ -62,6 +71,7 @@ class Generator extends React.Component{
           }
         }
     }
+
     render(){
         return(
             <div className="row generator">
@@ -75,7 +85,7 @@ class Generator extends React.Component{
                     <label>Letras mayúsculas</label>
                 </div>
                 <div className="input-group">
-                    <input name="length" type="number" min= "6" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
+                    <input name="length" type="number" min= "1" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
                     <label>Longitud</label>
                 </div>
               </div>
@@ -98,8 +108,7 @@ class Generator extends React.Component{
 }
 
 Generator.propTypes = {
-    handleGen: PropTypes.func.isRequired,
-    showGenerator: PropTypes.func.isRequired
+    handleGen: PropTypes.func.isRequired
 }
 
 export default Generator;

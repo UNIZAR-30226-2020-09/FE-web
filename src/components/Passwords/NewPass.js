@@ -33,6 +33,7 @@ class NewPass extends React.Component {
       this.handleChangeCat = this.handleChangeCat.bind(this);
       this.handleChangeText = this.handleChangeText.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.showGenerator = this.showGenerator.bind(this);
     }
 
     handleChangeName(event) {
@@ -66,6 +67,10 @@ class NewPass extends React.Component {
       });
       this.id = ed.passId;
       this.edit = true;
+      /* Cerramos el generador */
+      if(this.state.generadorAbierto === true){
+        this.showGenerator();
+      }
     }
 
     setNew() {
@@ -79,6 +84,10 @@ class NewPass extends React.Component {
       });
       this.id = 0;
       this.edit = false;
+      /* Cerramos el generador */
+      if(this.state.generadorAbierto === true){
+        this.showGenerator();
+      }
     }
 
     async listar_cat(){
@@ -132,10 +141,15 @@ class NewPass extends React.Component {
       }
       /* Cerramos el modal */
       this.handleClose();
+      /* Cerramos el generador */
+      if(this.state.generadorAbierto === true){
+        this.showGenerator();
+      }
     }
 
-    showGenerator(event){
-      event.preventDefault();
+    async showGenerator(){
+      let x = this.state.generadorAbierto;
+      this.setState({ generadorAbierto: !x });
       var generator=document.getElementById("generatorForm");
       generator.classList.toggle("generator-show");
       var all=document.getElementById("newpassForm");
@@ -190,7 +204,7 @@ class NewPass extends React.Component {
                 </button>
               </div>
               <div className="generator-default" id ="generatorForm">
-                <Generator handleGen={this.handleGen} showGenerator={this.showGenerator}> </Generator>
+                <Generator handleGen={this.handleGen}> </Generator>
               </div>
               <div className="input-group">
                 <label>
