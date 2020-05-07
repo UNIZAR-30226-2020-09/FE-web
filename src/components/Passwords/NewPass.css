@@ -9,16 +9,10 @@
   background-color: #23272a;
   color: #d1d1d1;
 }
-
 .newpass-gen-on{
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  height: 850px;
-  overflow: hidden;
-  background-color: #23272a;
-  color: #d1d1d1;
+  height: 880px;
 }
+
 .newpass h1{
   color: #d1d1d1;
   margin: 2% 15%;
@@ -42,74 +36,56 @@
 }
 
 .newpass .input-group select{
+    -moz-appearance: none;
     margin-left: 130px ;
     width: calc(100% - 130px);
 }
 
-.newpass .btn{
-  border: 10px;
-  width: 60%;
+.newpass .input-group .btn{
+  position: relative;
+  border: none;
+  width: 100%;
   padding: 10px 0;
   background-color: #2c2f33;
   color: #d1d1d1;
   font-size: 1rem;
   font-weight: bold;
-  margin-left: 5%;
-  margin-right: 3%;
 }
 .newpass .btn:hover{
   background-color: #373a3d;
   color: #FFF;
 }
 
-.newpass .btn-can{
-  border: 0;
-  width: 30%;
-  padding: 10px 0;
-  background-color: #2c2f33;
-  color: #d1d1d1;
-  font-size: 1rem;
-  font-weight: bold;
+.btn-generar{
+  margin-bottom: 10px !important;
 }
-.newpass .btn-can:hover{
-  background-color: #373a3d;
-  color: #FFF;
+.btn-submit{
+  width: 65% !important;
+}
+.btn-cancel{
+  width: 30% !important;
+  margin-left: 5%;
+  margin-bottom: 30px !important;
 }
 
 .generator-default{
   visibility: hidden;
-  display: none;
+  height: 0;
+  opacity: 0;
+  transition: 1s;
 }
 
 .generator-show{
   visibility: visible;
-  display: block;
+  height: 160px;
+  opacity: 1;
+  transition: 1s;
 }
-
-.newpass .btn-generator{
-  border: 10px;
-  width: 70%;
-  padding: 10px 0;
-  background-color: #2c2f33;
-  color: #d1d1d1;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-left: 15%;
-  margin-right: 3%;
-}
-
-.newpass .btn-generator:hover{
-  background-color: #373a3d;
-  color: #FFF;
-}
-
-
 
 
 /* Objetivo -> responsive */
 @media screen and (max-width: 600px) {
   .newpass {
-    height: 460px;
     overflow: hidden;
   }
   .newpass h1{
@@ -124,11 +100,13 @@
     width: 80%;
     margin: 5px auto 10px;
   }
+}
 
-  .newpass .input-group-bottons{
-    width: 100%;
-    margin: 5px auto 10px;
-    position: fixed;
-    display: flex;
+@media screen and (max-width: 1200px) {
+  .generator-show{
+    height: 310px;
+  }
+  .newpass-gen-on{
+    height: 1000px;
   }
 }

@@ -219,6 +219,7 @@ class Passwords extends React.Component {
 
   render() {
     if (this.mp === null) return null;
+    document.body.style.backgroundColor = "#ebe4f4";
     return (
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>

@@ -18,7 +18,8 @@ class NewPass extends React.Component {
           expirationTime: 120,
           passwordCategoryId: 0,
           optionalText: '',
-          userName: ''
+          userName: '',
+          generadorAbierto: false
       };
       this.id = 0;//id contraseña
       this.edit = false;//edit o create
@@ -32,7 +33,6 @@ class NewPass extends React.Component {
       this.handleChangeCat = this.handleChangeCat.bind(this);
       this.handleChangeText = this.handleChangeText.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleCloseCancel = this.handleCloseCancel.bind(this);
     }
 
     handleChangeName(event) {
@@ -134,16 +134,11 @@ class NewPass extends React.Component {
       this.handleClose();
     }
 
-    handleCloseCancel(){
-      window.location.reload();
-      this.handleClose();
-    }
-
     showGenerator(event){
       event.preventDefault();
       var generator=document.getElementById("generatorForm");
       generator.classList.toggle("generator-show");
-      var all=document.getElementById("allForm");
+      var all=document.getElementById("newpassForm");
       all.classList.toggle("newpass-gen-on")
     }
 
@@ -162,9 +157,9 @@ class NewPass extends React.Component {
         boton = "Guardar cambios";
       }
       return(
-        <div className="newpass" id="allForm">
+        <div className="newpass" id="newpassForm">
             <h1>{titulo}</h1>
-            <form id="newpassform" onSubmit={this.handleSubmit} >
+            <form onSubmit={this.handleSubmit} >
               <div className="input-group">
                 <label className={this.state.passwordName!=="" ? "label-active":null}>
                   Nombre
@@ -189,9 +184,11 @@ class NewPass extends React.Component {
                   onChange={this.handleChangePass} required
                 />
               </div>
-              <button onClick={this.showGenerator} className="btn-generator">
-                  Generar
-              </button>
+              <div className="input-group btn-generar">
+                <button type="button" onClick={this.showGenerator} className="btn">
+                  Generar contraseña robusta
+                </button>
+              </div>
               <div className="generator-default" id ="generatorForm">
                 <Generator handleGen={this.handleGen} showGenerator={this.showGenerator}> </Generator>
               </div>
@@ -223,11 +220,11 @@ class NewPass extends React.Component {
                   onChange={this.handleChangeText}
                 />
               </div>
-              <div className="input-group-bottons">
-                <button type="submit" className="btn">
+              <div className="input-group">
+                <button type="submit" className="btn btn-submit">
                   {boton}
                 </button>
-                <button onClick={this.handleCloseCancel} className="btn-can">
+                <button type="button" onClick={this.handleClose} className="btn btn-cancel">
                     Cancelar
                 </button>
               </div>
