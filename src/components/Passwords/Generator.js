@@ -7,13 +7,14 @@ class Generator extends React.Component{
     constructor(props){
         super(props);
         this.handleGen=props.handleGen;
+        this.showGenerator=props.showGenerator;
 
         this.state ={
             minus: true,
             mayus: true,
             numbers: true,
             specialCharacters: true,
-            length: 1
+            length: 4
         };
         this.handleChangeCheck=this.handleChangeCheck.bind(this);
         this.handleChangeNum=this.handleChangeNum.bind(this);
@@ -76,10 +77,13 @@ class Generator extends React.Component{
                 <form className="generator-form">
                     <label className = "generator-label">
                         Longitud &nbsp;
-                        <input name="length" type="number" min= "1" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
+                        <input name="length" type="number" min= "4" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
                     </label>
                 </form>
-                <button onClick={this.submitHandle} className="btn-gen">
+                <button onClick={this.showGenerator} className="btn-gen">
+                   <span className="fas fa-times" />
+                </button>
+                <button onClick={this.submitHandle} className="btn-gen-conf">
                    <span className="fas fa-check" />
                 </button>
                 
@@ -89,7 +93,8 @@ class Generator extends React.Component{
 }
 
 Generator.propTypes = {
-    handleGen: PropTypes.func.isRequired
+    handleGen: PropTypes.func.isRequired,
+    showGenerator: PropTypes.func.isRequired
 }
 
 export default Generator;

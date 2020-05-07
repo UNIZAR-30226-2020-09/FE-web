@@ -37,7 +37,20 @@
   color: #d1d1d1;
   font-size: 1rem;
   font-weight: bold;
-  margin-left: 70%;
+  margin-left: 67%;
+  margin-right: 3%;
+}
+
+.btn-gen-conf{
+  border: 10px;
+  width: 7%;
+  height: 6%;
+  padding: 10px 0;
+  background-color: #2c2f33;
+  color: #d1d1d1;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 1%;
   margin-right: 3%;
 }
 .newpass .btn-gen:hover{

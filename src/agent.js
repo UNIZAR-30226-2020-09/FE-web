@@ -43,7 +43,9 @@ const Usuario = {
   logout: () =>
     null,
   del: () =>
-    requests.del(`/usuarios/eliminar`)
+    requests.del(`/usuarios/eliminar`),
+  login2fa: (mail, masterPassword, verificationCode) =>
+   requests.post('/usuarios/loginCon2FA', {mail:mail, masterPassword: masterPassword, verificationCode: verificationCode})
 };
 
 const ContactaAgent = {

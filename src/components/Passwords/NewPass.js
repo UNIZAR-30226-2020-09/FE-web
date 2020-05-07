@@ -135,7 +135,7 @@ class NewPass extends React.Component {
     }
 
     handleCloseCancel(){
-      window.location.reload()
+      window.location.reload();
       this.handleClose();
     }
 
@@ -193,7 +193,7 @@ class NewPass extends React.Component {
                   Generar
               </button>
               <div className="generator-default" id ="generatorForm">
-                <Generator handleGen={this.handleGen}> </Generator>
+                <Generator handleGen={this.handleGen} showGenerator={this.showGenerator}> </Generator>
               </div>
               <div className="input-group">
                 <label>
