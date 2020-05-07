@@ -36,19 +36,20 @@ class Generator extends React.Component{
     async submitHandle(event){
         event.preventDefault();
         var cont = 0;
+        var e = null;
         if(this.state.minus === true) cont++;
         if(this.state.mayus === true) cont++;
         if(this.state.numbers === true) cont++;
         if(this.state.specialCharacters === true) cont++;
         if(cont===0){
-          var e = new CustomEvent('PandoraAlert', { 'detail': {
+          e = new CustomEvent('PandoraAlert', { 'detail': {
               code: 4,
               text: 'Debe marcar al menos una casilla'}});
           if (e !== null) {
             window.dispatchEvent(e);
           }
         }else if(cont > this.state.length){
-          var e = new CustomEvent('PandoraAlert', { 'detail': {
+          e = new CustomEvent('PandoraAlert', { 'detail': {
               code: 4,
               text: 'La longitud debe ser igual o mayor al número de casillas marcadas'}});
           if (e !== null) {
@@ -62,7 +63,7 @@ class Generator extends React.Component{
               this.handleGen(x.password);
           }
           else{
-              var e = new CustomEvent('PandoraAlert', { 'detail': {
+              e = new CustomEvent('PandoraAlert', { 'detail': {
                   code:4,
                   text: 'Error ' + x.status + ': ' + x.statusText}});
               if (e !== null) {
