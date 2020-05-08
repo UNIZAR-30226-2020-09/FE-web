@@ -94,9 +94,11 @@ class App extends React.Component {
             <Settings getUser={this.getUser.bind(this)}
               updateParent={this.updateState.bind(this)}/>
           } />
-          <Route path="/about" component={ () =>
-            <About/>
-          } />
+          <Route path="/about" component={About} />
+          <Route path="/help" component={() => {
+            window.location.href = 'https://github.com/UNIZAR-30226-2020-09/FE-web/issues/new';
+            return null;
+          }}/>
           <Route component={Err_404} />
         </Switch>
       </div>
