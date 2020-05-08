@@ -16,7 +16,8 @@ const top = [
 const left = [
   {id: 4, name: 'Inicio', link: '/home', icon: 'fas fa-home'},
   {id: 5, name: 'Mis Contraseñas', link: '/passwords', icon: 'fas fa-key'},
-  {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
+  {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'},
+  {id: 7, name: 'Sobre Pandora', link: '/about', icon: 'fas fa-info-circle'}
 ];
 
 /* Map function -> list items */
