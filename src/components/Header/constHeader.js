@@ -16,8 +16,7 @@ const top = [
 const left = [
   {id: 4, name: 'Inicio', link: '/home', icon: 'fas fa-home'},
   {id: 5, name: 'Mis Contraseñas', link: '/passwords', icon: 'fas fa-key'},
-  {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'},
-  {id: 7, name: 'Sobre Pandora', link: '/about', icon: 'fas fa-info-circle'}
+  {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
 ];
 
 /* Map function -> list items */
@@ -75,9 +74,9 @@ const OptionsLeft = props => {
           </a>
         </li>
         <li className="nav-left-item">
-          <a href="https://www.google.com/">
+          <a href="/about">
             <span className="fas fa-info-circle"/>
-            <i>About</i>
+            <i>Sobre Pandora</i>
           </a>
         </li>
       </ul>
