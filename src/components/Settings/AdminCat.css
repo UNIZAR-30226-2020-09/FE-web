@@ -19,7 +19,7 @@
 .categorias .slot {
   display: flex;
   width: 46%;
-  margin: 16px 2%;
+  margin: 16px 2% 0;
   height: 45px;
   border-radius: 10px;
   text-align: left;
@@ -40,12 +40,12 @@
 }
 .inner {
     float: left;
-
-
 }
 .inner:nth-child(2n+1) {
     clear: left;
 }
+
+
 @media screen and (max-width: 800px) {
   .inner:nth-child(n) {
     clear: left;
@@ -84,6 +84,9 @@
 }
 .categorias .slot span:hover{
   cursor: pointer;
+}
+.categorias .slot span:last-child{
+  margin-right: 8px;
 }
 
 .categorias .slot input{

@@ -55,7 +55,7 @@ class ContraObj extends React.Component {
           </div>
           <div className="box break">
             <h1>Texto Opcional</h1>
-            <h2>{this.data.userName}</h2>
+            <h2>{this.data.optionalText}</h2>
           </div>
         </div>
       </li>

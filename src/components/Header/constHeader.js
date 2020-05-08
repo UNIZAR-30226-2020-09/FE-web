@@ -5,10 +5,10 @@ import LoginForm from './LoginForm.js';
 /* OPCIONES NAVBAR SUPERIOR */
 const top = [
   [
-    {id: 1, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
+    {id: 1, name: 'Ayuda', link: '/help', icon: 'far fa-question-circle'}
   ], [
     {id: 2, name: 'Cerrar Sesión', link: {pathname: '/', state: {logout: true}}, icon: 'fas fa-sign-out-alt'},
-    {id: 3, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
+    {id: 3, name: 'Ayuda', link: '/help', icon: 'far fa-question-circle'}
   ]
 ];
 
@@ -16,13 +16,17 @@ const top = [
 const left = [
   {id: 4, name: 'Inicio', link: '/home', icon: 'fas fa-home'},
   {id: 5, name: 'Mis Contraseñas', link: '/passwords', icon: 'fas fa-key'},
-  {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'},
-  {id: 7, name: 'Sobre Pandora', link: '/about', icon: 'fas fa-info-circle'}
+  {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
 ];
+
+const left_dwn = [
+  {id: 7, name: 'Sobre Pandora', link: '/about', icon: 'fas fa-info-circle'},
+]
 
 /* Map function -> list items */
 function map_item(obj, props, liclass){
   let loc = props.currentlocation;
+  if (liclass === "nav-top-item") loc = null;
   return (
     <li key={obj.id} className={liclass + (obj.link !== loc ? "" : " active")}>
       <Link to={obj.link}>
@@ -74,12 +78,7 @@ const OptionsLeft = props => {
             <i>Documentación</i>
           </a>
         </li>
-        <li className="nav-left-item">
-          <a href="https://www.google.com/">
-            <span className="fas fa-info-circle"/>
-            <i>About</i>
-          </a>
-        </li>
+        {left_dwn.map((opt) => map_item(opt, props, "nav-left-item"))}
       </ul>
     </div>
   );
