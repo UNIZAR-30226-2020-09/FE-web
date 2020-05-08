@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Alerts from './cte/Alerts'
 import Err_404 from './Err_404';
 import Redirection from './Redirection';
+import About from './About/About';
 import Header from './Header/Header';
 import Home from './Home/Home';
 import Passwords from './Passwords/Passwords';
@@ -63,7 +64,7 @@ class App extends React.Component {
     window.addEventListener('storage', this.updateHandlerCookie);
   }
   componentDidUpdate(){
-    console.log("APP Update: ", this.state);
+    //console.log("APP Update: ", this.state);
     Cookie.set(this.state);
   }
   componentWillUnmount(){
@@ -71,7 +72,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("App State: ", this.state);
+    //console.log("App State: ", this.state);
     return (
       <div>
         <Header updateParent={this.updateState.bind(this)}
@@ -92,6 +93,9 @@ class App extends React.Component {
           <Route path="/settings" component={ () =>
             <Settings getUser={this.getUser.bind(this)}
               updateParent={this.updateState.bind(this)}/>
+          } />
+          <Route path="/about" component={ () =>
+            <About/>
           } />
           <Route component={Err_404} />
         </Switch>
