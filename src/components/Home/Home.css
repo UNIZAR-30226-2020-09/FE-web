@@ -34,10 +34,6 @@
   margin: 8px 0;
 }
 
-.colorBorrable{
-  background: #23272a;
-}
-
 
 /* Objetivo -> responsive */
 @media screen and (max-width: 800px) {
