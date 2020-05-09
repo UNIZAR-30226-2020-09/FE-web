@@ -5,10 +5,10 @@ import LoginForm from './LoginForm.js';
 /* OPCIONES NAVBAR SUPERIOR */
 const top = [
   [
-    {id: 1, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
+    {id: 1, name: 'Ayuda', link: '/help', icon: 'far fa-question-circle'}
   ], [
     {id: 2, name: 'Cerrar Sesión', link: {pathname: '/', state: {logout: true}}, icon: 'fas fa-sign-out-alt'},
-    {id: 3, name: 'Ayuda', link: '/about', icon: 'far fa-question-circle'}
+    {id: 3, name: 'Ayuda', link: '/help', icon: 'far fa-question-circle'}
   ]
 ];
 
@@ -19,9 +19,14 @@ const left = [
   {id: 6, name: 'Ajustes', link: '/settings', icon: 'fas fa-cog'}
 ];
 
+const left_dwn = [
+  {id: 7, name: 'Sobre Pandora', link: '/about', icon: 'fas fa-info-circle'},
+]
+
 /* Map function -> list items */
 function map_item(obj, props, liclass){
   let loc = props.currentlocation;
+  if (liclass === "nav-top-item") loc = null;
   return (
     <li key={obj.id} className={liclass + (obj.link !== loc ? "" : " active")}>
       <Link to={obj.link}>
@@ -68,17 +73,12 @@ const OptionsLeft = props => {
       <ul>
         {props.mobile ? top[user].map((opt) => map_item(opt, props, "nav-left-item")) : null}
         <li className="nav-left-item">
-          <a href="https://www.google.com/">
+          <a href="https://github.com/UNIZAR-30226-2020-09/FE-web">
             <span className="fas fa-book"/>
             <i>Documentación</i>
           </a>
         </li>
-        <li className="nav-left-item">
-          <a href="/about">
-            <span className="fas fa-info-circle"/>
-            <i>Sobre Pandora</i>
-          </a>
-        </li>
+        {left_dwn.map((opt) => map_item(opt, props, "nav-left-item"))}
       </ul>
     </div>
   );
