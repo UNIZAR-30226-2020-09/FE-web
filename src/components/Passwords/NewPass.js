@@ -1,8 +1,8 @@
 import React from 'react';
-import { Contrasenas } from '../../agent';
-import { Categorias } from '../../agent';
+import { Contrasenas, Categorias, Grupales } from '../../agent';
 import './NewPass.css';
 import Generator from './Generator.js';
+import Compartir from './Compartir.js';
 
 class NewPass extends React.Component {
     constructor(props){
@@ -17,9 +17,13 @@ class NewPass extends React.Component {
           password: '',
           expirationTime: 120,
           passwordCategoryId: 0,
+          categoryName: '',
           optionalText: '',
           userName: '',
-          generadorAbierto: false
+          usuarios: [],
+          generadorAbierto: false,
+          compartirAbierto: false,
+          botonOculto:false
       };
       this.id = 0;//id contraseña
       this.edit = false;//edit o create
@@ -34,6 +38,10 @@ class NewPass extends React.Component {
       this.handleChangeText = this.handleChangeText.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.showGenerator = this.showGenerator.bind(this);
+      this.showCompartir = this.showCompartir.bind(this);
+      this.getUsers = this.getUsers.bind(this);
+      this.setNewUser = this.setNewUser.bind(this);
+      this.delUser = this.delUser.bind(this);
     }
 
     handleChangeName(event) {
@@ -49,7 +57,9 @@ class NewPass extends React.Component {
       this.setState({ expirationTime: event.target.value });
     }
     handleChangeCat(event) {
-      this.setState({ passwordCategoryId: event.target.value });
+      if(this.state.categoryName !== "Compartida"){
+        this.setState({ passwordCategoryId: event.target.value });
+      }
     }
     handleChangeText(event) {
       this.setState({ optionalText: event.target.value });
@@ -61,15 +71,32 @@ class NewPass extends React.Component {
         passwordName: ed.passwordName,
         password: ed.password,
         expirationTime: ed.noDaysBeforeExpiration,
+        categoryName: ed.categoryName,
         passwordCategoryId: ed.catId,
         optionalText: ed.optionalText,
-        userName: ed.userName
+        userName: ed.userName,
+        usuarios: []
       });
       this.id = ed.passId;
       this.edit = true;
       /* Cerramos el generador */
       if(this.state.generadorAbierto === true){
         this.showGenerator();
+      }
+      /* Cerramos/Abrimos el compartir */
+      if((this.state.usuarios.length===0 & this.state.compartirAbierto===true)
+      |(this.state.usuarios.length>0 & this.state.compartirAbierto===false)) {
+        this.showCompartir();
+      }
+      /* Ocultamos botón compartir */
+      if(ed.catId === -1 && this.state.botonOculto === false){
+        var generator=document.getElementById("sharebutt");
+        generator.classList.toggle("compartir-but-show");
+        this.setState({ botonOculto: true });
+      }else if(ed.catId !== -1 && this.state.botonOculto === true){
+        generator=document.getElementById("sharebutt");
+        generator.classList.toggle("compartir-but-show");
+        this.setState({ botonOculto: false });
       }
     }
 
@@ -80,13 +107,24 @@ class NewPass extends React.Component {
         expirationTime: 120,
         passwordCategoryId: this.cats[0].catId,
         optionalText: '',
-        userName: ''
+        userName: '',
+        usuarios: []
       });
       this.id = 0;
       this.edit = false;
       /* Cerramos el generador */
       if(this.state.generadorAbierto === true){
         this.showGenerator();
+      }
+      /* Cerramos/Abrimos el compartir */
+      if(this.state.compartirAbierto===true){
+        this.showCompartir();
+      }
+      /* Ocultamos botón compartir */
+      if(this.state.botonOculto === true){
+        var generator=document.getElementById("sharebutt");
+        generator.classList.toggle("compartir-but-show");
+        this.setState({ botonOculto: false });
       }
     }
 
@@ -104,11 +142,19 @@ class NewPass extends React.Component {
     async handleSubmit(event) {
       event.preventDefault();
       var e = null;
+      let x = null;
       if(this.edit===false){
         /* Enviamos peticion *CREAR* a la API */
-        let x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
-          this.state.expirationTime, this.state.passwordCategoryId,
-          this.state.optionalText, this.state.userName);
+        console.log(this.state.usuarios.length);
+        if(this.state.usuarios.length > 0){
+          x = await Grupales.create(this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName, this.state.usuarios);
+        }else{
+          x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName);
+        }
         /* Comprobamos respuesta de la API */
         if (x.status === 200){
           e = new CustomEvent('PandoraAlert', { 'detail': {
@@ -121,9 +167,15 @@ class NewPass extends React.Component {
         }
       }else{
         /* Enviamos peticion *EDITAR* a la API */
-        let x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
-          this.state.expirationTime, this.state.passwordCategoryId,
-          this.state.optionalText, this.state.userName);
+        if(this.state.usuarios.length > 0){
+          x = await Grupales.update(this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName, this.state.usuarios);
+        }else{
+          x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName);
+        }
         /* Comprobamos respuesta de la API */
         if (x.status === 200){
           e = new CustomEvent('PandoraAlert', { 'detail': {
@@ -153,11 +205,48 @@ class NewPass extends React.Component {
       var generator=document.getElementById("generatorForm");
       generator.classList.toggle("generator-show");
       var all=document.getElementById("newpassForm");
-      all.classList.toggle("newpass-gen-on")
+      if(this.state.compartirAbierto===true){
+        all.classList.toggle("newpass-gen-comp-on");
+      }else{
+        all.classList.toggle("newpass-gen-on");
+      }
+    }
+
+    async showCompartir(){
+      let x = this.state.compartirAbierto;
+      this.setState({ compartirAbierto: !x });
+      var generator=document.getElementById("compartirForm");
+      generator.classList.toggle("compartir-show");
+      var all=document.getElementById("newpassForm");
+      if(this.state.generadorAbierto===true){
+        all.classList.toggle("newpass-gen-comp-on");
+      }else{
+        all.classList.toggle("newpass-comp-on");
+      }
     }
 
     handleGen = (pass) => {
       this.setState({ password: pass});
+    }
+
+    getUsers() {
+      return this.state.usuarios;
+    }
+    setNewUser(user){
+      var x = this.state.usuarios.concat(user);
+      this.setState({ usuarios: x });
+    }
+    delUser(user){
+      var x1 = this.state.usuarios;
+      var x2 = [];
+      var j = 0;
+      for (let i = 0; i < x1.length; i++) {
+        if(x1[i] !== user){
+          x2[j]=x1[i];
+          j++;
+        }
+      }
+      this.setState({ usuarios: x2 });
     }
 
     render(){
@@ -170,6 +259,7 @@ class NewPass extends React.Component {
         titulo = "Edita tu contraseña";
         boton = "Guardar cambios";
       }
+      console.log(this.state.passwordCategoryId);
       return(
         <div className="newpass" id="newpassForm">
             <h1>{titulo}</h1>
@@ -204,7 +294,7 @@ class NewPass extends React.Component {
                 </button>
               </div>
               <div className="generator-default" id ="generatorForm">
-                <Generator handleGen={this.handleGen}> </Generator>
+                <Generator handleGen={this.handleGen}/>
               </div>
               <div className="input-group">
                 <label>
@@ -233,6 +323,14 @@ class NewPass extends React.Component {
                 <textarea type="text" maxLength="100" name="text" value={this.state.optionalText}
                   onChange={this.handleChangeText}
                 />
+              </div>
+              <div className="input-group btn-compartir" id="sharebutt">
+                <button type="button" onClick={this.showCompartir} className="btn">
+                  Compartir contraseña
+                </button>
+              </div>
+              <div className="compartir-default" id ="compartirForm">
+                <Compartir ref="share" getUsers={this.getUsers} setNewUser={this.setNewUser} delUser={this.delUser}/>
               </div>
               <div className="input-group">
                 <button type="submit" className="btn btn-submit">

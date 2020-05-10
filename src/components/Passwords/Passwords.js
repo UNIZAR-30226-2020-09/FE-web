@@ -2,7 +2,7 @@ import React from 'react';
 import PassModal from './PassModal';
 import NewPass from './NewPass';
 import './Passwords.css';
-import {Contrasenas, Categorias} from '../../agent';
+import {Contrasenas, Categorias, Grupales} from '../../agent';
 
 const del = "fas fa-trash-alt";
 const edit = "fas fa-pen";
@@ -108,6 +108,7 @@ class Passwords extends React.Component {
 
   async listar_cat(){
     let x = await Categorias.list();
+    console.log("CAT",x);
     if (x.status === 200){
       this.setState({ cats: x.categories });
     }else{
@@ -117,10 +118,12 @@ class Passwords extends React.Component {
 
   async listar_contras(acordeon=true){
     let x;
+    var e;
     if(this.state.filtrarCat){
       x = await Contrasenas.filtrar(this.mp, this.state.filtrarCatId);
     }else{
       x = await Contrasenas.listar(this.mp);
+      console.log("INDIVIDUO",x);
     }
     if (x.status === 200) {
       if(this.state.filtrarBusq){
@@ -138,7 +141,7 @@ class Passwords extends React.Component {
         this.setState({ contras: x.passwords });
       }
     } else {
-      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
+      e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
       window.dispatchEvent(e);
     }
     if(acordeon){
@@ -151,6 +154,14 @@ class Passwords extends React.Component {
     let g1 = this.state.objKey;
     let g2 = this.state.contras.length;
     this.setState({ objKey: g1+g2 });
+    x = await Grupales.listar();
+    console.log("GRUPALES",x);
+    if (x.status === 200) {
+      this.setState({ grupales: x.passwords });
+    }else{
+      e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
+      window.dispatchEvent(e);
+    }
   }
 
   async delPass(pass){
@@ -268,8 +279,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Contraseñas Grupales</button>
               <ul className="panel">
-                {this.state.grupales.map((c,i) =>
-                  <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
+                {this.state.grupales.map((c,j) =>
+                  <ContraObj key={j+this.state.objKey} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>

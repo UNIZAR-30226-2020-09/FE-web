@@ -82,6 +82,15 @@ const Contrasenas = {
     requests.post(`/contrasenya/generar`,{minus: min, mayus: may, numbers: num, specialCharacters: spec, length:long})
 }
 
+const Grupales = {
+  create: (name, pass, time, cat, text, user, users) =>
+    requests.post(`/grupo/insertar`, { passwordName: name,
+      password: pass, expirationTime: time, passwordCategoryId: cat,
+      optionalText: text, userName: user, usuarios: users }),
+  listar: () =>
+    requests.get(`/grupo/listar`)
+}
+
 const StatsAgent = {
   list: () =>
     requests.get(`/estadisticas`)
@@ -92,7 +101,8 @@ export {
   ContactaAgent,
   Categorias,
   Contrasenas,
-  StatsAgent
+  StatsAgent,
+  Grupales
 };
 export const setToken = (_token) => { token = _token; }
 export const getToken = () => { return token; }
