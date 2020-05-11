@@ -20,6 +20,7 @@ class NewPass extends React.Component {
           categoryName: '',
           optionalText: '',
           userName: '',
+          rol: 0,
           usuarios: [],
           generadorAbierto: false,
           compartirAbierto: false,
@@ -27,6 +28,7 @@ class NewPass extends React.Component {
       };
       this.id = 0;//id contraseña
       this.edit = false;//edit o create
+      this.catsCompletas = [];
       this.cats = [];//para listar categorías en desplegable
       this.listar_cat();
 
@@ -75,6 +77,7 @@ class NewPass extends React.Component {
         passwordCategoryId: ed.catId,
         optionalText: ed.optionalText,
         userName: ed.userName,
+        rol: ed.rol,
         usuarios: []
       });
       this.id = ed.passId;
@@ -89,11 +92,15 @@ class NewPass extends React.Component {
         this.showCompartir();
       }
       /* Ocultamos botón compartir */
-      if(ed.catId === -1 && this.state.botonOculto === false){
+      if(ed.categoryName === "Compartida" && ed.rol===0 && this.state.botonOculto === false){
         var generator=document.getElementById("sharebutt");
         generator.classList.toggle("compartir-but-show");
         this.setState({ botonOculto: true });
-      }else if(ed.catId !== -1 && this.state.botonOculto === true){
+      }else if(ed.categoryName === "Compartida" && ed.rol===1 && this.state.botonOculto === true){
+        generator=document.getElementById("sharebutt");
+        generator.classList.toggle("compartir-but-show");
+        this.setState({ botonOculto: false });
+      }else if(ed.categoryName !== "Compartida" && this.state.botonOculto === true){
         generator=document.getElementById("sharebutt");
         generator.classList.toggle("compartir-but-show");
         this.setState({ botonOculto: false });
@@ -108,6 +115,7 @@ class NewPass extends React.Component {
         passwordCategoryId: this.cats[0].catId,
         optionalText: '',
         userName: '',
+        rol: 0,
         usuarios: []
       });
       this.id = 0;
@@ -130,9 +138,18 @@ class NewPass extends React.Component {
 
     async listar_cat(){
       /* Pedimos categorías a la API */
-      let x = await Categorias.list();
-      if (x.status === 200){
-        this.cats = x.categories;
+      let x1 = await Categorias.list();
+      if (x1.status === 200){
+        let j = 0;
+        var x2 = [];
+        for (let i = 0; i < x1.categories.length; i++) {
+          if(x1.categories[i].categoryName !== "Compartida"){
+            x2[j]=x1.categories[i];
+            j++;
+          }
+        }
+        this.cats = x2;
+        this.catsCompletas = x1.categories;
         this.setState({ passwordCategoryId: this.cats[0].catId });
       }else{
         this.cats = [{catId: -1,categoryName: "ERROR"}]
@@ -145,11 +162,11 @@ class NewPass extends React.Component {
       let x = null;
       if(this.edit===false){
         /* Enviamos peticion *CREAR* a la API */
-        console.log(this.state.usuarios.length);
         if(this.state.usuarios.length > 0){
           x = await Grupales.create(this.state.passwordName, this.state.password,
             this.state.expirationTime, this.state.passwordCategoryId,
             this.state.optionalText, this.state.userName, this.state.usuarios);
+          console.log(x);
         }else{
           x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
             this.state.expirationTime, this.state.passwordCategoryId,
@@ -189,7 +206,10 @@ class NewPass extends React.Component {
       }
       if (e !== null) {
         window.dispatchEvent(e);
-        if (e.detail.code === 2) this.listarC(false);
+        if (e.detail.code === 2){
+          this.listarC(true);
+          this.listarC(true);
+        }
       }
       /* Cerramos el modal */
       this.handleClose();
@@ -259,7 +279,10 @@ class NewPass extends React.Component {
         titulo = "Edita tu contraseña";
         boton = "Guardar cambios";
       }
-      console.log(this.state.passwordCategoryId);
+      var noeditcat = false;
+      if(this.state.categoryName === "Compartida") noeditcat = true;
+      var cats = this.cats;
+      if(this.state.categoryName === "Compartida") cats = this.catsCompletas;
       return(
         <div className="newpass" id="newpassForm">
             <h1>{titulo}</h1>
@@ -310,8 +333,8 @@ class NewPass extends React.Component {
                 Categoría
               </label>
                 <select name="catt" value={this.state.passwordCategoryId}
-                  onChange={this.handleChangeCat}>
-                  {this.cats.map( (cat, i) =>
+                  onChange={this.handleChangeCat} disabled={noeditcat}>
+                  {cats.map( (cat, i) =>
                     <option key={i} value={cat.catId}>{cat.categoryName}</option>
                   )}
                 </select>

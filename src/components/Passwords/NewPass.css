@@ -57,7 +57,10 @@
   margin-bottom: 10px !important;
 }
 .btn-compartir{
-  margin-bottom: 10px !important;
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+  margin-bottom: 10px;
 }
 .btn-submit{
   width: 65% !important;
@@ -85,18 +88,19 @@
   height: 0;
   opacity: 0;
   transition: 1s;
+  transform:scaleY(0);
 }
 .compartir-show{
   visibility: visible;
   height: auto;
   opacity: 1;
   transition: 1s;
+  transform:scaleY(1);
 }
 .compartir-but-show {
   visibility: hidden;
   height: 0;
   opacity: 0;
-  transition: 1s;
   margin:0;
 }
 
