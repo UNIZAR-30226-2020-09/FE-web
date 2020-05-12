@@ -1,5 +1,4 @@
 import React from 'react';
-import Contacta from '../Home/Contacta.js';
 import './About.css';
 
 import logo from '../cte/pandora-texto.png';

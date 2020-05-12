@@ -1,5 +1,5 @@
 import React from 'react';
-import { history, mailValidation, passwValidation } from '../../utils';
+import { history, mailValidation, passwValidation, twoFAValidation } from '../../utils';
 import { Usuario, setToken } from '../../agent';
 import './LoginForm.css';
 
@@ -35,26 +35,10 @@ class LoginForm extends React.Component {
   async handleSubmitMail(event) {
     event.preventDefault();
     var e = null;
-    /////// DEBUG NO 2FA, NO BORRAR
-    /*
-    if (!this.state.twofa){
-      this.setState({ twofa: true });
-      return;
-    }*/
-    
+
     if (mailValidation(this.state.user)){
       if (passwValidation(this.state.password)) {
-        let x = await Usuario.login(this.state.user, this.state.password);
-        if (x.status === 200){
-          this.setState({twofa :true});
-        }
-        else{
-          e = new CustomEvent('PandoraAlert', { 'detail': {
-            code: 4,
-            text: 'Error ' + x.status + ': ' + x.statusText
-          }});
-          window.dispatchEvent(e);
-        }
+        this.setState({twofa :true});
       } else {
         e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Contraseña no válida'} });
         window.dispatchEvent(e);
@@ -67,27 +51,31 @@ class LoginForm extends React.Component {
   async handleSubmit2FA(event) {
     event.preventDefault();
     var e = null;
-    let x = await Usuario.login2fa(this.state.user, this.state.password, (this.state.fa_code).toUpperCase());
-        if (x.status === 200){
-          setToken(x.token);
-          this.setUser({ user: {
-            mail: this.state.user,
-            password: this.state.password,
-            token: x.token
-          }});
-          e = new CustomEvent('PandoraAlert', { 'detail': {
-            code: 1,
-            text:'Sesión iniciada (' + this.state.user + ')'
-          }});
-          window.dispatchEvent(e);
-          history.push('/home');
-        } else {
-          e = new CustomEvent('PandoraAlert', { 'detail': {
-            code: 4,
-            text: 'Error ' + x.status + ': ' + x.statusText
-          }});
-          window.dispatchEvent(e);
-        }
+    if (twoFAValidation(this.state.fa_code)){
+      let x = await Usuario.login2fa(this.state.user, this.state.password, this.state.fa_code);
+      if (x.status === 200){
+        setToken(x.token);
+        this.setUser({ user: {
+          mail: this.state.user,
+          password: this.state.password,
+          token: x.token
+        }});
+        e = new CustomEvent('PandoraAlert', { 'detail': {
+          code: 1,
+          text:'Sesión iniciada (' + this.state.user + ')'
+        }});
+        history.push('/home');
+      } else {
+        e = new CustomEvent('PandoraAlert', { 'detail': {
+          code: 4,
+          text: 'Error ' + x.status + ': ' + x.statusText
+        }});
+        this.setState({twofa: false});
+      }
+    } else {
+      e = new CustomEvent('PandoraAlert', { 'detail': { code: 4, text: 'Error: Código 2FA no válido.'}});
+    }
+    if (e !== null) window.dispatchEvent(e);
   }
 
 
