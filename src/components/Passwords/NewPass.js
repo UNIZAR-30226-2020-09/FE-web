@@ -59,9 +59,7 @@ class NewPass extends React.Component {
       this.setState({ expirationTime: event.target.value });
     }
     handleChangeCat(event) {
-      if(this.state.categoryName !== "Compartida"){
-        this.setState({ passwordCategoryId: event.target.value });
-      }
+      this.setState({ passwordCategoryId: event.target.value });
     }
     handleChangeText(event) {
       this.setState({ optionalText: event.target.value });
@@ -82,6 +80,7 @@ class NewPass extends React.Component {
       });
       this.id = ed.passId;
       this.edit = true;
+      if(this.state.categoryName==="Compartida") this.setState({usuarios: ed.usuarios});
       /* Cerramos el generador */
       if(this.state.generadorAbierto === true){
         this.showGenerator();
@@ -91,20 +90,6 @@ class NewPass extends React.Component {
       |(this.state.usuarios.length>0 & this.state.compartirAbierto===false)) {
         this.showCompartir();
       }
-      /* Ocultamos botón compartir */
-      if(ed.categoryName === "Compartida" && ed.rol===0 && this.state.botonOculto === false){
-        var generator=document.getElementById("sharebutt");
-        generator.classList.toggle("compartir-but-show");
-        this.setState({ botonOculto: true });
-      }else if(ed.categoryName === "Compartida" && ed.rol===1 && this.state.botonOculto === true){
-        generator=document.getElementById("sharebutt");
-        generator.classList.toggle("compartir-but-show");
-        this.setState({ botonOculto: false });
-      }else if(ed.categoryName !== "Compartida" && this.state.botonOculto === true){
-        generator=document.getElementById("sharebutt");
-        generator.classList.toggle("compartir-but-show");
-        this.setState({ botonOculto: false });
-      }
     }
 
     setNew() {
@@ -112,6 +97,7 @@ class NewPass extends React.Component {
         passwordName: '',
         password: '',
         expirationTime: 120,
+        categoryName: '',
         passwordCategoryId: this.cats[0].catId,
         optionalText: '',
         userName: '',
@@ -127,12 +113,6 @@ class NewPass extends React.Component {
       /* Cerramos/Abrimos el compartir */
       if(this.state.compartirAbierto===true){
         this.showCompartir();
-      }
-      /* Ocultamos botón compartir */
-      if(this.state.botonOculto === true){
-        var generator=document.getElementById("sharebutt");
-        generator.classList.toggle("compartir-but-show");
-        this.setState({ botonOculto: false });
       }
     }
 
@@ -185,10 +165,15 @@ class NewPass extends React.Component {
       }else{
         /* Enviamos peticion *EDITAR* a la API */
         if(this.state.usuarios.length > 0){
-          x = await Grupales.update(this.state.passwordName, this.state.password,
-            this.state.expirationTime, this.state.passwordCategoryId,
-            this.state.optionalText, this.state.userName, this.state.usuarios);
+          // JESUS
+
         }else{
+          if(this.state.categoryName==="Compartida"){
+            await this.setState({ passwordCategoryId: this.cats[0].catId});
+            console.log("GROUP TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
+          }else{
+            console.log("INDIVIDUAL TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
+          }
           x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
             this.state.expirationTime, this.state.passwordCategoryId,
             this.state.optionalText, this.state.userName);
@@ -197,7 +182,7 @@ class NewPass extends React.Component {
         if (x.status === 200){
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code:2,
-            text:'Contraseña modificada con éxito :)'}});
+            text:'Contraseña modificada con éxito.'}});
         }else{
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code:4,

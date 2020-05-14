@@ -120,22 +120,21 @@ class Passwords extends React.Component {
         }
       }
       this.setState({ cats: x2 });
-      console.log("CAT",x2);
     }else{
       this.setState({ cats: [{catId: -1,categoryName: "ERROR"}] });
     }
+    console.log("CATEGORIAS",x1);
   }
 
   async listar_contras(acordeon=true){
     let x;
     var e;
-    console.log("listar",acordeon);
     /* LISTAR INDIVIDUALES */
     if(this.state.filtrarCat){
       x = await Contrasenas.filtrar(this.mp, this.state.filtrarCatId);
     }else{
       x = await Contrasenas.listar(this.mp);
-      console.log("INDIVIDUO",x);
+      //console.log("INDIVIDUO",x);
     }
     if (x.status === 200) {
       if(this.state.filtrarBusq){
@@ -162,7 +161,7 @@ class Passwords extends React.Component {
     if (x.status === 200) {
       this.setState({ grupales: x.passwords });
     }else{
-      e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
+      e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas grupales.'} });
       window.dispatchEvent(e);
     }
     /* ABRIMOS ACORDEON */
@@ -191,9 +190,14 @@ class Passwords extends React.Component {
   }
 
   editPass(x){
-    this.edit = x;
-    this.refs.newpass.setEdit();
-    this.toggleModal();
+    if(x.categoryName==="Compartida" && x.rol===0){
+      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No puedes editar esta contraseña porque no eres el creador'} });
+      if (e !== null) window.dispatchEvent(e);
+    }else{
+      this.edit = x;
+      this.refs.newpass.setEdit();
+      this.toggleModal();
+    }
   }
   newPass(){
     this.edit = null;
