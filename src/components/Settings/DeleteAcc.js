@@ -15,18 +15,24 @@ class DeleteAcc extends React.Component {
   }
 
   async handdleClick(e) {
-    //e.preventDefault();
     if(window.confirm("¿Estas seguro?")){
       let x = await Usuario.del();
        console.log(x);
        if(x.status === 200){
-         window.alert('Usuario Eliminado');
+         var ev = new CustomEvent('PandoraAlert', { 'detail': {
+           code: 2,
+           text:'Se ha borrado su cuenta.'
+         }});
+         window.dispatchEvent(e);
          history.push('/', {logout: true});
-       }
-       else{
+       } else {
          window.alert('Error: ' + x.text + ' ' + x.status);
+         var ev = new CustomEvent('PandoraAlert', { 'detail': {
+           code: 5,
+           text: 'Error ' + x.status + ': ' + x.statusText
+         }});
+         window.dispatchEvent(e);
        }
-
     }
   }
 
