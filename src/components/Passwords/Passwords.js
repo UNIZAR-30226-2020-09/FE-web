@@ -13,11 +13,18 @@ class ContraObj extends React.Component {
     this.data = props.data;
     this.delPass = props.delPass;
     this.editPass = props.editPass;
+
+    this.hide = function(e) {
+      let x = e.currentTarget;
+      x.classList.toggle("fa-eye-slash");
+      x = x.nextElementSibling;
+      if (x.type === 'text') x.type = 'password';
+      else x.type = 'text';
+    }
   }
 
   faux(ev){
     let ch = ev.currentTarget.parentElement.parentElement;
-    console.log(ch)
     if (ch.style.maxHeight) {
       ch.style.maxHeight = null;
     } else {
@@ -44,7 +51,10 @@ class ContraObj extends React.Component {
           </div>
           <div className="box">
             <h1>Contraseña</h1>
-            <h2>{this.data.password}</h2>
+            <h2>
+              <span className="fas fa-eye" onClick={this.hide}/>
+              <input type="password" value={this.data.password} readOnly/>
+            </h2>
           </div>
           <div className="box cols">
             <div className="box">
@@ -114,7 +124,7 @@ class Passwords extends React.Component {
     if (x.status === 200){
       this.setState({ cats: x.categories });
     }else{
-      this.setState({ cats: [{catId: -1,categoryName: "ERROR"}] });
+      this.setState({ cats: [{catId: -1, categoryName: "ERROR"}] });
     }
   }
 
@@ -123,7 +133,7 @@ class Passwords extends React.Component {
     if(this.state.filtrarCat){
       x = await Contrasenas.filtrar(this.mp, this.state.filtrarCatId);
     }else{
-      x = await Contrasenas.listar(this.mp);
+      x = await Contrasenas.personales(this.mp);
     }
     if (x.status === 200) {
       if(this.state.filtrarBusq){

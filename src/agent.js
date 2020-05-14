@@ -9,6 +9,7 @@ const API_ROOT = 'https://pandorapp.herokuapp.com/api';
 //const encode = encodeURIComponent;
 const responseBody = res => {
   let response = res.body;
+  if (response === null) {response = {}}
   response.statusType = res.statusType;
   response.status = res.status;
   return response;
@@ -74,6 +75,10 @@ const Contrasenas = {
       passwordCategoryId: cat, optionalText: text, userName: user }),
   listar: (mp) =>
     requests.post(`/contrasenya/listar`, { masterPassword: mp }),
+  personales: (mp) =>
+    requests.post(`/contrasenya/listarNoCompartidas`, { masterPassword: mp }),
+  grupales: (mp) =>
+    requests.post(`/contrasenya/listarPorCategoria`, { masterPassword: mp, idCat: 7 }),
   filtrar: (mp,id) =>
     requests.post(`/contrasenya/listarPorCategoria`, { masterPassword: mp, idCat: id }),
   del: (cat) =>
