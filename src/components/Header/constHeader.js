@@ -73,8 +73,8 @@ const OptionsLeft = props => {
       <ul>
         {props.mobile ? top[user].map((opt) => map_item(opt, props, "nav-left-item")) : null}
         <li className="nav-left-item">
-          <a href="https://haveibennpwned.com">
-            <span className="fas fa-book"/>
+          <a href="https://haveibeenpwned.com">
+            <span className="fas fa-user-secret"/>
             <i>Comprometidas</i>
           </a>
         </li>
