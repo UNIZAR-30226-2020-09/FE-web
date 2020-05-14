@@ -4,13 +4,10 @@
   position: relative;
   width: 100%;
   max-width: 100%;
-  height: 700px;
+  height: auto;
   overflow: hidden;
   background-color: #23272a;
   color: #d1d1d1;
-}
-.newpass-gen-on{
-  height: 880px;
 }
 
 .newpass h1{
@@ -59,13 +56,17 @@
 .btn-generar{
   margin-bottom: 10px !important;
 }
+.btn-compartir{
+  height: auto;
+  margin-bottom: 10px;
+}
 .btn-submit{
   width: 65% !important;
 }
 .btn-cancel{
   width: 30% !important;
   margin-left: 5%;
-  margin-bottom: 30px !important;
+  margin-bottom: 10px !important;
 }
 
 .generator-default{
@@ -74,12 +75,25 @@
   opacity: 0;
   transition: 1s;
 }
-
 .generator-show{
   visibility: visible;
   height: 160px;
   opacity: 1;
   transition: 1s;
+}
+.compartir-default{
+  visibility: hidden;
+  height: 0;
+  opacity: 0;
+  transition: 1s;
+  transform:scaleY(0);
+}
+.compartir-show{
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+  transition: 1s;
+  transform:scaleY(1);
 }
 
 
@@ -105,8 +119,5 @@
 @media screen and (max-width: 1200px) {
   .generator-show{
     height: 310px;
-  }
-  .newpass-gen-on{
-    height: 1000px;
   }
 }

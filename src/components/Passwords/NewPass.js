@@ -1,8 +1,8 @@
 import React from 'react';
-import { Contrasenas } from '../../agent';
-import { Categorias } from '../../agent';
+import { Contrasenas, Categorias, Grupales } from '../../agent';
 import './NewPass.css';
 import Generator from './Generator.js';
+import Compartir from './Compartir.js';
 
 class NewPass extends React.Component {
     constructor(props){
@@ -17,12 +17,18 @@ class NewPass extends React.Component {
           password: '',
           expirationTime: 120,
           passwordCategoryId: 0,
+          categoryName: '',
           optionalText: '',
           userName: '',
-          generadorAbierto: false
+          rol: 0,
+          usuarios: [],
+          generadorAbierto: false,
+          compartirAbierto: false,
+          botonOculto:false
       };
       this.id = 0;//id contraseña
       this.edit = false;//edit o create
+      this.catsCompletas = [];
       this.cats = [];//para listar categorías en desplegable
       this.listar_cat();
 
@@ -34,6 +40,10 @@ class NewPass extends React.Component {
       this.handleChangeText = this.handleChangeText.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.showGenerator = this.showGenerator.bind(this);
+      this.showCompartir = this.showCompartir.bind(this);
+      this.getUsers = this.getUsers.bind(this);
+      this.setNewUser = this.setNewUser.bind(this);
+      this.delUser = this.delUser.bind(this);
     }
 
     handleChangeName(event) {
@@ -61,15 +71,24 @@ class NewPass extends React.Component {
         passwordName: ed.passwordName,
         password: ed.password,
         expirationTime: ed.noDaysBeforeExpiration,
+        categoryName: ed.categoryName,
         passwordCategoryId: ed.catId,
         optionalText: ed.optionalText,
-        userName: ed.userName
+        userName: ed.userName,
+        rol: ed.rol,
+        usuarios: []
       });
       this.id = ed.passId;
       this.edit = true;
+      if(this.state.categoryName==="Compartida") this.setState({usuarios: ed.usuarios});
       /* Cerramos el generador */
       if(this.state.generadorAbierto === true){
         this.showGenerator();
+      }
+      /* Cerramos/Abrimos el compartir */
+      if((this.state.usuarios.length===0 & this.state.compartirAbierto===true)
+      |(this.state.usuarios.length>0 & this.state.compartirAbierto===false)) {
+        this.showCompartir();
       }
     }
 
@@ -78,9 +97,12 @@ class NewPass extends React.Component {
         passwordName: '',
         password: '',
         expirationTime: 120,
+        categoryName: '',
         passwordCategoryId: this.cats[0].catId,
         optionalText: '',
-        userName: ''
+        userName: '',
+        rol: 0,
+        usuarios: []
       });
       this.id = 0;
       this.edit = false;
@@ -88,13 +110,26 @@ class NewPass extends React.Component {
       if(this.state.generadorAbierto === true){
         this.showGenerator();
       }
+      /* Cerramos/Abrimos el compartir */
+      if(this.state.compartirAbierto===true){
+        this.showCompartir();
+      }
     }
 
     async listar_cat(){
       /* Pedimos categorías a la API */
-      let x = await Categorias.list();
-      if (x.status === 200){
-        this.cats = x.categories;
+      let x1 = await Categorias.list();
+      if (x1.status === 200){
+        let j = 0;
+        var x2 = [];
+        for (let i = 0; i < x1.categories.length; i++) {
+          if(x1.categories[i].categoryName !== "Compartida"){
+            x2[j]=x1.categories[i];
+            j++;
+          }
+        }
+        this.cats = x2;
+        this.catsCompletas = x1.categories;
         this.setState({ passwordCategoryId: this.cats[0].catId });
       }else{
         this.cats = [{catId: -1,categoryName: "ERROR"}]
@@ -104,11 +139,19 @@ class NewPass extends React.Component {
     async handleSubmit(event) {
       event.preventDefault();
       var e = null;
+      let x = null;
       if(this.edit===false){
         /* Enviamos peticion *CREAR* a la API */
-        let x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
-          this.state.expirationTime, this.state.passwordCategoryId,
-          this.state.optionalText, this.state.userName);
+        if(this.state.usuarios.length > 0){
+          x = await Grupales.create(this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName, this.state.usuarios);
+          console.log(x);
+        }else{
+          x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName);
+        }
         /* Comprobamos respuesta de la API */
         if (x.status === 200){
           e = new CustomEvent('PandoraAlert', { 'detail': {
@@ -121,14 +164,25 @@ class NewPass extends React.Component {
         }
       }else{
         /* Enviamos peticion *EDITAR* a la API */
-        let x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
-          this.state.expirationTime, this.state.passwordCategoryId,
-          this.state.optionalText, this.state.userName);
+        if(this.state.usuarios.length > 0){
+          // JESUS
+
+        }else{
+          if(this.state.categoryName==="Compartida"){
+            await this.setState({ passwordCategoryId: this.cats[0].catId});
+            console.log("GROUP TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
+          }else{
+            console.log("INDIVIDUAL TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
+          }
+          x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
+            this.state.expirationTime, this.state.passwordCategoryId,
+            this.state.optionalText, this.state.userName);
+        }
         /* Comprobamos respuesta de la API */
         if (x.status === 200){
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code:2,
-            text:'Contraseña modificada con éxito :)'}});
+            text:'Contraseña modificada con éxito.'}});
         }else{
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code:4,
@@ -137,7 +191,10 @@ class NewPass extends React.Component {
       }
       if (e !== null) {
         window.dispatchEvent(e);
-        if (e.detail.code === 2) this.listarC(false);
+        if (e.detail.code === 2){
+          this.listarC(true);
+          this.listarC(true);
+        }
       }
       /* Cerramos el modal */
       this.handleClose();
@@ -153,11 +210,48 @@ class NewPass extends React.Component {
       var generator=document.getElementById("generatorForm");
       generator.classList.toggle("generator-show");
       var all=document.getElementById("newpassForm");
-      all.classList.toggle("newpass-gen-on")
+      if(this.state.compartirAbierto===true){
+        all.classList.toggle("newpass-gen-comp-on");
+      }else{
+        all.classList.toggle("newpass-gen-on");
+      }
+    }
+
+    async showCompartir(){
+      let x = this.state.compartirAbierto;
+      this.setState({ compartirAbierto: !x });
+      var generator=document.getElementById("compartirForm");
+      generator.classList.toggle("compartir-show");
+      var all=document.getElementById("newpassForm");
+      if(this.state.generadorAbierto===true){
+        all.classList.toggle("newpass-gen-comp-on");
+      }else{
+        all.classList.toggle("newpass-comp-on");
+      }
     }
 
     handleGen = (pass) => {
       this.setState({ password: pass});
+    }
+
+    getUsers() {
+      return this.state.usuarios;
+    }
+    setNewUser(user){
+      var x = this.state.usuarios.concat(user);
+      this.setState({ usuarios: x });
+    }
+    delUser(user){
+      var x1 = this.state.usuarios;
+      var x2 = [];
+      var j = 0;
+      for (let i = 0; i < x1.length; i++) {
+        if(x1[i] !== user){
+          x2[j]=x1[i];
+          j++;
+        }
+      }
+      this.setState({ usuarios: x2 });
     }
 
     render(){
@@ -170,6 +264,10 @@ class NewPass extends React.Component {
         titulo = "Edita tu contraseña";
         boton = "Guardar cambios";
       }
+      var noeditcat = false;
+      if(this.state.categoryName === "Compartida") noeditcat = true;
+      var cats = this.cats;
+      if(this.state.categoryName === "Compartida") cats = this.catsCompletas;
       return(
         <div className="newpass" id="newpassForm">
             <h1>{titulo}</h1>
@@ -204,7 +302,7 @@ class NewPass extends React.Component {
                 </button>
               </div>
               <div className="generator-default" id ="generatorForm">
-                <Generator handleGen={this.handleGen}> </Generator>
+                <Generator handleGen={this.handleGen}/>
               </div>
               <div className="input-group">
                 <label>
@@ -220,8 +318,8 @@ class NewPass extends React.Component {
                 Categoría
               </label>
                 <select name="catt" value={this.state.passwordCategoryId}
-                  onChange={this.handleChangeCat}>
-                  {this.cats.map( (cat, i) =>
+                  onChange={this.handleChangeCat} disabled={noeditcat}>
+                  {cats.map( (cat, i) =>
                     <option key={i} value={cat.catId}>{cat.categoryName}</option>
                   )}
                 </select>
@@ -233,6 +331,14 @@ class NewPass extends React.Component {
                 <textarea type="text" maxLength="100" name="text" value={this.state.optionalText}
                   onChange={this.handleChangeText}
                 />
+              </div>
+              <div className="input-group btn-compartir" id="sharebutt">
+                <button type="button" onClick={this.showCompartir} className="btn">
+                  Compartir contraseña
+                </button>
+              </div>
+              <div className="compartir-default" id ="compartirForm">
+                <Compartir ref="share" getUsers={this.getUsers} setNewUser={this.setNewUser} delUser={this.delUser}/>
               </div>
               <div className="input-group">
                 <button type="submit" className="btn btn-submit">

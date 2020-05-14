@@ -2,7 +2,7 @@ import React from 'react';
 import PassModal from './PassModal';
 import NewPass from './NewPass';
 import './Passwords.css';
-import {Contrasenas, Categorias} from '../../agent';
+import {Contrasenas, Categorias, Grupales} from '../../agent';
 
 const del = "fas fa-trash-alt";
 const edit = "fas fa-pen";
@@ -80,13 +80,15 @@ class Passwords extends React.Component {
       filtrarCatId: 0,
       filtrarBusq: false,
       filtrarBusqText: '',
-      objKey: 0,
+      objKeyIndividuales: 0,
+      objKeyGrupales: 0,
       cats: [],
       contras: [],
       grupales: []
     };
     this.listar_cat();
-    this.listar_contras();
+    this.listar_contras(false);
+    this.listar_contras(true);
 
     this.delPass = this.delPass.bind(this);
     this.edit = null;
@@ -112,20 +114,32 @@ class Passwords extends React.Component {
   }
 
   async listar_cat(){
-    let x = await Categorias.list();
-    if (x.status === 200){
-      this.setState({ cats: x.categories });
+    let x1 = await Categorias.list();
+    if (x1.status === 200){
+      let j = 0;
+      var x2 = [];
+      for (let i = 0; i < x1.categories.length; i++) {
+        if(x1.categories[i].categoryName !== "Compartida"){
+          x2[j]=x1.categories[i];
+          j++;
+        }
+      }
+      this.setState({ cats: x2 });
     }else{
       this.setState({ cats: [{catId: -1,categoryName: "ERROR"}] });
     }
+    console.log("CATEGORIAS",x1);
   }
 
   async listar_contras(acordeon=true){
     let x;
+    var e;
+    /* LISTAR INDIVIDUALES */
     if(this.state.filtrarCat){
       x = await Contrasenas.filtrar(this.mp, this.state.filtrarCatId);
     }else{
       x = await Contrasenas.listar(this.mp);
+      //console.log("INDIVIDUO",x);
     }
     if (x.status === 200) {
       if(this.state.filtrarBusq){
@@ -143,9 +157,19 @@ class Passwords extends React.Component {
         this.setState({ contras: x.passwords });
       }
     } else {
-      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
+      e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
       window.dispatchEvent(e);
     }
+    /* LISTAR GRUPALES */
+    x = await Grupales.listar();
+    console.log("GRUPALES",x);
+    if (x.status === 200) {
+      this.setState({ grupales: x.passwords });
+    }else{
+      e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas grupales.'} });
+      window.dispatchEvent(e);
+    }
+    /* ABRIMOS ACORDEON */
     if(acordeon){
       var acc = document.getElementsByClassName("accordion");
       var i, ev = new Event("click");
@@ -153,9 +177,12 @@ class Passwords extends React.Component {
         acc[i].dispatchEvent(ev);
       }
     }
-    let g1 = this.state.objKey;
-    let g2 = this.state.contras.length;
-    this.setState({ objKey: g1+g2 });
+    /* ACTUALIZAMOS ÍNDICES */
+    let i1 = await this.state.objKeyIndividuales;
+    let i2 = await this.state.contras.length +1;
+    let g2 = await this.state.grupales.length +1;
+    await this.setState({ objKeyIndividuales: (i1+i2+g2) });
+    await this.setState({ objKeyGrupales: (i1+i2+i2+g2) });
   }
 
   async delPass(pass){
@@ -168,9 +195,14 @@ class Passwords extends React.Component {
   }
 
   editPass(x){
-    this.edit = x;
-    this.refs.newpass.setEdit();
-    this.toggleModal();
+    if(x.categoryName==="Compartida" && x.rol===0){
+      var e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No puedes editar esta contraseña porque no eres el creador'} });
+      if (e !== null) window.dispatchEvent(e);
+    }else{
+      this.edit = x;
+      this.refs.newpass.setEdit();
+      this.toggleModal();
+    }
   }
   newPass(){
     this.edit = null;
@@ -265,7 +297,7 @@ class Passwords extends React.Component {
               <button className="accordion">Mis Contraseñas</button>
               <ul className="panel">
                 {this.state.contras.map((c,i) =>
-                  <ContraObj key={i+this.state.objKey} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
+                  <ContraObj key={this.state.objKeyIndividuales+i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>
@@ -273,8 +305,8 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Contraseñas Grupales</button>
               <ul className="panel">
-                {this.state.grupales.map((c,i) =>
-                  <ContraObj key={i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
+                {this.state.grupales.map((c,j) =>
+                  <ContraObj key={this.state.objKeyGrupales+j} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
           </div>
