@@ -136,7 +136,7 @@ class Passwords extends React.Component {
     }else{
       this.setState({ cats: [{catId: -1, categoryName: "ERROR"}] });
     }
-    console.log("CATEGORIAS",x1);
+    //console.log("CATEGORIAS",x1);
   }
 
   async listar_contras(acordeon=false){
@@ -169,7 +169,7 @@ class Passwords extends React.Component {
     }
     /* LISTAR GRUPALES */
     x = await Grupales.listar();
-    console.log("GRUPALES",x);
+    //console.log("GRUPALES",x);
     if (x.status === 200) {
       this.setState({ grupales: x.passwords });
     }else{
