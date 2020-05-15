@@ -153,20 +153,7 @@ class Passwords extends React.Component {
       x = await Contrasenas.listar(this.mp);
     }
     if (x.status === 200) {
-      if(this.state.filtrarBusq){
-        let x1 = x.passwords;
-        let x2 = [];
-        let j = 0;
-        for (let i = 0; i < x1.length; i++) {
-          if(x1[i].passwordName.includes(this.state.filtrarBusqText)){
-            x2[j] = x1[i];
-            j++;
-          }
-        }
-        this.setState({ contras: x2 });
-      }else{
-        this.setState({ contras: x.passwords });
-      }
+      this.setState({ contras: x.passwords });
     } else {
       e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
       window.dispatchEvent(e);
@@ -268,6 +255,26 @@ class Passwords extends React.Component {
   render() {
     if (this.mp === null) return null;
     document.body.style.backgroundColor = "#ebe4f4";
+    var contras_individuales = this.state.contras;
+    var contras_grupales = this.state.grupales;
+    if(this.state.filtrarBusq){
+      let j = 0, aux1 = [], aux2 = [];
+      for (let i = 0; i < contras_individuales.length; i++) {
+        if(contras_individuales[i].passwordName.includes(this.state.filtrarBusqText)){
+          aux1[j] = contras_individuales[i];
+          j++;
+        }
+      }
+      j = 0;
+      for (let i = 0; i < contras_grupales.length; i++) {
+        if(contras_grupales[i].passwordName.includes(this.state.filtrarBusqText)){
+          aux2[j] = contras_grupales[i];
+          j++;
+        }
+      }
+      contras_individuales = aux1;
+      contras_grupales = aux2;
+    }
     return (
       <div className="app-container">
         <PassModal show={this.state.addModal} handleClose={this.toggleModal}>
@@ -307,7 +314,7 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Mis Contraseñas</button>
               <ul className="panel">
-                {this.state.contras.map((c,i) =>
+                {contras_individuales.map((c,i) =>
                   <ContraObj key={this.state.objKeyIndividuales+i} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
@@ -316,7 +323,7 @@ class Passwords extends React.Component {
             <div className="column col-100">
               <button className="accordion">Contraseñas Grupales</button>
               <ul className="panel">
-                {this.state.grupales.map((c,j) =>
+                {contras_grupales.map((c,j) =>
                   <ContraObj key={this.state.objKeyGrupales+j} data={c} delPass={this.delPass} editPass={this.editPass}/>)}
               </ul>
             </div>
