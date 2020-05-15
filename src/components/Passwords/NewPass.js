@@ -149,7 +149,7 @@ class NewPass extends React.Component {
           if(x.usuariosErroneos.length > 0){
             e2 = new CustomEvent('PandoraAlert', { 'detail': {
               code:2,
-              text:'Los usuarios '+ x.usuariosErroneos + 'no existen'}});
+              text:'El/Los usuario/s '+ x.usuariosErroneos + ' no existen'}});
             if (e2 !== null)window.dispatchEvent(e2);
           }
         }else{
