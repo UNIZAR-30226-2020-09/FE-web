@@ -9,6 +9,7 @@ const API_ROOT = 'https://pandorapp.herokuapp.com/api';
 //const encode = encodeURIComponent;
 const responseBody = res => {
   let response = res.body;
+  if (response === null) {response = {}}
   response.statusType = res.statusType;
   response.status = res.status;
   return response;

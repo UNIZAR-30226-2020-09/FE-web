@@ -30,7 +30,10 @@ class Registro extends Component{
         if(this.state.password === this.state.confirm){
           let x = await Usuario.registro(this.state.email, this.state.password);
           if (x.status === 200) {
-            e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text: 'Se ha registrado correctamente. Puede iniciar sesión.'}});
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code:2,
+              text: 'Se ha registrado correctamente. Dirijasé a su correo para verificar el registro.'
+            }});
             this.setState({email: '', password: '', confirm: ''});
           }
           else e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'Error: ' + x.statusText}});

@@ -44,6 +44,7 @@ export const Cookie = {
   }
 }
 
+/* Aux func */
 
 export const mailValidation = (mail) => {
   //var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -58,6 +59,10 @@ export const passwValidation = (pass) => {
   if (aux < 8 ) return false;
   if (!pass.match(mayusc) || !pass.match(minusc) || !pass.match(num) || !pass.match(espe)) return false;
   return true;
+}
+
+export const twoFAValidation = (fa) => {
+  return fa === fa.toUpperCase();
 }
 
 export const truncateText = (text, maxLength) => {
