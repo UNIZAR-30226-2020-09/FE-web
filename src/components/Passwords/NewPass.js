@@ -12,6 +12,7 @@ class NewPass extends React.Component {
       this.getEdit = props.edit;//contraseña que ha sido pulsada
       this.listarC = props.listar;
 
+      this.listar_cat();
       this.state = {
           passwordName: '',
           password: '',
@@ -30,7 +31,6 @@ class NewPass extends React.Component {
       this.edit = false;//edit o create
       this.catsCompletas = [];
       this.cats = [];//para listar categorías en desplegable
-      this.listar_cat();
 
       this.handleChangeName = this.handleChangeName.bind(this);
       this.handleChangePass = this.handleChangePass.bind(this);
@@ -257,12 +257,12 @@ class NewPass extends React.Component {
     render(){
       let titulo;
       let boton;
-      if(this.edit===false){
-        titulo = "Crea tu nueva contraseña";
-        boton = "Crear contraseña";
-      }else{
+      if(this.edit){
         titulo = "Edita tu contraseña";
         boton = "Guardar cambios";
+      }else{
+        titulo = "Crea tu nueva contraseña";
+        boton = "Crear contraseña";
       }
       var noeditcat = false;
       if(this.state.categoryName === "Compartida") noeditcat = true;

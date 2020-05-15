@@ -97,8 +97,6 @@ class Passwords extends React.Component {
       grupales: []
     };
     this.listar_cat();
-    this.listar_contras(false);
-    this.listar_contras(true);
 
     this.delPass = this.delPass.bind(this);
     this.edit = null;
@@ -141,7 +139,7 @@ class Passwords extends React.Component {
     console.log("CATEGORIAS",x1);
   }
 
-  async listar_contras(acordeon=true){
+  async listar_contras(acordeon=false){
     let x;
     var e;
     /* LISTAR INDIVIDUALES */
@@ -190,8 +188,7 @@ class Passwords extends React.Component {
     let i1 = await this.state.objKeyIndividuales;
     let i2 = await this.state.contras.length +1;
     let g2 = await this.state.grupales.length +1;
-    await this.setState({ objKeyIndividuales: (i1+i2+g2) });
-    await this.setState({ objKeyGrupales: (i1+i2+i2+g2) });
+    this.setState({ objKeyIndividuales: (i1+i2+g2), objKeyGrupales: (i1+i2+i2+g2) });
   }
 
   async delPass(pass){
@@ -200,7 +197,7 @@ class Passwords extends React.Component {
     if(x.status === 200) e = new CustomEvent('PandoraAlert', { 'detail': {code:2, text:'Contraseña borrada.'} });
     else e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido borrar la contraseña.'} });
     if (e !== null) window.dispatchEvent(e);
-    this.listar_contras(false);
+    this.listar_contras();
   }
 
   editPass(x){
@@ -235,7 +232,7 @@ class Passwords extends React.Component {
     }else{
       await this.setState({ filtrarBusq: true });
     }
-    this.listar_contras(false);
+    this.listar_contras();
   }
   async handleFiltrarCat(event){
     event.preventDefault();
@@ -246,7 +243,7 @@ class Passwords extends React.Component {
     }else{
       await this.setState({ filtrarCat: true });
     }
-    this.listar_contras(false);
+    this.listar_contras();
   }
 
   componentDidMount(){
@@ -254,6 +251,7 @@ class Passwords extends React.Component {
     for (i = 0; i < acc.length; i++) {
       acc[i].addEventListener("click", this.componentAux);
     }
+    this.listar_contras(true);
   }
   componentWillUnmount(){
     var acc = document.getElementsByClassName("accordion");
