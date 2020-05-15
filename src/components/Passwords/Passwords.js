@@ -41,7 +41,9 @@ class ContraObj extends React.Component {
           <button onClick={this.faux}>
             <i>{this.data.passwordName}</i>
           </button>
+          { this.data.rol===1 &&
           <span className={edit} onClick={() => this.editPass(this.data)}/>
+          }
           <span className={del} onClick={() => this.delPass(this.data)}/>
         </div>
         <div className="ctr-body">
