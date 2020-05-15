@@ -25,11 +25,6 @@ class ContraObj extends React.Component {
     }
   }
 
-  showPass(event){
-    console.log("Mostrar Contraseña");
-    
-  }
-
   render() {
     document.body.style.backgroundColor = "#ebe4f4";
     return (
@@ -48,7 +43,7 @@ class ContraObj extends React.Component {
           </div>
           <div className="box break">
             <h1>Contraseña</h1>
-               <h2>{this.data.password}</h2>
+            <h2>{this.data.password}</h2>
           </div>
           <div className="box twoR">
             <h1>Expira en</h1>
