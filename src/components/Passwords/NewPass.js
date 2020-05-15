@@ -80,7 +80,7 @@ class NewPass extends React.Component {
       });
       this.id = ed.passId;
       this.edit = true;
-      if(this.state.categoryName==="Compartida") this.setState({usuarios: ed.usuarios});
+      if(ed.categoryName==="Compartida") this.setState({usuarios: ed.usuarios});
       /* Cerramos el generador */
       if(this.state.generadorAbierto === true){
         this.showGenerator();
@@ -165,6 +165,24 @@ class NewPass extends React.Component {
       }else{
         /* Enviamos peticion *EDITAR* a la API */
         if(this.state.usuarios.length > 0){
+           if(this.state.categoryName ==="Compartida"){
+            x = await Grupales.modify(this.id,this.state.passwordName,
+              this.state.password,this.state.expirationTime,this.state.optionalText,this.state.userName,
+              this.state.usuarios);
+           }
+           else{
+             x = await Contrasenas.del(this.id);
+             if (x.status === 200){
+              x = await Grupales.create(this.state.passwordName, this.state.password,
+                this.state.expirationTime, this.state.passwordCategoryId,
+                this.state.optionalText, this.state.userName, this.state.usuarios);
+             }
+            else{
+              e = new CustomEvent('PandoraAlert', { 'detail': {
+                code:4,
+                text: 'Error ' + x.status + ': ' + x.statusText}});
+             }
+           }
           // JESUS
 
         }else{
