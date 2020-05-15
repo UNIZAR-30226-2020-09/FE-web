@@ -89,7 +89,10 @@ const Grupales = {
       password: pass, expirationTime: time, passwordCategoryId: cat,
       optionalText: text, userName: user, usuarios: users }),
   listar: () =>
-    requests.get(`/grupo/listar`)
+    requests.get(`/grupo/listar`),
+  modify: (passId,name,pass,time,text,user,users) =>
+    requests.post(`/grupo/modificar`, { id: passId,passwordName: name,
+      password: pass, expirationTime: time, optionalText: text, userName: user,usuarios: users })
 }
 
 const StatsAgent = {
