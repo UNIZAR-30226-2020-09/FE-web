@@ -90,7 +90,7 @@ const Grupales = {
   listar: () =>
     requests.get(`/grupo/listar`),
   modify: (passId,name,pass,time,text,user,users) =>
-    requests.post(`/grupo/modificar`, { passId: passId,passwordName: name,
+    requests.post(`/grupo/modificar`, { id: passId,passwordName: name,
       password: pass, expirationTime: time, optionalText: text, userName: user,usuarios: users })
 }
 

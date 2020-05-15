@@ -183,14 +183,12 @@ class NewPass extends React.Component {
                 text: 'Error ' + x.status + ': ' + x.statusText}});
              }
            }
-          // JESUS
-
         }else{
           if(this.state.categoryName==="Compartida"){
             await this.setState({ passwordCategoryId: this.cats[0].catId});
-            console.log("GROUP TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
+            //console.log("GROUP TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
           }else{
-            console.log("INDIVIDUAL TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
+            //console.log("INDIVIDUAL TO INDIVIDUAL MODIFICATION",this.state.passwordCategoryId);
           }
           x = await Contrasenas.update(this.mp, this.id, this.state.passwordName, this.state.password,
             this.state.expirationTime, this.state.passwordCategoryId,
