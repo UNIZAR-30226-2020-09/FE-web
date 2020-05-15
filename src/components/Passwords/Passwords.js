@@ -260,14 +260,14 @@ class Passwords extends React.Component {
     if(this.state.filtrarBusq){
       let j = 0, aux1 = [], aux2 = [];
       for (let i = 0; i < contras_individuales.length; i++) {
-        if(contras_individuales[i].passwordName.includes(this.state.filtrarBusqText)){
+        if(contras_individuales[i].passwordName.toLowerCase().includes(this.state.filtrarBusqText.toLowerCase())){
           aux1[j] = contras_individuales[i];
           j++;
         }
       }
       j = 0;
       for (let i = 0; i < contras_grupales.length; i++) {
-        if(contras_grupales[i].passwordName.includes(this.state.filtrarBusqText)){
+        if(contras_grupales[i].passwordName.toLowerCase().includes(this.state.filtrarBusqText.toLowerCase())){
           aux2[j] = contras_grupales[i];
           j++;
         }
