@@ -31,8 +31,9 @@ class AdminCat extends React.Component {
     //console.log("listar_cat");
     if (x.status === 200) {
       this.cats = x.categories;
-      for( var i = 0; i < this.cats.length; i++) if ( this.cats[i].categoryName === "Sin categoría") this.cats.splice(i, 1);
-      for( var i = 0; i < this.cats.length; i++) if ( this.cats[i].categoryName === "Compartida") this.cats.splice(i, 1);
+      var i;
+      for( i = 0; i < this.cats.length; i++) if ( this.cats[i].categoryName === "Sin categoría") this.cats.splice(i, 1);
+      for( i = 0; i < this.cats.length; i++) if ( this.cats[i].categoryName === "Compartida") this.cats.splice(i, 1);
       let arr = [];
       for (x in this.cats) arr.push(false);
       this.setState({onedit: arr});

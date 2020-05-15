@@ -35,9 +35,13 @@ class ContraObj extends React.Component {
 
   render() {
     document.body.style.backgroundColor = "#ebe4f4";
+    let t = this.data.noDaysBeforeExpiration;
+    let expiraen = null
+    if (t < 0) expiraen = 'Caducada';
+    else expiraen = t + ' dias';
     return (
       <li>
-        <div className="ctr-title">
+        <div className="ctr-title" style={t<0? {backgroundColor: '#ff8b52'}: null}>
           <button onClick={this.faux}>
             <i>{this.data.passwordName}</i>
           </button>
@@ -61,7 +65,7 @@ class ContraObj extends React.Component {
           <div className="box cols">
             <div className="box">
             <h1>Expira en</h1>
-            <h2>{this.data.noDaysBeforeExpiration} dias</h2>
+            <h2>{expiraen}</h2>
             </div>
             <div className="box">
             <h1>Categoría</h1>
