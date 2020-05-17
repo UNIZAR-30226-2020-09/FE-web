@@ -28,8 +28,14 @@ class Generator extends React.Component{
     }
     handleChangeNum(event){
         const target = event.target;
-        const value = target.value;
+        var value = target.value;
         const name = target.name;
+        if (value > 40){
+            value = 40;
+        }
+        if (value < 4){
+            value = 4;
+        }
         this.setState({[name]: value});
     }
 
@@ -45,16 +51,12 @@ class Generator extends React.Component{
           e = new CustomEvent('PandoraAlert', { 'detail': {
               code: 4,
               text: 'Debe marcar al menos una casilla'}});
-          if (e !== null) {
-            window.dispatchEvent(e);
-          }
+          window.dispatchEvent(e);
         }else if(cont > this.state.length){
           e = new CustomEvent('PandoraAlert', { 'detail': {
               code: 4,
               text: 'La longitud debe ser igual o mayor al número de casillas marcadas'}});
-          if (e !== null) {
-            window.dispatchEvent(e);
-          }
+          window.dispatchEvent(e);
         }else{
           let x = await Contrasenas.gen(this.state.minus,this.state.mayus,
               this.state.numbers,this.state.specialCharacters,this.state.length);
@@ -86,7 +88,7 @@ class Generator extends React.Component{
                     <label>Letras mayúsculas</label>
                 </div>
                 <div className="input-group">
-                    <input name="length" type="number" min= "1" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
+                    <input name="length" type="number" min="4" max ="40"  value={this.state.length} onChange={this.handleChangeNum} />
                     <label>Longitud</label>
                 </div>
               </div>

@@ -138,7 +138,7 @@ class NewPass extends React.Component {
 
     async handleSubmit(event) {
       event.preventDefault();
-      var e = null;
+      var e = null, e2 = null;
       let x = null;
       if(this.edit===false){
         /* Enviamos peticion *CREAR* a la API */
@@ -146,7 +146,12 @@ class NewPass extends React.Component {
           x = await Grupales.create(this.state.passwordName, this.state.password,
             this.state.expirationTime, this.state.passwordCategoryId,
             this.state.optionalText, this.state.userName, this.state.usuarios);
-          console.log(x);
+          if(x.usuariosErroneos.length > 0){
+            e2 = new CustomEvent('PandoraAlert', { 'detail': {
+              code:2,
+              text:'El/Los usuario/s '+ x.usuariosErroneos + ' no existen'}});
+            if (e2 !== null)window.dispatchEvent(e2);
+          }
         }else{
           x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
             this.state.expirationTime, this.state.passwordCategoryId,
