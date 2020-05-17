@@ -28,8 +28,14 @@ class Generator extends React.Component{
     }
     handleChangeNum(event){
         const target = event.target;
-        const value = target.value;
+        var value = target.value;
         const name = target.name;
+        if (value > 40){
+            value = 40;
+        }
+        if (value < 4){
+            value = 4;
+        }
         this.setState({[name]: value});
     }
 
@@ -82,7 +88,7 @@ class Generator extends React.Component{
                     <label>Letras mayúsculas</label>
                 </div>
                 <div className="input-group">
-                    <input name="length" type="number" min="4" max ="40" value={this.state.length} onChange={this.handleChangeNum} />
+                    <input name="length" type="number" min="4" max ="40"  value={this.state.length} onChange={this.handleChangeNum} />
                     <label>Longitud</label>
                 </div>
               </div>
