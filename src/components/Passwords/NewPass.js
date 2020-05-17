@@ -146,11 +146,13 @@ class NewPass extends React.Component {
           x = await Grupales.create(this.state.passwordName, this.state.password,
             this.state.expirationTime, this.state.passwordCategoryId,
             this.state.optionalText, this.state.userName, this.state.usuarios);
-          if(x.usuariosErroneos.length > 0){
-            e2 = new CustomEvent('PandoraAlert', { 'detail': {
-              code:2,
-              text:'Usuario(s) no existente(s): '+ x.usuariosErroneos}});
-            if (e2 !== null)window.dispatchEvent(e2);
+          if(x.usuariosErroneos !== null ){
+            if(x.usuariosErroneos.length > 0){
+              e2 = new CustomEvent('PandoraAlert', { 'detail': {
+                code: 1,
+                text: 'Usuario(s) no existente(s): '+ x.usuariosErroneos}});
+              if (e2 !== null)window.dispatchEvent(e2);
+            }
           }
         }else{
           x = await Contrasenas.create(this.mp, this.state.passwordName, this.state.password,
