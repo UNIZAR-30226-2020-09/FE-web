@@ -35,10 +35,21 @@ class LoginForm extends React.Component {
   async handleSubmitMail(event) {
     event.preventDefault();
     var e = null;
-
+    
     if (mailValidation(this.state.user)){
-      if (passwValidation(this.state.password)) {
-        this.setState({twofa :true});
+      if (passwValidation(this.state.password)){
+        let x = await Usuario.login(this.state.user,this.state.password);
+        console.log(x.statusText);
+          if(x.status === 200){
+            this.setState({twofa :true});
+          }
+          else{
+            e = new CustomEvent('PandoraAlert', { 'detail': {
+              code: 4,
+              text: 'Error ' + x.status + ': ' + x.statusText
+            }});
+            window.dispatchEvent(e);
+          }
       } else {
         e = new CustomEvent('PandoraAlert', { 'detail': {code:4, text:'Contraseña no válida'} });
         window.dispatchEvent(e);
