@@ -140,12 +140,11 @@ class Passwords extends React.Component {
     }else{
       this.setState({ cats: [{catId: -1, categoryName: "ERROR"}] });
     }
-    //console.log("CATEGORIAS",x1);
   }
 
   async listar_contras(acordeon=false){
     let x;
-    var e;
+    var e = null;
     /* LISTAR INDIVIDUALES */
     if(this.state.filtrarCat){
       x = await Contrasenas.filtrar(this.mp, this.state.filtrarCatId);
@@ -156,17 +155,18 @@ class Passwords extends React.Component {
       this.setState({ contras: x.passwords });
     } else {
       e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas.'} });
-      window.dispatchEvent(e);
     }
+    if (e !== null && this.mp !== null) window.dispatchEvent(e);
+    e = null;
     /* LISTAR GRUPALES */
     x = await Grupales.listar();
     //console.log("GRUPALES",x);
     if (x.status === 200) {
       this.setState({ grupales: x.passwords });
-    }else{
+    } else {
       e = new CustomEvent('PandoraAlert', { 'detail': {code:5, text:'No se han podido recuperar las contraseñas grupales.'} });
-      window.dispatchEvent(e);
     }
+    if (e !== null && this.mp !== null) window.dispatchEvent(e);
     /* ABRIMOS ACORDEON */
     if(acordeon){
       var acc = document.getElementsByClassName("accordion");
