@@ -38,10 +38,10 @@ class App extends React.Component {
       else if (path === '/categories') history.push('/');
       else if (path === '/settings') history.push('/');
     }
-    console.log('APP_LOC: ', window.location.href);
+    //console.log('APP_LOC: ', window.location.href);
     if (window.location.href.match(/http:\/\/app-pandora/)) {
-      console.log('APP_LOC REEMPLAZO: ', window.location.href.replace(/GeeksForGeeks/, 'https'));
-      //window.location.href;
+      //console.log('APP_LOC REEMPLAZO: ', window.location.href.replace(/http/, 'https'));
+      window.location.href = window.location.href.replace(/http/, 'https');
     }
   }
 
