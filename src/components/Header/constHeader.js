@@ -25,11 +25,12 @@ const left_dwn = [
 
 /* Map function -> list items */
 function map_item(obj, props, liclass){
-  let loc = props.currentlocation;
+  let loc = props.currentlocation, target=null;
   if (liclass === "nav-top-item") loc = null;
+  if (obj.link === '/help') target = "_blank";
   return (
     <li key={obj.id} className={liclass + (obj.link !== loc ? "" : " active")}>
-      <Link to={obj.link}>
+      <Link to={obj.link} target={target}>
         <span className={obj.icon}/>
         <i>{obj.name}</i>
       </Link>
