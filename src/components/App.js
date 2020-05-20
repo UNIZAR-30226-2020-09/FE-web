@@ -41,7 +41,7 @@ class App extends React.Component {
     console.log('APP_LOC: ', window.location.href);
     if (window.location.href.match(/http:\/\/app-pandora/)) {
       console.log('APP_LOC REEMPLAZO: ', window.location.href.replace(/GeeksForGeeks/, 'https'));
-      window.location.href;
+      //window.location.href;
     }
   }
 
