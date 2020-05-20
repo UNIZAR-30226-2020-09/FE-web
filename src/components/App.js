@@ -101,8 +101,16 @@ class App extends React.Component {
           } />
           <Route path="/about" component={About} />
           <Route path="/help" component={() => {
-            window.location.href = 'https://github.com/UNIZAR-30226-2020-09/FE-web/issues/new';
-            return null;
+          //window.location.href = 'https://github.com/UNIZAR-30226-2020-09/FE-web/issues/new';
+            return (
+              <div className="app-container">
+               <iframe
+                src="https://github.com/UNIZAR-30226-2020-09/FE-web/issues/new"
+                title="New Issue - GitHub Pandora"
+                style={{width: '100%', height: '100%'}}
+               />
+              </div>
+            );
           }}/>
           <Route component={Err_404} />
         </Switch>
