@@ -64,13 +64,15 @@ class ContraObj extends React.Component {
             </h2>
           </div>
           <div className="box cols">
+            <br/>
             <div className="box">
-            <h1>Expira en</h1>
-            <h2>{expiraen}</h2>
+              <h1>Expira en</h1>
+              <h2>{expiraen}</h2>
             </div>
+            <br/>
             <div className="box">
-            <h1>Categoría</h1>
-            <h2>{this.data.categoryName}</h2>
+              <h1>Categoría</h1>
+              <h2>{this.data.categoryName}</h2>
             </div>
           </div>
           <div className="box">
