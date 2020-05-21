@@ -53,7 +53,7 @@ export const mailValidation = (mail) => {
 }
 
 export const passwValidation = (pass) => {
-  if (pass === "1234") return true; // DEBUG!!!
+  //if (pass === "1234") return true; // DEBUG!!!
   var mayusc = /.*[A-Z].*/, minusc = /.*[a-z].*/, num = /.*[0-9].*/,
       espe = /.*\W.*/, aux = pass.length;
   if (aux < 8 ) return false;

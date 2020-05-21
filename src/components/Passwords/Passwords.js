@@ -38,7 +38,7 @@ class ContraObj extends React.Component {
     let t = this.data.noDaysBeforeExpiration;
     let expiraen = null
     if (t < 0) expiraen = 'Caducada';
-    else expiraen = t + ' dias';
+    else expiraen = t + ' días';
     return (
       <li>
         <div className="ctr-title" style={t<0? {backgroundColor: '#ff8b52'}: null}>

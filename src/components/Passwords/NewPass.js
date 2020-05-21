@@ -148,9 +148,12 @@ class NewPass extends React.Component {
             this.state.optionalText, this.state.userName, this.state.usuarios);
           if(x.usuariosErroneos !== null ){
             if(x.usuariosErroneos.length > 0){
+              let list = '';
+              for (let z in x.usuariosErroneos) list = list + ', ' + x.usuariosErroneos[z];
+              list = list.substring(1);
               e2 = new CustomEvent('PandoraAlert', { 'detail': {
                 code: 1,
-                text: 'Usuario(s) no existente(s): '+ x.usuariosErroneos}});
+                text: 'Usuario(s) no existente(s): ' + list + '.' }});
               if (e2 !== null)window.dispatchEvent(e2);
             }
           }
@@ -176,6 +179,17 @@ class NewPass extends React.Component {
             x = await Grupales.modify(this.id,this.state.passwordName,
               this.state.password,this.state.expirationTime,this.state.optionalText,this.state.userName,
               this.state.usuarios);
+            if(x.usuariosErroneos !== null ){
+              if(x.usuariosErroneos.length > 0){
+                let list = '';
+                for (let z in x.usuariosErroneos) list = list + ', ' + x.usuariosErroneos[z];
+                list = list.substring(1);
+                e2 = new CustomEvent('PandoraAlert', { 'detail': {
+                  code: 1,
+                  text: 'Usuario(s) no existente(s): ' + list + '.' }});
+                if (e2 !== null)window.dispatchEvent(e2);
+              }
+            }
            }
            else{
              x = await Contrasenas.del(this.id);

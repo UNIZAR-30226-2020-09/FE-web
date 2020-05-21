@@ -7,8 +7,10 @@ import './Contacta.css';
 class Contacta extends React.Component{
     constructor(props){
       super(props);
+      if (props.user) this.mail = props.user.mail;
+      else this.mail = null;
       this.state = {
-          mail: '',
+          mail: this.mail===null ? '': this.mail,
           body: ''
       };
       this.handleChangeMail = this.handleChangeMail.bind(this);
@@ -54,7 +56,7 @@ class Contacta extends React.Component{
             <form onSubmit={this.handleSubmit} >
               <div className="input-group">
                 <label className={this.state.mail!=="" ? "label-active":null}>
-                  Correo:
+                  Correo
                 </label>
                 <input
                   type="text"
@@ -66,7 +68,7 @@ class Contacta extends React.Component{
               </div>
               <div className="input-group">
                 <label className={this.state.body!=="" ? "label-active": "textarea-correction"}>
-                  Mensaje:
+                  Mensaje
                 </label>
                 <textarea
                 type="text"

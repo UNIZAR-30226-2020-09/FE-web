@@ -15,12 +15,14 @@ class Home extends React.Component {
   }
 
   render() {
-    let box;
+    let box, ct;
     let user = this.getUser();
     if (user === null){
-      box = <Registro/>
+      box = <Registro/>;
+      ct = <Contacta/>;
     }else{
       box = <Bienvenido user={user}/>
+      ct = <Contacta user={user}/>;
     }
     document.body.style.backgroundColor = "#a997df";
     return (
@@ -44,7 +46,7 @@ class Home extends React.Component {
           <Stats/>
         </div>
         <div className="row">
-          <Contacta/>
+          {ct}
         </div>
       </div>
     );
