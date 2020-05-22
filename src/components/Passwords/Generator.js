@@ -101,7 +101,7 @@ class Generator extends React.Component{
                     <input name="specialCharacters" type="checkbox" checked={this.state.specialCharacters} onChange={this.handleChangeCheck} />
                     <label>Carácteres especiales</label>
                 </div>
-                <button onClick={this.submitHandle} className="btn-gen">
+                <button type="button" onClick={this.submitHandle} className="btn-gen">
                    Generar Contraseña
                 </button>
               </div>

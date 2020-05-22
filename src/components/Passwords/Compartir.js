@@ -48,7 +48,7 @@ class Compartir extends React.Component{
               {x.map( (c,i) =>
                 <div key={i} className="input-group">
                     <input readOnly name="u" type="text" value={c} />
-                    <button type="submit" onClick={() => this.delete(c)} className="btn-minus fas fa-minus-square"/>
+                    <button type="button" onClick={() => this.delete(c)} className="btn-minus fas fa-minus-square"/>
                 </div>
               )}
                 <div className="input-group">

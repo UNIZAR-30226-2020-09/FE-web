@@ -137,6 +137,8 @@ class NewPass extends React.Component {
     }
 
     async handleSubmit(event) {
+      console.log(event);
+      console.log(event.key);
       event.preventDefault();
       var e = null, e2 = null;
       let x = null;
@@ -308,7 +310,6 @@ class NewPass extends React.Component {
       return(
         <div className="newpass" id="newpassForm">
             <h1>{titulo}</h1>
-            <form onSubmit={this.handleSubmit} >
               <div className="input-group">
                 <label className={this.state.passwordName!=="" ? "label-active":null}>
                   Nombre
@@ -378,14 +379,13 @@ class NewPass extends React.Component {
                 <Compartir ref="share" getUsers={this.getUsers} setNewUser={this.setNewUser} delUser={this.delUser}/>
               </div>
               <div className="input-group">
-                <button type="submit" className="btn btn-submit">
+                <button type="button" className="btn btn-submit" onClick={this.handleSubmit}>
                   {boton}
                 </button>
                 <button type="button" onClick={this.handleClose} className="btn btn-cancel">
                     Cancelar
                 </button>
               </div>
-            </form>
         </div>
 
       )
