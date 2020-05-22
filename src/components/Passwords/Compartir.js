@@ -14,6 +14,13 @@ class Compartir extends React.Component{
         this.submitAnyadir = this.submitAnyadir.bind(this);
         this.delete = this.delete.bind(this);
         this.sem = 1;
+        this.inputEnter = function(event){
+          if (event.key === 'Enter') {
+            let span_ok = event.target.nextElementSibling;
+            span_ok.click();
+          }
+          return;
+        }
     }
 
     async changeAnyadir(event){
@@ -45,7 +52,10 @@ class Compartir extends React.Component{
                 </div>
               )}
                 <div className="input-group">
-                    <input placeholder="Introduzca usuario a quien compartir" type="text" value={this.state.anyadiendo} onChange={this.changeAnyadir} />
+                    <input placeholder="Introduzca usuario a quien compartir" type="text"
+                      value={this.state.anyadiendo}
+                      onChange={this.changeAnyadir}
+                      onKeyUp={this.inputEnter}/>
                     <button type="button" onClick={this.submitAnyadir} className="btn-plus fas fa-plus-square"/>
                 </div>
               </div>

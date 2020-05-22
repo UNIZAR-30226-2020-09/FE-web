@@ -34,6 +34,7 @@ class Contacta extends React.Component{
         if (x.status === 200){
           e = new CustomEvent('PandoraAlert', { 'detail': {code:1, text:'Mensaje Enviado.'} });
           window.dispatchEvent(e);
+          this.setState({ body: '' });
         }else{
           e = new CustomEvent('PandoraAlert', { 'detail': {
             code: 4,
