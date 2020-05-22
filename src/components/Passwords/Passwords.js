@@ -40,8 +40,8 @@ class ContraObj extends React.Component {
     if (t <= 0) expiraen = 'Caducada';
     else expiraen = t + ' días';
     return (
-      <li>
-        <div className="ctr-title" style={t<=0 ? {backgroundColor: '#ff8b52'}: null}>
+      <li className={t<=0? "caducada": null}>
+        <div className="ctr-title">
           <button onClick={this.faux}>
             {t <= 0 ? <span className="fas fa-exclamation-triangle"/>:null}
             <i>{this.data.passwordName}</i>
