@@ -14,6 +14,29 @@ class ContraObj extends React.Component {
     this.delPass = props.delPass;
     this.editPass = props.editPass;
 
+    this.robustez = [];
+    let perc = this.data.robustez/100;
+    //this.color = this.pickHex([52, 235, 107], [235, 94, 52], perc);
+    this.color = this.pickHex([100, 100, 100], [0,0,0], perc);
+    while (this.robustez.length < 5) {
+      if(perc > 0.2) {
+        this.robustez.push(
+          {color: this.color}
+        );
+      } else {
+        if (this.robustez.length === 0) {
+          this.robustez.push(
+            {color: this.color}
+          );
+        } else {
+          this.robustez.push(
+            {color: '#FFFFFF'}
+          );
+        }
+      }
+      perc -= 0.2
+    }
+
     this.hide = function(e) {
       let x = e.currentTarget;
       x.classList.toggle("fa-eye-slash");
@@ -21,6 +44,15 @@ class ContraObj extends React.Component {
       if (x.type === 'text') x.type = 'password';
       else x.type = 'text';
     }
+  }
+
+  pickHex(color1, color2, weight) {
+    var w1 = weight;
+    var w2 = 1 - w1;
+    var rgb = [Math.round(color1[0] * w1 + color2[0] * w2),
+        Math.round(color1[1] * w1 + color2[1] * w2),
+        Math.round(color1[2] * w1 + color2[2] * w2)];
+    return '#' + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
   }
 
   faux(ev){
@@ -39,6 +71,7 @@ class ContraObj extends React.Component {
     let expiraen = null
     if (t <= 0) expiraen = 'Caducada';
     else expiraen = t + ' días';
+    let rob = this.robustez;
     return (
       <li className={t<=0? "caducada": null}>
         <div className="ctr-title">
@@ -61,6 +94,11 @@ class ContraObj extends React.Component {
             <h2>
               <span className="fas fa-eye" onClick={this.hide}/>
               <input type="password" value={this.data.password} readOnly/>
+              <i className="fas fa-grip-lines-vertical" style={rob[0]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[1]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[2]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[3]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[4]}/>
             </h2>
           </div>
           <div className="box cols">
