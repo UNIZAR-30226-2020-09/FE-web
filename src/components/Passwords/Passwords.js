@@ -94,11 +94,11 @@ class ContraObj extends React.Component {
             <h2>
               <span className="fas fa-eye" onClick={this.hide}/>
               <input type="password" value={this.data.password} readOnly/>
-              <i className="fas fa-grip-lines-vertical" style={rob[0]}/>
-              <i className="fas fa-grip-lines-vertical" style={rob[1]}/>
-              <i className="fas fa-grip-lines-vertical" style={rob[2]}/>
-              <i className="fas fa-grip-lines-vertical" style={rob[3]}/>
               <i className="fas fa-grip-lines-vertical" style={rob[4]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[3]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[2]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[1]}/>
+              <i className="fas fa-grip-lines-vertical" style={rob[0]}/>
             </h2>
           </div>
           <div className="box cols">
