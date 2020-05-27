@@ -33,7 +33,7 @@ class DeleteAcc extends React.Component {
         }});
       }
     }
-    if (ev !== null) window.dispatchEvent(e);
+    if (ev !== null) window.dispatchEvent(ev);
   }
 
   render(){
