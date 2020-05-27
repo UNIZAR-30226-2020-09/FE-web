@@ -60,7 +60,7 @@ class ContraObj extends React.Component {
     if (ch.style.maxHeight) {
       ch.style.maxHeight = null;
     } else {
-      ch.style.maxHeight = 400 + 'px';
+      ch.style.maxHeight = 450 + 'px';
       //panel.scrollHeight + 20 + "px";
     }
   }
@@ -160,7 +160,7 @@ class Passwords extends React.Component {
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
       } else {
-        panel.style.maxHeight = panel.childElementCount*400 + "px";
+        panel.style.maxHeight = panel.childElementCount*450 + "px";
         //panel.scrollHeight + 20 + "px"; // TODO:
       }
     }
